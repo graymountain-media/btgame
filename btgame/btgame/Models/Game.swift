@@ -12,11 +12,11 @@ class Game {
     let id: UUID
     let numRounds: Int
     var timeLines: [Timeline]
-    var timeLimit: TimeInterval
+    var timeLimit: Int
     var players: [Player]
     var topics: [String]
     
-    init(players: [Player], timeLines: [Timeline], timeLimit: TimeInterval = 15) {
+    init(players: [Player], timeLines: [Timeline], timeLimit: Int = 15) {
         self.id = UUID()
         self.numRounds = players.count
         self.timeLines = timeLines
