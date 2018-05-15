@@ -31,7 +31,7 @@ class GameController {
         getTopics()
     }
     
-    func endRound(forPlayer player: Player, withImage image: UIImage?, guess: String?, timeLine: Timeline) {
+    func endRound(forPlayer player: Player, withImage image: UIImage?, guess: String?, timeline: Timeline) {
         RoundController.createRound(withImage: image, orGuess: guess, owner: player, inTimeline: timeline )
     }
     
