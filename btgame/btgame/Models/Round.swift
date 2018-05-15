@@ -21,3 +21,9 @@ class Round {
         self.isImage = isImage
     }
 }
+
+extension Round: Equatable {
+    static func == (lhs: Round, rhs: Round) -> Bool {
+        return (lhs.owner == rhs.owner && lhs.image == rhs.image && lhs.guess == rhs.guess && lhs.isImage == rhs.isImage)
+    }
+}

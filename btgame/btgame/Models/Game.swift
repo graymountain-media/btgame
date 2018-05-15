@@ -25,3 +25,9 @@ class Game {
         self.topics = []
     }
 }
+
+extension Game: Equatable {
+    static func == (lhs: Game, rhs: Game) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
