@@ -13,27 +13,41 @@ class GameController {
     static let shared = GameController()
     var currentGame: Game
     var timelines: [Timeline] = []
+    var time = 0
+    var timer: Timer = Timer()
     
     private init() {
         currentGame = Game(players: [], timeLines: [])
     }
     
-    //create game
+    // MARK: - Public Functions
+    
     func startNewGame() {
         let players: [Player] = []
         let timelines = createTimelines(forPlayers: players)
         currentGame = Game(players: players, timeLines: timelines)
         getTopics()
     }
-        //Set game parameters
     
-    //add players
+    func resetTimer() {
+        time = currentGame.timeLimit
+        timer.invalidate()
+    }
     
-    //get topics
-    
-    //assign topics
+    func startTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerTicked), userInfo: nil, repeats: true)
+    } 
     
     // MARK: - Private Functions
+    
+    @objc private func timerTicked() {
+        time -= 1
+        if time == 0 {
+            //FIXME: GO to next phase
+            resetTimer()
+        }
+    }
+    
     private func createTimelines(forPlayers players: [Player]) -> [Timeline] {
         var timelines: [Timeline] = []
         for player in players {

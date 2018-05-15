@@ -29,6 +29,7 @@
 		A1BCCC2E20AB2C2000A4AC7D /* GuessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC2D20AB2C2000A4AC7D /* GuessViewController.swift */; };
 		A1BCCC3020AB2C2D00A4AC7D /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC2F20AB2C2D00A4AC7D /* ResultsViewController.swift */; };
 		A1BCCC3420AB2D1200A4AC7D /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC3320AB2D1200A4AC7D /* WelcomeViewController.swift */; };
+		A1BCCC3620AB789C00A4AC7D /* Topics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC3520AB789C00A4AC7D /* Topics.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		A1BCCC2D20AB2C2000A4AC7D /* GuessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuessViewController.swift; sourceTree = "<group>"; };
 		A1BCCC2F20AB2C2D00A4AC7D /* ResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
 		A1BCCC3320AB2D1200A4AC7D /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		A1BCCC3520AB789C00A4AC7D /* Topics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Topics.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +153,7 @@
 				A1BCCC0620AA4BA700A4AC7D /* Info.plist */,
 				3BD076B520AB384900BA7C43 /* Constants.swift */,
 				3BD076B720AB389F00BA7C43 /* Extensions.swift */,
+				A1BCCC3520AB789C00A4AC7D /* Topics.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -225,6 +228,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1BCCC3620AB789C00A4AC7D /* Topics.swift in Sources */,
 				A1BCCC1120AB2B3900A4AC7D /* Timeline.swift in Sources */,
 				3BD076B620AB384900BA7C43 /* Constants.swift in Sources */,
 				A1BCCC2320AB2BCF00A4AC7D /* TimelineController.swift in Sources */,
