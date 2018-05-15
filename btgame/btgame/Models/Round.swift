@@ -14,7 +14,7 @@ class Round {
     var guess: String?
     var isImage: Bool
     
-    init(owner: Player, image: UIImage? = nil, guess: String? = nil isImage: Bool = false) {
+    init(owner: Player, image: UIImage? = nil, guess: String? = nil, isImage: Bool = false) {
         self.owner = owner
         self.image = image
         self.guess = guess
