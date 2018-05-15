@@ -7,3 +7,13 @@
 //
 
 import Foundation
+
+class Timeline {
+    var id: UUID
+    var rounds: [Round]
+    
+    init() {
+        self.rounds = []
+        self.id = UUID()
+    }
+}
