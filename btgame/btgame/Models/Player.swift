@@ -9,16 +9,22 @@
 import Foundation
 import MultipeerConnectivity
 
-struct Player {
+class Player {
     let displayName: String
     let id: MCPeerID
     let isAdvertiser: Bool
-    let timelineID: UUID
+    var timelineID: UUID?
     
-    init(displayName: String, id: MCPeerID, isAdvertiser: Bool, timelineID: UUID) {
+    init(displayName: String, id: MCPeerID, isAdvertiser: Bool, timelineID: UUID? = nil) {
         self.displayName = displayName
         self.id = id
         self.isAdvertiser = isAdvertiser
         self.timelineID = timelineID
+    }
+}
+
+extension Player: Equatable {
+    static func == (lhs: Player, rhs: Player) -> Bool {
+        return (lhs.displayName == rhs.displayName && lhs.id == rhs.id && lhs.isAdvertiser == rhs.isAdvertiser && lhs.timelineID == rhs.timelineID)
     }
 }

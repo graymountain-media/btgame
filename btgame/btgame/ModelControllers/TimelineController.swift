@@ -7,3 +7,12 @@
 //
 
 import Foundation
+
+class TimelineController {
+    
+    static func create(timeline: Timeline, forPlayer player: Player) -> Timeline{
+        let timeline = Timeline()
+        player.timelineID = timeline.id
+        return timeline
+    }
+}

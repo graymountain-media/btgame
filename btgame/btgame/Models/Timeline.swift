@@ -17,3 +17,9 @@ class Timeline {
         self.id = UUID()
     }
 }
+
+extension Timeline: Equatable {
+    static func == (lhs: Timeline, rhs: Timeline) -> Bool {
+        return (lhs.id == rhs.id)
+    }
+}
