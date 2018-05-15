@@ -7,3 +7,18 @@
 //
 
 import Foundation
+
+class GameController {
+    //create game
+    
+        //Set game parameters
+    
+    //add players
+    
+    //get topics
+    
+    //assign topics
+    
+    //create timelines
+    
+}
