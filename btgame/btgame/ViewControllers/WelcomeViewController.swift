@@ -22,7 +22,7 @@ class WelcomeViewController: UIViewController {
     
     let welcomeLabel: UILabel = {
         let label = UILabel()
-        label.text = "Welcome to Dub n' Doodle"
+        label.text = "\(Constants.welcome) \(Constants.to) \(Constants.gameName)"
         label.textColor = UIColor.white
         label.textAlignment = .center
         label.font = UIFont.boldSystemFont(ofSize: 28)
@@ -45,7 +45,7 @@ class WelcomeViewController: UIViewController {
     let hostButton: UIButton = {
         let button = UIButton(type: .system)
 //        button.backgroundColor = UIColor(r: 20, g: 150, b: 220)
-        button.setTitle("Host", for: .normal)
+        button.setTitle("\(Constants.host)", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
@@ -57,7 +57,7 @@ class WelcomeViewController: UIViewController {
     let joinButton: UIButton = {
         let button = UIButton(type: .system)
 //       button.backgroundColor = UIColor(r: 20, g: 150, b: 220)
-        button.setTitle("Join", for: .normal)
+        button.setTitle("\(Constants.join)", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
@@ -75,12 +75,11 @@ class WelcomeViewController: UIViewController {
         
         // Views
         view.addSubview(containerView)
-        view.addSubview(welcomeLabel)
+        
         
         
         // Contstraints
         setupContainerView()
-        setupWelcomeLabel()
         
     }
     
@@ -94,7 +93,9 @@ class WelcomeViewController: UIViewController {
         containerView.addSubview(welcomeLabel)
         
         welcomeLabel.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 12).isActive = true
-        
+        welcomeLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 20).isActive = true
+        welcomeLabel.widthAnchor.constraint(equalTo: containerView.widthAnchor, constant: 20).isActive = true
+        welcomeLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
     }
     
