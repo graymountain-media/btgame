@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3BD076B620AB384900BA7C43 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD076B520AB384900BA7C43 /* Constants.swift */; };
+		3BD076B820AB389F00BA7C43 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD076B720AB389F00BA7C43 /* Extensions.swift */; };
 		A1BCCBFB20AA4BA600A4AC7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCBFA20AA4BA600A4AC7D /* AppDelegate.swift */; };
 		A1BCCC0220AA4BA700A4AC7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1BCCC0120AA4BA700A4AC7D /* Assets.xcassets */; };
 		A1BCCC0520AA4BA700A4AC7D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1BCCC0320AA4BA700A4AC7D /* LaunchScreen.storyboard */; };
@@ -30,6 +32,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3BD076B520AB384900BA7C43 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		3BD076B720AB389F00BA7C43 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		A1BCCBF720AA4BA600A4AC7D /* btgame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = btgame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1BCCBFA20AA4BA600A4AC7D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A1BCCC0120AA4BA700A4AC7D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -145,6 +149,8 @@
 				A1BCCC0120AA4BA700A4AC7D /* Assets.xcassets */,
 				A1BCCC0320AA4BA700A4AC7D /* LaunchScreen.storyboard */,
 				A1BCCC0620AA4BA700A4AC7D /* Info.plist */,
+				3BD076B520AB384900BA7C43 /* Constants.swift */,
+				3BD076B720AB389F00BA7C43 /* Extensions.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -220,6 +226,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1BCCC1120AB2B3900A4AC7D /* Timeline.swift in Sources */,
+				3BD076B620AB384900BA7C43 /* Constants.swift in Sources */,
 				A1BCCC2320AB2BCF00A4AC7D /* TimelineController.swift in Sources */,
 				A1BCCC1620AB2B6F00A4AC7D /* MCController.swift in Sources */,
 				A1BCCC2620AB2BF900A4AC7D /* RegisterViewController.swift in Sources */,
@@ -233,6 +240,7 @@
 				A1BCCC0F20AB2ACC00A4AC7D /* Round.swift in Sources */,
 				A1BCCC2E20AB2C2000A4AC7D /* GuessViewController.swift in Sources */,
 				A1BCCC1B20AB2B9C00A4AC7D /* GameController.swift in Sources */,
+				3BD076B820AB389F00BA7C43 /* Extensions.swift in Sources */,
 				A1BCCC1820AB2B7700A4AC7D /* NetworkController.swift in Sources */,
 				A1BCCC2820AB2C0000A4AC7D /* SetupViewController.swift in Sources */,
 				A1BCCC2C20AB2C1000A4AC7D /* CanvasViewController.swift in Sources */,
