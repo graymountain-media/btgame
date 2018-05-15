@@ -10,9 +10,8 @@ import Foundation
 
 class TimelineController {
     
-    static func create(timeline: Timeline, forPlayer player: Player) -> Timeline{
-        let timeline = Timeline()
-        player.timelineID = timeline.id
+    static func createTimeline(forPlayer player: Player) -> Timeline{
+        let timeline = Timeline(owner: player)
         return timeline
     }
 }
