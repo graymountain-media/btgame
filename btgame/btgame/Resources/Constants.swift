@@ -12,6 +12,16 @@ import Foundation
 struct Constants {
     static let example = "example"
     
+    static let welcome = "Welcome"
+    static let to = "to"
+    static let gameName = "Dub n’ Doodle"
+    static let host = "Host"
+    static let join = "Join"
+    static let game = "Game"
+    static let begin = "Begin"
+    static let enterYourNameBelow = "Enter your name below"
+    static let enterUsernamePlaceholderText = "Enter username here..."
+    static let pickOneBelowToDraw = "Pick one below to draw"
     
     
 }
