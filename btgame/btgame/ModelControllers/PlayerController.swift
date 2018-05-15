@@ -12,7 +12,7 @@ import MultipeerConnectivity
 class PlayerController {
     
     static func create(displayName: String, id: MCPeerID, isAdvertiser: Bool, timelineID: UUID) -> Player {
-        let player = Player(displayName: displayName, id: id, isAdvertiser: isAdvertiser, timelineID: timelineID)
+        let player = Player(displayName: displayName, id: id, isAdvertiser: isAdvertiser)
         return player
     }
     

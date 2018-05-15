@@ -13,11 +13,13 @@ class Player {
     let displayName: String
     let id: MCPeerID
     let isAdvertiser: Bool
+    var possibleTopics: [String]
     
     init(displayName: String, id: MCPeerID, isAdvertiser: Bool) {
         self.displayName = displayName
         self.id = id
         self.isAdvertiser = isAdvertiser
+        self.possibleTopics = []
     }
 }
 
