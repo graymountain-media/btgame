@@ -6,7 +6,7 @@
 //  Copyright © 2018 Jake Gray. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class GameController {
 
@@ -15,9 +15,11 @@ class GameController {
     var timelines: [Timeline] = []
     var time = 0
     var timer: Timer = Timer()
+    var isDrawingRound: Bool
     
     private init() {
         currentGame = Game(players: [], timeLines: [])
+        isDrawingRound = false
     }
     
     // MARK: - Public Functions
@@ -28,6 +30,12 @@ class GameController {
         currentGame = Game(players: players, timeLines: timelines)
         getTopics()
     }
+    
+    func endRound(forPlayer player: Player, withImage image: UIImage?, guess: String?, timeLine: Timeline) {
+        RoundController.createRound(withImage: image, orGuess: guess, owner: player, inTimeline: timeline )
+    }
+    
+    // MARK: Timer
     
     func resetTimer() {
         time = currentGame.timeLimit
@@ -59,38 +67,22 @@ class GameController {
     }
     
     private func getTopics(){
-        currentGame.topics = createTopics(count: currentGame.players.count) //replace with network call
-    }
-    
-    func assignTopics() ->[[String]] {
-        print("Assign Topics")
-        var sortedTopics: [[String]] = []
-        var playerTopics: [String] = []
-        var topicCount = 0
-        print("NEW PLAYER")
-        for topic in currentGame.topics {
-            playerTopics.append(topic)
-            print(topic)
-            topicCount += 1
-            
-            if topicCount > 4 {
-                topicCount = 0
-                sortedTopics.append(playerTopics)
-                playerTopics = []
-                print("NEW PLAYER")
+        var usedNumbers: [UInt32] = []
+        func getNumber() -> UInt32 {
+            let randomNumber = arc4random_uniform(UInt32(topics_all.count))
+            if usedNumbers.contains(randomNumber) {
+                return getNumber()
+            } else {
+                usedNumbers.append(randomNumber)
+                return randomNumber
             }
         }
         
-        return sortedTopics
-    }
-    
-    func createTopics(count: Int) -> [String]{
-        var topics: [String] = []
-        for i in 1...(count * 4){
-            let str = "Choice \(i)"
-            print(str)
-            topics.append(str)
+        for player in currentGame.players {
+            for _ in 1...4{
+                let index = getNumber()
+                player.possibleTopics.append(topics_all[Int(index)])
+            }
         }
-        return topics
     }
 }

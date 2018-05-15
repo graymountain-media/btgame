@@ -10,7 +10,7 @@ import UIKit
 
 class RoundController {
     
-    static func create(round: Round, withImage image: UIImage?, orGuess guess: String?, owner: Player , inTimeline timeline: Timeline) {
+    static func createRound(withImage image: UIImage?, orGuess guess: String?, owner: Player , inTimeline timeline: Timeline) {
         var isImage = false
         if image != nil {
             isImage =  true
