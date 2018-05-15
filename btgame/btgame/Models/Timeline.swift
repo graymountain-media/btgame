@@ -9,17 +9,17 @@
 import Foundation
 
 class Timeline {
-    var id: UUID
+    var owner: Player
     var rounds: [Round]
     
-    init() {
+    init(owner: Player) {
         self.rounds = []
-        self.id = UUID()
+        self.owner = owner
     }
 }
 
 extension Timeline: Equatable {
     static func == (lhs: Timeline, rhs: Timeline) -> Bool {
-        return (lhs.id == rhs.id)
+        return (lhs.owner == rhs.owner && lhs.rounds == rhs.rounds)
     }
 }
