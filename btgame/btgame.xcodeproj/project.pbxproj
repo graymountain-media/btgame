@@ -8,20 +8,50 @@
 
 /* Begin PBXBuildFile section */
 		A1BCCBFB20AA4BA600A4AC7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCBFA20AA4BA600A4AC7D /* AppDelegate.swift */; };
-		A1BCCBFD20AA4BA600A4AC7D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCBFC20AA4BA600A4AC7D /* ViewController.swift */; };
-		A1BCCC0020AA4BA600A4AC7D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1BCCBFE20AA4BA600A4AC7D /* Main.storyboard */; };
 		A1BCCC0220AA4BA700A4AC7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1BCCC0120AA4BA700A4AC7D /* Assets.xcassets */; };
 		A1BCCC0520AA4BA700A4AC7D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1BCCC0320AA4BA700A4AC7D /* LaunchScreen.storyboard */; };
+		A1BCCC0D20AB2ABF00A4AC7D /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC0C20AB2ABF00A4AC7D /* Player.swift */; };
+		A1BCCC0F20AB2ACC00A4AC7D /* Round.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC0E20AB2ACC00A4AC7D /* Round.swift */; };
+		A1BCCC1120AB2B3900A4AC7D /* Timeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC1020AB2B3900A4AC7D /* Timeline.swift */; };
+		A1BCCC1320AB2B3F00A4AC7D /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC1220AB2B3F00A4AC7D /* Game.swift */; };
+		A1BCCC1620AB2B6F00A4AC7D /* MCController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC1520AB2B6F00A4AC7D /* MCController.swift */; };
+		A1BCCC1820AB2B7700A4AC7D /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC1720AB2B7700A4AC7D /* NetworkController.swift */; };
+		A1BCCC1B20AB2B9C00A4AC7D /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC1A20AB2B9C00A4AC7D /* GameController.swift */; };
+		A1BCCC1F20AB2BBA00A4AC7D /* PlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC1E20AB2BBA00A4AC7D /* PlayerController.swift */; };
+		A1BCCC2120AB2BC400A4AC7D /* RoundController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC2020AB2BC400A4AC7D /* RoundController.swift */; };
+		A1BCCC2320AB2BCF00A4AC7D /* TimelineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC2220AB2BCF00A4AC7D /* TimelineController.swift */; };
+		A1BCCC2620AB2BF900A4AC7D /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC2520AB2BF900A4AC7D /* RegisterViewController.swift */; };
+		A1BCCC2820AB2C0000A4AC7D /* SetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC2720AB2C0000A4AC7D /* SetupViewController.swift */; };
+		A1BCCC2A20AB2C0900A4AC7D /* TopicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC2920AB2C0900A4AC7D /* TopicViewController.swift */; };
+		A1BCCC2C20AB2C1000A4AC7D /* CanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC2B20AB2C1000A4AC7D /* CanvasViewController.swift */; };
+		A1BCCC2E20AB2C2000A4AC7D /* GuessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC2D20AB2C2000A4AC7D /* GuessViewController.swift */; };
+		A1BCCC3020AB2C2D00A4AC7D /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC2F20AB2C2D00A4AC7D /* ResultsViewController.swift */; };
+		A1BCCC3420AB2D1200A4AC7D /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC3320AB2D1200A4AC7D /* WelcomeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A1BCCBF720AA4BA600A4AC7D /* btgame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = btgame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1BCCBFA20AA4BA600A4AC7D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A1BCCBFC20AA4BA600A4AC7D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		A1BCCBFF20AA4BA600A4AC7D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A1BCCC0120AA4BA700A4AC7D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A1BCCC0420AA4BA700A4AC7D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A1BCCC0620AA4BA700A4AC7D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A1BCCC0C20AB2ABF00A4AC7D /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		A1BCCC0E20AB2ACC00A4AC7D /* Round.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Round.swift; sourceTree = "<group>"; };
+		A1BCCC1020AB2B3900A4AC7D /* Timeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timeline.swift; sourceTree = "<group>"; };
+		A1BCCC1220AB2B3F00A4AC7D /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		A1BCCC1520AB2B6F00A4AC7D /* MCController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCController.swift; sourceTree = "<group>"; };
+		A1BCCC1720AB2B7700A4AC7D /* NetworkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
+		A1BCCC1A20AB2B9C00A4AC7D /* GameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
+		A1BCCC1E20AB2BBA00A4AC7D /* PlayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerController.swift; sourceTree = "<group>"; };
+		A1BCCC2020AB2BC400A4AC7D /* RoundController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundController.swift; sourceTree = "<group>"; };
+		A1BCCC2220AB2BCF00A4AC7D /* TimelineController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineController.swift; sourceTree = "<group>"; };
+		A1BCCC2520AB2BF900A4AC7D /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		A1BCCC2720AB2C0000A4AC7D /* SetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewController.swift; sourceTree = "<group>"; };
+		A1BCCC2920AB2C0900A4AC7D /* TopicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicViewController.swift; sourceTree = "<group>"; };
+		A1BCCC2B20AB2C1000A4AC7D /* CanvasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewController.swift; sourceTree = "<group>"; };
+		A1BCCC2D20AB2C2000A4AC7D /* GuessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuessViewController.swift; sourceTree = "<group>"; };
+		A1BCCC2F20AB2C2D00A4AC7D /* ResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
+		A1BCCC3320AB2D1200A4AC7D /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +84,69 @@
 		A1BCCBF920AA4BA600A4AC7D /* btgame */ = {
 			isa = PBXGroup;
 			children = (
+				A1BCCC1420AB2B5C00A4AC7D /* Models */,
+				A1BCCC2420AB2BD700A4AC7D /* ModelControllers */,
+				A1BCCC3120AB2C3A00A4AC7D /* ViewControllers */,
+				A1BCCC1920AB2B7F00A4AC7D /* SpecialControllers */,
+				A1BCCC3220AB2CA300A4AC7D /* Resources */,
+			);
+			path = btgame;
+			sourceTree = "<group>";
+		};
+		A1BCCC1420AB2B5C00A4AC7D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A1BCCC0C20AB2ABF00A4AC7D /* Player.swift */,
+				A1BCCC0E20AB2ACC00A4AC7D /* Round.swift */,
+				A1BCCC1020AB2B3900A4AC7D /* Timeline.swift */,
+				A1BCCC1220AB2B3F00A4AC7D /* Game.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A1BCCC1920AB2B7F00A4AC7D /* SpecialControllers */ = {
+			isa = PBXGroup;
+			children = (
+				A1BCCC1520AB2B6F00A4AC7D /* MCController.swift */,
+				A1BCCC1720AB2B7700A4AC7D /* NetworkController.swift */,
+			);
+			path = SpecialControllers;
+			sourceTree = "<group>";
+		};
+		A1BCCC2420AB2BD700A4AC7D /* ModelControllers */ = {
+			isa = PBXGroup;
+			children = (
+				A1BCCC1A20AB2B9C00A4AC7D /* GameController.swift */,
+				A1BCCC1E20AB2BBA00A4AC7D /* PlayerController.swift */,
+				A1BCCC2020AB2BC400A4AC7D /* RoundController.swift */,
+				A1BCCC2220AB2BCF00A4AC7D /* TimelineController.swift */,
+			);
+			path = ModelControllers;
+			sourceTree = "<group>";
+		};
+		A1BCCC3120AB2C3A00A4AC7D /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				A1BCCC3320AB2D1200A4AC7D /* WelcomeViewController.swift */,
+				A1BCCC2520AB2BF900A4AC7D /* RegisterViewController.swift */,
+				A1BCCC2720AB2C0000A4AC7D /* SetupViewController.swift */,
+				A1BCCC2920AB2C0900A4AC7D /* TopicViewController.swift */,
+				A1BCCC2B20AB2C1000A4AC7D /* CanvasViewController.swift */,
+				A1BCCC2D20AB2C2000A4AC7D /* GuessViewController.swift */,
+				A1BCCC2F20AB2C2D00A4AC7D /* ResultsViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		A1BCCC3220AB2CA300A4AC7D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
 				A1BCCBFA20AA4BA600A4AC7D /* AppDelegate.swift */,
-				A1BCCBFC20AA4BA600A4AC7D /* ViewController.swift */,
-				A1BCCBFE20AA4BA600A4AC7D /* Main.storyboard */,
 				A1BCCC0120AA4BA700A4AC7D /* Assets.xcassets */,
 				A1BCCC0320AA4BA700A4AC7D /* LaunchScreen.storyboard */,
 				A1BCCC0620AA4BA700A4AC7D /* Info.plist */,
 			);
-			path = btgame;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -124,7 +209,6 @@
 			files = (
 				A1BCCC0520AA4BA700A4AC7D /* LaunchScreen.storyboard in Resources */,
 				A1BCCC0220AA4BA700A4AC7D /* Assets.xcassets in Resources */,
-				A1BCCC0020AA4BA600A4AC7D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,7 +219,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1BCCBFD20AA4BA600A4AC7D /* ViewController.swift in Sources */,
+				A1BCCC1120AB2B3900A4AC7D /* Timeline.swift in Sources */,
+				A1BCCC2320AB2BCF00A4AC7D /* TimelineController.swift in Sources */,
+				A1BCCC1620AB2B6F00A4AC7D /* MCController.swift in Sources */,
+				A1BCCC2620AB2BF900A4AC7D /* RegisterViewController.swift in Sources */,
+				A1BCCC2120AB2BC400A4AC7D /* RoundController.swift in Sources */,
+				A1BCCC1F20AB2BBA00A4AC7D /* PlayerController.swift in Sources */,
+				A1BCCC2A20AB2C0900A4AC7D /* TopicViewController.swift in Sources */,
+				A1BCCC3020AB2C2D00A4AC7D /* ResultsViewController.swift in Sources */,
+				A1BCCC1320AB2B3F00A4AC7D /* Game.swift in Sources */,
+				A1BCCC3420AB2D1200A4AC7D /* WelcomeViewController.swift in Sources */,
+				A1BCCC0D20AB2ABF00A4AC7D /* Player.swift in Sources */,
+				A1BCCC0F20AB2ACC00A4AC7D /* Round.swift in Sources */,
+				A1BCCC2E20AB2C2000A4AC7D /* GuessViewController.swift in Sources */,
+				A1BCCC1B20AB2B9C00A4AC7D /* GameController.swift in Sources */,
+				A1BCCC1820AB2B7700A4AC7D /* NetworkController.swift in Sources */,
+				A1BCCC2820AB2C0000A4AC7D /* SetupViewController.swift in Sources */,
+				A1BCCC2C20AB2C1000A4AC7D /* CanvasViewController.swift in Sources */,
 				A1BCCBFB20AA4BA600A4AC7D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -143,14 +243,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		A1BCCBFE20AA4BA600A4AC7D /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A1BCCBFF20AA4BA600A4AC7D /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		A1BCCC0320AA4BA700A4AC7D /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
