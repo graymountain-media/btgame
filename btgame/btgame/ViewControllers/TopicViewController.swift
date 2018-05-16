@@ -41,6 +41,7 @@ class TopicViewController: UIViewController {
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         button.layer.cornerRadius = 15
         button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(firstChoiceButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -97,10 +98,10 @@ class TopicViewController: UIViewController {
     
     func setupContainerView() {
         
-        containerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        containerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        containerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        containerView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
+        containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        containerView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
         
         containerView.addSubview(chooseTopicBelowLabel)
         containerView.addSubview(firstChoiceButton)
@@ -167,6 +168,12 @@ class TopicViewController: UIViewController {
                                  paddingRight: 0,
                                  width: 150,
                                  height: 0)
+    }
+    
+    @objc func firstChoiceButtonTapped() {
+        let resultsViewController = ResultsViewController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(resultsViewController, animated: true)
+        
     }
     
 }
