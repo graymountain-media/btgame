@@ -92,10 +92,6 @@ extension SetupViewController: MCBrowserViewControllerDelegate {
     func browserViewControllerWasCancelled(_ browserViewController: MCBrowserViewController) {
         dismiss(animated: true, completion: nil)
         //checks the status of bluetooth enum cases are: poweredOff, poweredOn, resetting, unauthorized, unknown, unsupported
-        if cbManager.state == .poweredOn {
-            print("Bluetooth on")
-        } else {
-            turnOnBluetooth()
-        }
+        navigationController?.popViewController(animated: true)
     }
 }
