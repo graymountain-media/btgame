@@ -15,7 +15,7 @@ class WelcomeViewController: UIViewController {
         let view = UIView()
         view.backgroundColor = UIColor.white
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 25
+//        view.layer.cornerRadius = 25
         view.layer.masksToBounds = true
         return view
     }()
