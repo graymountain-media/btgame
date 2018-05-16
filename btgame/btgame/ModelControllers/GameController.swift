@@ -29,6 +29,7 @@ class GameController {
         let timelines = createTimelines(forPlayers: players)
         currentGame = Game(players: players, timeLines: timelines)
         getTopics()
+        time = currentGame.timeLimit
     }
     
     func endRound(forPlayer player: Player, withImage image: UIImage?, guess: String?, timeline: Timeline) {
