@@ -10,6 +10,8 @@ import UIKit
 
 class SetupViewController: UIViewController {
 
+    var displayName: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
