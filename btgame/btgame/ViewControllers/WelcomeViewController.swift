@@ -22,10 +22,10 @@ class WelcomeViewController: UIViewController {
     
     let welcomeLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(Constants.welcome) \(Constants.to) \(Constants.gameName)"
-        label.textColor = UIColor.white
+        label.text = "\(Constants.gameName)"
+        label.textColor = UIColor.black
         label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 28)
+        label.font = UIFont.boldSystemFont(ofSize: 50)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -44,25 +44,27 @@ class WelcomeViewController: UIViewController {
     
     let hostButton: UIButton = {
         let button = UIButton(type: .system)
-//        button.backgroundColor = UIColor(r: 20, g: 150, b: 220)
+        button.backgroundColor = UIColor.black
         button.setTitle("\(Constants.host)", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(UIColor.white, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 40)
         button.layer.cornerRadius = 15
         button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(hostButtonTapped), for: .touchUpInside)
         return button
     }()
     
     let joinButton: UIButton = {
         let button = UIButton(type: .system)
-//       button.backgroundColor = UIColor(r: 20, g: 150, b: 220)
+        button.backgroundColor = UIColor.black
         button.setTitle("\(Constants.join)", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(UIColor.white, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 40)
         button.layer.cornerRadius = 15
         button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(joinButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -70,8 +72,8 @@ class WelcomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor.black
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        view.backgroundColor = UIColor.blue
+//        self.navigationController?.setNavigationBarHidden(true, animated: true)
         
         // Views
         view.addSubview(containerView)
@@ -85,18 +87,61 @@ class WelcomeViewController: UIViewController {
     
     func setupContainerView() {
         
-        containerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        containerView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        containerView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        containerView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        containerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        containerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        containerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         
         containerView.addSubview(welcomeLabel)
+        containerView.addSubview(hostButton)
+        containerView.addSubview(joinButton)
         
-        welcomeLabel.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 12).isActive = true
-        welcomeLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 20).isActive = true
-        welcomeLabel.widthAnchor.constraint(equalTo: containerView.widthAnchor, constant: 20).isActive = true
-        welcomeLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        welcomeLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
+        welcomeLabel.anchor(top: containerView.topAnchor,
+                            left: nil,
+                            bottom: nil,
+                            right: nil,
+                            paddingTop: 75,
+                            paddingLeft: 0,
+                            paddingBottom: 0,
+                            paddingRight: 0,
+                            width: 0,
+                            height: 0)
         
+        hostButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
+        hostButton.anchor(top: welcomeLabel.bottomAnchor,
+                          left: nil,
+                          bottom: nil,
+                          right: nil,
+                          paddingTop: 150,
+                          paddingLeft: 0,
+                          paddingBottom: 0,
+                          paddingRight: 0,
+                          width: 150,
+                          height: 0)
+        
+        joinButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
+        joinButton.anchor(top: hostButton.bottomAnchor,
+                          left: nil,
+                          bottom: nil,
+                          right: nil,
+                          paddingTop: 20,
+                          paddingLeft: 0,
+                          paddingBottom: 0,
+                          paddingRight: 0,
+                          width: 150,
+                          height: 0)
+    }
+    
+    @objc func hostButtonTapped() {
+        let registerViewController = RegisterViewController()
+        navigationController?.pushViewController(registerViewController, animated: true)
+    }
+    
+    @objc func joinButtonTapped() {
+        
+       let registeredViewController = RegisterViewController()
+        navigationController?.pushViewController(registeredViewController, animated: true)
     }
     
 
