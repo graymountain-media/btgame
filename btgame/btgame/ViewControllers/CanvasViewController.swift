@@ -9,40 +9,47 @@
 import UIKit
 
 class CanvasViewController: UIViewController {
-    
     var path = UIBezierPath()
     var startPoint = CGPoint()
     var touchPoint = CGPoint()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        canvasView.clipsToBounds = true
         canvasView.isMultipleTouchEnabled = false
         
         //        self.view.addSubview(viewContainer)
-        self.view.addSubview(canvasView)
-        self.view.addSubview(topicLabel)
+        //        self.view.addSubview(canvasView)
+        //        self.view.addSubview(topicLabel)
+        self.view.addBackground()
     }
-    //        let viewContainer: UIView = {
-    //            let vc = UIView()
-    //            vc.frame = CGRect(x: 0, y: 0, width: 450, height: 700)
-    //            vc.backgroundColor = .red
-    //            return vc
-    //        }()
-    //
-    let topicLabel: UILabel = {
+    
+    //    lazy var viewContainer: UIView = {
+    //        let vc = UIView()
+    //        vc.frame = CGRect(x: 0, y: 0, width: self.view.frame.width/1, height: self.view.frame.height/1)
+    //        vc.
+    //        return vc
+    //    }()
+    
+    lazy var topicLabel: UILabel = {
         let lbl = UILabel()
-        lbl.frame = (frame: CGRect(x: 100, y: 50, width: , height: 50))
-        lbl.text = "Print Topic Here"
+        lbl.frame = CGRect(x: self.view.frame.width/4, y: self.view.frame.height/8, width: self.view.frame.width/2, height: self.view.frame.height/16)
+        lbl.backgroundColor = .white
+        lbl.layer.cornerRadius = 15.0
+        lbl.text = "Topic goes here"
+        lbl.textAlignment = .center
+        lbl.textColor = .red
+        
         return lbl
     }()
     
-    let canvasView: UIView = {
+    lazy var canvasView: UIView = {
         let cv = UIView()
-        cv.frame = CGRect(x: 0, y: 150, width: 450, height: 400)
+        cv.frame = CGRect(x: 0, y: self.view.frame.height/4, width: self.view.frame.width/1, height: self.view.frame.height/2)
         cv.backgroundColor = .white
         return cv
     }()
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
         if let point = touch?.location(in: canvasView) {
@@ -72,15 +79,18 @@ class CanvasViewController: UIViewController {
     }
 }
 
-
-//    var lastPoint = CGPoint.zeroPoint
-//    var red: CGFloat = 0.0
-//    var green: CGFloat = 0.0
-//    var blue: CGFloat = 0.0
-//    var brushWidth: CGFloat = 10.0
-//    var opacity: CGFloat = 1.0
-//    var swiped = false
-    
+extension UIView {
+    func addBackground() {
+        let width = self.frame.width/1
+        let height = self.frame.height/1
+        let imageViewBackground = UIImageView(frame: CGRect(x: 0, y: 0, width: width, height: height))
+        imageViewBackground.image = UIImage(named: "palette")
+        imageViewBackground.contentMode = UIViewContentMode.scaleAspectFill
+        
+        self.addSubview(imageViewBackground)
+        self.sendSubview(toBack: imageViewBackground)
+    }
+}
     
     /*
     // MARK: - Navigation
