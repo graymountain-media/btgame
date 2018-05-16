@@ -23,5 +23,6 @@ struct Constants {
     static let enterUsernamePlaceholderText = "Enter username here..."
     static let pickOneBelowToDraw = "Pick one below to draw"
     
-    
+    //Custom Cell Identifiers
+    static let playerCellIdentifier = "PlayerCell"
 }
