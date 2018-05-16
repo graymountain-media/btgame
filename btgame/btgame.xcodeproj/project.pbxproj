@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3BD076B620AB384900BA7C43 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD076B520AB384900BA7C43 /* Constants.swift */; };
 		3BD076B820AB389F00BA7C43 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD076B720AB389F00BA7C43 /* Extensions.swift */; };
+		A107EFC820ACD60E00EFBC59 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A107EFC720ACD60E00EFBC59 /* DataManager.swift */; };
 		A1BCCBFB20AA4BA600A4AC7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCBFA20AA4BA600A4AC7D /* AppDelegate.swift */; };
 		A1BCCC0220AA4BA700A4AC7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1BCCC0120AA4BA700A4AC7D /* Assets.xcassets */; };
 		A1BCCC0520AA4BA700A4AC7D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1BCCC0320AA4BA700A4AC7D /* LaunchScreen.storyboard */; };
@@ -35,6 +36,7 @@
 /* Begin PBXFileReference section */
 		3BD076B520AB384900BA7C43 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3BD076B720AB389F00BA7C43 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		A107EFC720ACD60E00EFBC59 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		A1BCCBF720AA4BA600A4AC7D /* btgame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = btgame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1BCCBFA20AA4BA600A4AC7D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A1BCCC0120AA4BA700A4AC7D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 			children = (
 				A1BCCC1520AB2B6F00A4AC7D /* MCController.swift */,
 				A1BCCC1720AB2B7700A4AC7D /* NetworkController.swift */,
+				A107EFC720ACD60E00EFBC59 /* DataManager.swift */,
 			);
 			path = SpecialControllers;
 			sourceTree = "<group>";
@@ -247,6 +250,7 @@
 				3BD076B820AB389F00BA7C43 /* Extensions.swift in Sources */,
 				A1BCCC1820AB2B7700A4AC7D /* NetworkController.swift in Sources */,
 				A1BCCC2820AB2C0000A4AC7D /* SetupViewController.swift in Sources */,
+				A107EFC820ACD60E00EFBC59 /* DataManager.swift in Sources */,
 				A1BCCC2C20AB2C1000A4AC7D /* CanvasViewController.swift in Sources */,
 				A1BCCBFB20AA4BA600A4AC7D /* AppDelegate.swift in Sources */,
 			);
@@ -385,7 +389,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9KP8U9QDYN;
+				DEVELOPMENT_TEAM = 6K47ASRSPN;
 				INFOPLIST_FILE = "$(SRCROOT)/btgame/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -403,7 +407,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9KP8U9QDYN;
+				DEVELOPMENT_TEAM = 6K47ASRSPN;
 				INFOPLIST_FILE = "$(SRCROOT)/btgame/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

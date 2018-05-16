@@ -135,15 +135,15 @@ class WelcomeViewController: UIViewController {
     
     @objc func hostButtonTapped() {
         let registerViewController = RegisterViewController()
-        MCController.shared.isAdvertiser = true
+        registerViewController.isAdvertiser = true
         navigationController?.pushViewController(registerViewController, animated: true)
     }
     
     @objc func joinButtonTapped() {
-        let registeredViewController = RegisterViewController()
-        MCController.shared.isAdvertiser = false
+        let registerViewController = RegisterViewController()
+        registerViewController.isAdvertiser = false
 
-        navigationController?.pushViewController(registeredViewController, animated: true)
+        navigationController?.pushViewController(registerViewController, animated: true)
     }
 
 }

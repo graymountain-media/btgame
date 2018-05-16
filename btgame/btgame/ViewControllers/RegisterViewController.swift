@@ -10,6 +10,7 @@ import UIKit
 
 class RegisterViewController: UIViewController {
     
+    var isAdvertiser: Bool = false
     let containerView: UIView = {
         
         let view = UIView()
@@ -127,7 +128,10 @@ class RegisterViewController: UIViewController {
             print("No name entered")
             return
         }
+        print("REGISTER NAME: \(name)")
         MCController.shared.displayName = name
+        MCController.shared.isAdvertiser = self.isAdvertiser
+        MCController.shared.setupMC()
         let destinationVC = SetupViewController()
         navigationController?.pushViewController(destinationVC, animated: true)
         
