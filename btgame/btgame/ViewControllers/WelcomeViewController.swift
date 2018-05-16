@@ -135,24 +135,15 @@ class WelcomeViewController: UIViewController {
     
     @objc func hostButtonTapped() {
         let registerViewController = RegisterViewController()
+        MCController.shared.isAdvertiser = true
         navigationController?.pushViewController(registerViewController, animated: true)
     }
     
     @objc func joinButtonTapped() {
-        
-       let registeredViewController = RegisterViewController()
+        let registeredViewController = RegisterViewController()
+        MCController.shared.isAdvertiser = false
+
         navigationController?.pushViewController(registeredViewController, animated: true)
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

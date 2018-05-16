@@ -123,8 +123,12 @@ class RegisterViewController: UIViewController {
     }
     
     @objc func submitButtonTapped() {
-        let destinationVC = TopicViewController()
-        destinationVC.displayName = playerNameTextField.text
+        guard let name = playerNameTextField.text, !name.isEmpty else {
+            print("No name entered")
+            return
+        }
+        MCController.shared.displayName = name
+        let destinationVC = SetupViewController()
         navigationController?.pushViewController(destinationVC, animated: true)
         
     }
