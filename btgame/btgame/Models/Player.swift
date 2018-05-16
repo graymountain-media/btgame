@@ -9,22 +9,29 @@
 import Foundation
 import MultipeerConnectivity
 
-class Player {
+class Player: Codable, Hashable {
+    var uid: Int
     let displayName: String
-    let id: MCPeerID
     let isAdvertiser: Bool
     var possibleTopics: [String]
+    var hashValue: Int {
+        return self.uid
+    }
     
     init(displayName: String, id: MCPeerID, isAdvertiser: Bool) {
         self.displayName = displayName
-        self.id = id
         self.isAdvertiser = isAdvertiser
         self.possibleTopics = []
+        self.uid = Int(arc4random_uniform(UInt32(1000000)))
+    }
+    
+    func asDict() -> [String: Player]{
+        return ["player": self]
     }
 }
 
 extension Player: Equatable {
     static func == (lhs: Player, rhs: Player) -> Bool {
-        return (lhs.displayName == rhs.displayName && lhs.id == rhs.id && lhs.isAdvertiser == rhs.isAdvertiser)
+        return (lhs.displayName == rhs.displayName && lhs.isAdvertiser == rhs.isAdvertiser)
     }
 }

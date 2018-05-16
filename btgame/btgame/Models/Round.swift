@@ -8,15 +8,15 @@
 
 import UIKit
 
-class Round {
+class Round: Codable {
     let owner: Player
-    var image: UIImage?
+    var imageData: Data?
     var guess: String?
     var isImage: Bool
     
     init(owner: Player, image: UIImage? = nil, guess: String? = nil, isImage: Bool = false) {
         self.owner = owner
-        self.image = image
+        self.imageData = image == nil ? nil : UIImagePNGRepresentation(image!)
         self.guess = guess
         self.isImage = isImage
     }
@@ -24,6 +24,6 @@ class Round {
 
 extension Round: Equatable {
     static func == (lhs: Round, rhs: Round) -> Bool {
-        return (lhs.owner == rhs.owner && lhs.image == rhs.image && lhs.guess == rhs.guess && lhs.isImage == rhs.isImage)
+        return (lhs.owner == rhs.owner && lhs.imageData == rhs.imageData && lhs.guess == rhs.guess && lhs.isImage == rhs.isImage)
     }
 }

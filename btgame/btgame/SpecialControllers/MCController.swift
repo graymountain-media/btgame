@@ -31,9 +31,16 @@ class MCController: NSObject, MCSessionDelegate {
     var browser: MCBrowserViewController!
     var advertiser: MCNearbyServiceAdvertiser?
     var advertiserAssistant: MCAdvertiserAssistant?
-    var currentGamePeers = [MCPeerID]() {
-        didSet{
-            print("********PEER ARRAY: \(currentGamePeers)")
+    var currentGamePeers = [MCPeerID]()
+    var playerArray: [Player] = [] {
+        didSet {
+            let array = playerArray.compactMap({$0.displayName})
+            print(array)
+        }
+    }
+    var peerIDDict: [Player:MCPeerID] = [:] {
+        didSet {
+            print(peerIDDict)
         }
     }
     
@@ -57,6 +64,14 @@ class MCController: NSObject, MCSessionDelegate {
         //login on welcomeview option
         browser = MCBrowserViewController(serviceType: Constants.serviceType, session: session)
         advertiserAssistant = MCAdvertiserAssistant(serviceType: Constants.serviceType, discoveryInfo: nil, session: session)
+        
+        createPlayer()
+    }
+    
+    fileprivate func createPlayer() {
+        guard let name = displayName else {return}
+        let newPlayer = PlayerController.create(displayName: name, id: peerID, isAdvertiser: isAdvertiser)
+        playerArray.append(newPlayer)
     }
     
     
@@ -68,11 +83,16 @@ class MCController: NSObject, MCSessionDelegate {
             print("Connected to session")
             currentGamePeers.append(peerID)
             delegate?.playerJoinedSession()
-            do {
-              
-            } catch {
-                
+            if isAdvertiser {
+                do {
+                    guard let data = DataManager.shared.encodePlayer(player: playerArray[0]) else {return}
+                    
+                    try session.send(data, toPeers: [peerID], with: .reliable)
+                } catch let e{
+                    print("Error sending advertiser player object: \(e)")
+                }
             }
+            
             
         case MCSessionState.connecting:
             print("Connecting to session")
@@ -84,6 +104,22 @@ class MCController: NSObject, MCSessionDelegate {
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         // turn data to person object
+        
+        
+        
+        
+        guard let player = DataManager.shared.decodePlayer(from: data) else { return }
+        playerArray.append(player)
+        peerIDDict[player] = peerID
+        
+        if !isAdvertiser {
+            do {
+                guard let data = DataManager.shared.encodePlayer(player: playerArray[0]) else {return}
+                try session.send(data, toPeers: [peerID], with: .reliable)
+            } catch let e {
+                print("Error sending self to advertiser: \(e)")
+            }
+        }
     }
     
     func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
