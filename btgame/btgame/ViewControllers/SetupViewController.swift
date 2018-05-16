@@ -15,7 +15,7 @@ class SetupViewController: UIViewController {
     
     
     let cbManager = CBCentralManager()
-    var startPlayerCounter = 0
+    var doneButtonTappedCounter = 0
     
     let tableView: UITableView = {
         let view = UITableView()
@@ -107,12 +107,20 @@ extension SetupViewController: MCBrowserViewControllerDelegate {
         tableView.reloadData()
         print("Done pressed")
         startButtonStatus()
+        let counterDict = ["counter" : 1]
+        do {
+            guard let data = DataManager.shared.encodeCounter(dict: counterDict) else {return}
+            try MCController.shared.session.send(data, toPeers: [MCController.shared.peerIDDict[MCController.shared.playerArray[1]]!], with: .reliable)
+        } catch let e {
+            print("Error sending count: \(e)")
+        }
+        
     }
     
     fileprivate func startButtonStatus(){
-        startPlayerCounter += 1
-        print(startPlayerCounter)
-        if startPlayerCounter >= (MCController.shared.currentGamePeers.count - 1) {
+        doneButtonTappedCounter += 1
+        print(doneButtonTappedCounter)
+        if doneButtonTappedCounter >= (MCController.shared.currentGamePeers.count - 1) {
             startButton.isEnabled = true
         }else {
             startButton.isEnabled = false

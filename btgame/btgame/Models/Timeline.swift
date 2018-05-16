@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Timeline {
+class Timeline: Codable {
     var owner: Player
     var rounds: [Round]
     
