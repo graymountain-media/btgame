@@ -12,9 +12,9 @@ import UIKit
 import MultipeerConnectivity
 import CoreBluetooth
 
-//protocol MCControllerDelegate {
-//    func playerJoinedSession()
-//}
+protocol MCControllerDelegate {
+    func playerJoinedSession()
+}
 
 class MCController: NSObject, MCSessionDelegate {
     
@@ -25,19 +25,28 @@ class MCController: NSObject, MCSessionDelegate {
     
     var isAdvertiser = false
     var displayName: String?
-//    var delegate: MCControllerDelegate?
+    var delegate: MCControllerDelegate?
     var session: MCSession!
     var peerID: MCPeerID!
     var browser: MCBrowserViewController!
-    var advertiser: MCNearbyServiceAdvertiser!
-    var advertiserAssistant: MCAdvertiserAssistant!
-    var currentGamePeers = [MCPeerID]()
+    var advertiser: MCNearbyServiceAdvertiser?
+    var advertiserAssistant: MCAdvertiserAssistant?
+    var currentGamePeers = [MCPeerID]() {
+        didSet{
+            print("********PEER ARRAY: \(currentGamePeers)")
+        }
+    }
     
     // MARK: - Manager Initializer
     override init() {
         super.init()
-        
-        peerID = MCPeerID(displayName: UIDevice.current.name)
+    }
+    
+    func setupMC(){
+        guard let name = displayName else {
+            return
+        }
+        peerID = MCPeerID(displayName: name)
         
         // May need to change
         session = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .required)
@@ -46,8 +55,8 @@ class MCController: NSObject, MCSessionDelegate {
         currentGamePeers.append(peerID)
         
         //login on welcomeview option
-        browser = MCBrowserViewController(serviceType: "BoardBuddy", session: session)
-        advertiserAssistant = MCAdvertiserAssistant(serviceType: "BoardBuddy", discoveryInfo: nil, session: session)
+        browser = MCBrowserViewController(serviceType: Constants.serviceType, session: session)
+        advertiserAssistant = MCAdvertiserAssistant(serviceType: Constants.serviceType, discoveryInfo: nil, session: session)
     }
     
     
@@ -58,7 +67,12 @@ class MCController: NSObject, MCSessionDelegate {
         case MCSessionState.connected:
             print("Connected to session")
             currentGamePeers.append(peerID)
-//            delegate?.playerJoinedSession()
+            delegate?.playerJoinedSession()
+            do {
+              
+            } catch {
+                
+            }
             
         case MCSessionState.connecting:
             print("Connecting to session")
