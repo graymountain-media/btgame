@@ -10,12 +10,14 @@ import UIKit
 
 class TopicViewController: UIViewController {
     
+    var displayName: String?
+    
     let containerView: UIView = {
         
         let view = UIView()
         view.backgroundColor = UIColor.white
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 25
+//        view.layer.cornerRadius = 25
         view.layer.masksToBounds = true
         return view
     }()
@@ -25,52 +27,58 @@ class TopicViewController: UIViewController {
         label.text = "Choose one below"
         label.textColor = UIColor.black
         label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 50)
+        label.font = UIFont.boldSystemFont(ofSize: 35)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let firstChoiceLabel: UILabel = {
-        let label = UILabel()
-        label.text = "***API***"
-        label.textColor = UIColor.black
-        label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 25)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    let firstChoiceButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = UIColor.black
+        button.setTitle("Topic", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.layer.cornerRadius = 15
+        button.layer.masksToBounds = true
+        return button
     }()
     
-    let secondChoiceLabel: UILabel = {
-        let label = UILabel()
-        label.text = "***API***"
-        label.textColor = UIColor.black
-        label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 25)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    let secondChoiceButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = UIColor.black
+        button.setTitle("Topic", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.layer.cornerRadius = 15
+        button.layer.masksToBounds = true
+        return button
     }()
     
-    let thirdChoiceLabel: UILabel = {
-        let label = UILabel()
-        label.text = "***API***"
-        label.textColor = UIColor.black
-        label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 25)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    let thirdChoiceButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = UIColor.black
+        button.setTitle("Topic", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.layer.cornerRadius = 15
+        button.layer.masksToBounds = true
+        return button
     }()
     
-    let fourthChoiceLabel: UILabel = {
-        let label = UILabel()
-        label.text = "***API***"
-        label.textColor = UIColor.black
-        label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 25)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    let fourthChoiceButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = UIColor.black
+        button.setTitle("Topic", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.layer.cornerRadius = 15
+        button.layer.masksToBounds = true
+        return button
     }()
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,37 +103,37 @@ class TopicViewController: UIViewController {
         containerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         
         containerView.addSubview(chooseTopicBelowLabel)
-        containerView.addSubview(firstChoiceLabel)
-        containerView.addSubview(secondChoiceLabel)
-        containerView.addSubview(thirdChoiceLabel)
-        containerView.addSubview(fourthChoiceLabel)
+        containerView.addSubview(firstChoiceButton)
+        containerView.addSubview(secondChoiceButton)
+        containerView.addSubview(thirdChoiceButton)
+        containerView.addSubview(fourthChoiceButton)
         
         chooseTopicBelowLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
         chooseTopicBelowLabel.anchor(top: containerView.topAnchor,
                             left: nil,
                             bottom: nil,
                             right: nil,
-                            paddingTop: 75,
+                            paddingTop: 100,
                             paddingLeft: 0,
                             paddingBottom: 0,
                             paddingRight: 0,
                             width: 0,
                             height: 0)
         
-        firstChoiceLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-        firstChoiceLabel.anchor(top: chooseTopicBelowLabel.bottomAnchor,
+        firstChoiceButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
+        firstChoiceButton.anchor(top: chooseTopicBelowLabel.bottomAnchor,
                           left: nil,
                           bottom: nil,
                           right: nil,
-                          paddingTop: 150,
+                          paddingTop: 100,
                           paddingLeft: 0,
                           paddingBottom: 0,
                           paddingRight: 0,
                           width: 150,
                           height: 0)
         
-        secondChoiceLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-        secondChoiceLabel.anchor(top: firstChoiceLabel.bottomAnchor,
+        secondChoiceButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
+        secondChoiceButton.anchor(top: firstChoiceButton.bottomAnchor,
                           left: nil,
                           bottom: nil,
                           right: nil,
@@ -136,8 +144,8 @@ class TopicViewController: UIViewController {
                           width: 150,
                           height: 0)
         
-        thirdChoiceLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-        thirdChoiceLabel.anchor(top: secondChoiceLabel.bottomAnchor,
+        thirdChoiceButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
+        thirdChoiceButton.anchor(top: secondChoiceButton.bottomAnchor,
                                  left: nil,
                                  bottom: nil,
                                  right: nil,
@@ -148,8 +156,8 @@ class TopicViewController: UIViewController {
                                  width: 150,
                                  height: 0)
         
-        fourthChoiceLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-        fourthChoiceLabel.anchor(top: thirdChoiceLabel.bottomAnchor,
+        fourthChoiceButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
+        fourthChoiceButton.anchor(top: thirdChoiceButton.bottomAnchor,
                                  left: nil,
                                  bottom: nil,
                                  right: nil,

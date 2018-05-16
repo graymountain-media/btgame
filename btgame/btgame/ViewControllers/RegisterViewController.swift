@@ -15,7 +15,7 @@ class RegisterViewController: UIViewController {
         let view = UIView()
         view.backgroundColor = UIColor.white
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 25
+//        view.layer.cornerRadius = 25
         view.layer.masksToBounds = true
         return view
     }()
@@ -123,7 +123,7 @@ class RegisterViewController: UIViewController {
     }
     
     @objc func submitButtonTapped() {
-        let destinationVC = SetupViewController()
+        let destinationVC = TopicViewController()
         destinationVC.displayName = playerNameTextField.text
         navigationController?.pushViewController(destinationVC, animated: true)
         
