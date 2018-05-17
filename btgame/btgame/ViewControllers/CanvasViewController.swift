@@ -78,7 +78,7 @@ extension UIView {
         let width = self.frame.width/1
         let height = self.frame.height/1
         let imageViewBackground = UIImageView(frame: CGRect(x: 0, y: 0, width: width, height: height))
-        imageViewBackground.image = UIImage(named: "palette")
+        imageViewBackground.image = UIImage(named: "Background")
         imageViewBackground.contentMode = UIViewContentMode.scaleAspectFill
         
         self.addSubview(imageViewBackground)
