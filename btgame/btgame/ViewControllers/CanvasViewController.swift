@@ -18,9 +18,8 @@ class CanvasViewController: UIViewController {
         canvasView.clipsToBounds = true
         canvasView.isMultipleTouchEnabled = false
         
-        //        self.view.addSubview(viewContainer)
-        //        self.view.addSubview(canvasView)
-        //        self.view.addSubview(topicLabel)
+        self.view.addSubview(canvasView)
+        self.view.addSubview(topicLabel)
         self.view.addBackground()
     }
     
@@ -29,7 +28,7 @@ class CanvasViewController: UIViewController {
         lbl.frame = CGRect(x: self.view.frame.width/4, y: self.view.frame.height/8, width: self.view.frame.width/2, height: self.view.frame.height/16)
         lbl.backgroundColor = .white
         lbl.layer.cornerRadius = 15.0
-        lbl.text = "Topic goes here"
+        lbl.text = "selectedTopic"
         lbl.textAlignment = .center
         lbl.textColor = .red
         
