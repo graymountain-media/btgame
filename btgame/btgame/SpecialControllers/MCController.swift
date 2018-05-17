@@ -157,5 +157,21 @@ class MCController: NSObject, MCSessionDelegate {
         // Nothing to do here
     }
     
-    
+    func sendEvent(event: Event, timeline: Timeline, toPeers peer: MCPeerID) {
+        
+        guard let eventData = event.rawValue.data(using: .utf8),
+            let timelineData = DataManager.shared.encodeTimeline(timeline: timeline) else {return}
+        
+        var eventObject: [String: Data] = ["event": eventData]
+        eventObject["timeline"] = timelineData
+        
+        guard let eventObjectData = DataManager.shared.encodeEventObject(eventObject: eventObject) else {return}
+        
+        let data = NSKeyedArchiver.archivedData(withRootObject: eventObjectData)
+        print("Event Object Data Prepared")
+        try? session.send(data, toPeers: [peer], with: .reliable)
+        print("Event Object Data Sent")
+
+    }
+
 }

@@ -71,4 +71,44 @@ class DataManager {
             return nil
         }
     }
+    
+    func encodeEvent(event: Event) -> Data? {
+        do {
+            let encodedEvent = try JSONEncoder().encode(event)
+            return encodedEvent
+        } catch {
+            print("Error encoding event: \(error.localizedDescription)")
+        }
+        return nil
+    }
+    
+    func decodeEvent(from data: Data) -> Event? {
+        do {
+            let event = try JSONDecoder().decode(Event.self, from: data)
+            return event
+        } catch {
+            print("Error decoding event: \(error.localizedDescription)")
+            return nil
+        }
+    }
+    
+    func encodeEventObject(eventObject: [String:Data]) -> Data? {
+        do {
+            let encodedEventObject = try JSONEncoder().encode(eventObject)
+            return encodedEventObject
+        } catch {
+            print("Error encoding event object: \(error.localizedDescription)")
+        }
+        return nil
+    }
+    
+    func decodeEventObject(from data: Data) -> [String:Data]? {
+        do {
+            let eventObject = try JSONDecoder().decode([String:Data].self, from: data)
+            return eventObject
+        } catch {
+            print("Error decoding event object: \(error.localizedDescription)")
+            return nil
+        }
+    }
 }
