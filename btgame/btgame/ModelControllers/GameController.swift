@@ -12,13 +12,14 @@ class GameController {
     
     static let shared = GameController()
     var currentGame: Game
-    var timelines: [Timeline] = []
+//    var timelines: [Timeline] = []
     var time = 0
     var timer: Timer = Timer()
     var isDrawingRound: Bool
     var turnOrder: [UUID:Player] = [:]
+    
     private init() {
-        currentGame = Game(players: [], timeLines: [])
+        currentGame = Game(players: [], timelines: [])
         isDrawingRound = false
     }
     
@@ -26,9 +27,28 @@ class GameController {
     
     func startNewGame(players: [Player]) {
         let timelines = createTimelines(forPlayers: players)
-        currentGame = Game(players: players, timeLines: timelines)
+        currentGame = Game(players: players, timelines: timelines)
         getTopics()
         time = currentGame.timeLimit
+        createTurnOrder()
+        distributeTopics()
+    }
+    
+    func createTurnOrder(){
+        for i in 0...currentGame.players.count - 1 {
+            turnOrder[currentGame.timelines[i].id] = currentGame.timelines[i].owner
+        }
+    }
+    func distributeTopics(){
+        for timeline in currentGame.timelines {
+            if timeline.owner != currentGame.players[0] {
+                guard let peerID = MCController.shared.peerIDDict[timeline.owner] else {
+                    print("Failed sending first round")
+                    return}
+                print("send timeline")
+                MCController.shared.sendEvent(event: .toTopics, timeline: timeline, toPeers: peerID)
+            }
+        }
     }
     
     func endRound(forPlayer player: Player, withImage image: UIImage?, guess: String?, timeline: Timeline) {
@@ -80,10 +100,10 @@ class GameController {
             }
         }
         
-        for player in currentGame.players {
+        for timeline in currentGame.timelines {
             for _ in 1...4{
                 let index = getNumber()
-                player.possibleTopics.append(topics_all[Int(index)])
+                timeline.possibleTopics.append(topics_all[Int(index)])
             }
         }
     }

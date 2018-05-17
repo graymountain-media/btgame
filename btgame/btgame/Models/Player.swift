@@ -13,7 +13,6 @@ class Player: Codable, Hashable {
     var uid: Int
     let displayName: String
     let isAdvertiser: Bool
-    var possibleTopics: [String]
     var hashValue: Int {
         return self.uid
     }
@@ -21,7 +20,6 @@ class Player: Codable, Hashable {
     init(displayName: String, id: MCPeerID, isAdvertiser: Bool) {
         self.displayName = displayName
         self.isAdvertiser = isAdvertiser
-        self.possibleTopics = []
         self.uid = Int(arc4random_uniform(UInt32(1000000)))
     }
     

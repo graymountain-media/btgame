@@ -8,20 +8,24 @@
 
 import Foundation
 
-class Timeline: Codable {
+class Timeline: Codable{
+    
     var id: UUID
     var owner: Player
     var rounds: [Round]
+    var possibleTopics: [String]
     
     init(owner: Player) {
         self.rounds = []
         self.owner = owner
+        self.possibleTopics = []
         self.id = UUID()
     }
+    
 }
 
-extension Timeline: Equatable {
-    static func == (lhs: Timeline, rhs: Timeline) -> Bool {
-        return (lhs.owner == rhs.owner && lhs.rounds == rhs.rounds)
-    }
-}
+//extension Timeline: Equatable {
+//    static func == (lhs: Timeline, rhs: Timeline) -> Bool {
+//        return (lhs.owner == rhs.owner && lhs.rounds == rhs.rounds)
+//    }
+//}
