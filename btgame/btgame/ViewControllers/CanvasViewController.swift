@@ -24,13 +24,6 @@ class CanvasViewController: UIViewController {
         self.view.addBackground()
     }
     
-    //    lazy var viewContainer: UIView = {
-    //        let vc = UIView()
-    //        vc.frame = CGRect(x: 0, y: 0, width: self.view.frame.width/1, height: self.view.frame.height/1)
-    //        vc.
-    //        return vc
-    //    }()
-    
     lazy var topicLabel: UILabel = {
         let lbl = UILabel()
         lbl.frame = CGRect(x: self.view.frame.width/4, y: self.view.frame.height/8, width: self.view.frame.width/2, height: self.view.frame.height/16)
@@ -47,6 +40,7 @@ class CanvasViewController: UIViewController {
         let cv = UIView()
         cv.frame = CGRect(x: 0, y: self.view.frame.height/4, width: self.view.frame.width/1, height: self.view.frame.height/2)
         cv.backgroundColor = .white
+        
         return cv
     }()
     
@@ -91,15 +85,4 @@ extension UIView {
         self.sendSubview(toBack: imageViewBackground)
     }
 }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 
