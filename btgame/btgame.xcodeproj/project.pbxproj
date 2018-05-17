@@ -30,6 +30,9 @@
 		A1BCCC3020AB2C2D00A4AC7D /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC2F20AB2C2D00A4AC7D /* ResultsViewController.swift */; };
 		A1BCCC3420AB2D1200A4AC7D /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC3320AB2D1200A4AC7D /* WelcomeViewController.swift */; };
 		A1BCCC3620AB789C00A4AC7D /* Topics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC3520AB789C00A4AC7D /* Topics.swift */; };
+		BAA4C23920ADE0020083A5A0 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA4C23820ADE0020083A5A0 /* CanvasView.swift */; };
+		BAA4C23B20ADE0220083A5A0 /* InstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA4C23A20ADE0220083A5A0 /* InstructionsViewController.swift */; };
+		BAA4C23D20ADE03E0083A5A0 /* CanvasController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA4C23C20ADE03E0083A5A0 /* CanvasController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +61,9 @@
 		A1BCCC2F20AB2C2D00A4AC7D /* ResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
 		A1BCCC3320AB2D1200A4AC7D /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		A1BCCC3520AB789C00A4AC7D /* Topics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Topics.swift; sourceTree = "<group>"; };
+		BAA4C23820ADE0020083A5A0 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
+		BAA4C23A20ADE0220083A5A0 /* InstructionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsViewController.swift; sourceTree = "<group>"; };
+		BAA4C23C20ADE03E0083A5A0 /* CanvasController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +132,7 @@
 				A1BCCC1E20AB2BBA00A4AC7D /* PlayerController.swift */,
 				A1BCCC2020AB2BC400A4AC7D /* RoundController.swift */,
 				A1BCCC2220AB2BCF00A4AC7D /* TimelineController.swift */,
+				BAA4C23C20ADE03E0083A5A0 /* CanvasController.swift */,
 			);
 			path = ModelControllers;
 			sourceTree = "<group>";
@@ -138,6 +145,8 @@
 				A1BCCC2720AB2C0000A4AC7D /* SetupViewController.swift */,
 				A1BCCC2920AB2C0900A4AC7D /* TopicViewController.swift */,
 				A1BCCC2B20AB2C1000A4AC7D /* CanvasViewController.swift */,
+				BAA4C23820ADE0020083A5A0 /* CanvasView.swift */,
+				BAA4C23A20ADE0220083A5A0 /* InstructionsViewController.swift */,
 				A1BCCC2D20AB2C2000A4AC7D /* GuessViewController.swift */,
 				A1BCCC2F20AB2C2D00A4AC7D /* ResultsViewController.swift */,
 			);
@@ -236,6 +245,7 @@
 				A1BCCC2620AB2BF900A4AC7D /* RegisterViewController.swift in Sources */,
 				A1BCCC2120AB2BC400A4AC7D /* RoundController.swift in Sources */,
 				A1BCCC1F20AB2BBA00A4AC7D /* PlayerController.swift in Sources */,
+				BAA4C23920ADE0020083A5A0 /* CanvasView.swift in Sources */,
 				A1BCCC2A20AB2C0900A4AC7D /* TopicViewController.swift in Sources */,
 				A1BCCC3020AB2C2D00A4AC7D /* ResultsViewController.swift in Sources */,
 				A1BCCC1320AB2B3F00A4AC7D /* Game.swift in Sources */,
@@ -244,8 +254,10 @@
 				A1BCCC0F20AB2ACC00A4AC7D /* Round.swift in Sources */,
 				A1BCCC2E20AB2C2000A4AC7D /* GuessViewController.swift in Sources */,
 				A1BCCC1B20AB2B9C00A4AC7D /* GameController.swift in Sources */,
+				BAA4C23D20ADE03E0083A5A0 /* CanvasController.swift in Sources */,
 				3BD076B820AB389F00BA7C43 /* Extensions.swift in Sources */,
 				A1BCCC1820AB2B7700A4AC7D /* NetworkController.swift in Sources */,
+				BAA4C23B20ADE0220083A5A0 /* InstructionsViewController.swift in Sources */,
 				A1BCCC2820AB2C0000A4AC7D /* SetupViewController.swift in Sources */,
 				A1BCCC2C20AB2C1000A4AC7D /* CanvasViewController.swift in Sources */,
 				A1BCCBFB20AA4BA600A4AC7D /* AppDelegate.swift in Sources */,
