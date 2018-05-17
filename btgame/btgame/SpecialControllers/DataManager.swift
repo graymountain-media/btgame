@@ -28,8 +28,8 @@ class DataManager {
             return player
         } catch {
             print("Error decoding player: \(error.localizedDescription)")
-            return nil
         }
+        return nil
     }
     // This is used for the done button counter (browser sends a '1' to advertiser when they tap the done button)
     func encodeCounter(counter: Counter) -> Data? {
@@ -48,8 +48,8 @@ class DataManager {
             return decodedCounter
         } catch {
             print("Error decoding counter: \(error.localizedDescription)")
-            return nil
         }
+        return nil
     }
     
     func encodeTimeline(timeline: Timeline) -> Data? {
@@ -68,8 +68,8 @@ class DataManager {
             return timeline
         } catch {
             print("Error decoding timeline: \(error.localizedDescription)")
-            return nil
         }
+        return nil
     }
     
     func encodeEvent(event: Event) -> Data? {
@@ -88,27 +88,29 @@ class DataManager {
             return event
         } catch {
             print("Error decoding event: \(error.localizedDescription)")
-            return nil
-        }
-    }
-    
-    func encodeEventObject(eventObject: [String:Data]) -> Data? {
-        do {
-            let encodedEventObject = try JSONEncoder().encode(eventObject)
-            return encodedEventObject
-        } catch {
-            print("Error encoding event object: \(error.localizedDescription)")
+            
         }
         return nil
     }
     
-    func decodeEventObject(from data: Data) -> [String:Data]? {
-        do {
-            let eventObject = try JSONDecoder().decode([String:Data].self, from: data)
-            return eventObject
-        } catch {
-            print("Error decoding event object: \(error.localizedDescription)")
-            return nil
-        }
-    }
+//    func encodeEventObject(eventObject: [String:Data]) -> Data? {
+//        do {
+//            let encodedEventObject = try JSONEncoder().encode(eventObject)
+//            return encodedEventObject
+//        } catch {
+//            print("Error encoding event object: \(error.localizedDescription)")
+//        }
+//        return nil
+//    }
+//    
+//    func decodeEventObject(from data: Data) -> [String:Data]? {
+//        do {
+//            let eventObject = try JSONDecoder().decode([String:Data].self, from: data)
+//            return eventObject
+//        } catch {
+//            print("Error decoding event object: \(error.localizedDescription)")
+//            
+//        }
+//        return nil
+//    }
 }

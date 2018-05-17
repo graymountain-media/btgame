@@ -46,7 +46,7 @@ class GameController {
                     print("Failed sending first round")
                     return}
                 print("send timeline")
-                MCController.shared.sendEvent(event: .toTopics, timeline: timeline, toPeers: peerID)
+                MCController.shared.sendEvent(withInstruction: .toTopics, timeline: timeline, toPeers: peerID)
             }
         }
     }

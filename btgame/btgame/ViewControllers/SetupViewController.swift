@@ -74,7 +74,11 @@ class SetupViewController: UIViewController {
     @objc fileprivate func startGame() {
         print("Start game tapped")
         GameController.shared.startNewGame(players: MCController.shared.playerArray)
-        self.navigationController?.pushViewController(TopicViewController(), animated: true)
+        DispatchQueue.main.async {
+            let destinationVC = TopicViewController()
+            destinationVC.timeline = GameController.shared.currentGame.timelines[0]
+            self.navigationController?.pushViewController(destinationVC, animated: true)
+        }
     }
     
     fileprivate func setTableViewConstraints(){
@@ -140,6 +144,14 @@ extension SetupViewController: MCBrowserViewControllerDelegate {
 }
 
 extension SetupViewController: MCControllerDelegate {
+    func toTopicView(timeline: Timeline) {
+        DispatchQueue.main.async {
+            let destinationVC = TopicViewController()
+            destinationVC.timeline = timeline
+            self.navigationController?.pushViewController(destinationVC, animated: true)
+        }
+        
+    }
 
     func playerJoinedSession() {
         print("player added")

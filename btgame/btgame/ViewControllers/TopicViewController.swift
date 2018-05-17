@@ -11,6 +11,8 @@ import UIKit
 class TopicViewController: UIViewController {
     
     var displayName: String?
+    var timeline: Timeline?
+    var buttons: [UIButton] = []
     
     let containerView: UIView = {
         
@@ -83,17 +85,20 @@ class TopicViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        buttons = [firstChoiceButton,secondChoiceButton,thirdChoiceButton,fourthChoiceButton]
         
         view.backgroundColor = UIColor.blue
         //        self.navigationController?.setNavigationBarHidden(true, animated: true)
         
         // Views
         view.addSubview(containerView)
+        navigationItem.leftBarButtonItem = nil
         
         
         
         // Contstraints
         setupContainerView()
+        setTopics()
     }
     
     func setupContainerView() {
@@ -174,6 +179,13 @@ class TopicViewController: UIViewController {
         let resultsViewController = ResultsViewController(collectionViewLayout: UICollectionViewFlowLayout())
         navigationController?.pushViewController(resultsViewController, animated: true)
         
+    }
+    
+    func setTopics(){
+        guard let timeline = timeline else {return}
+        for (index,button) in buttons.enumerated() {
+            button.setTitle(timeline.possibleTopics[index], for: .normal)
+        }
     }
     
 }

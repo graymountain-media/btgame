@@ -13,15 +13,14 @@ import MultipeerConnectivity
 import CoreBluetooth
 
 protocol MCControllerDelegate {
-   func playerJoinedSession()
-   func incrementDoneButtonCounter()
+    func playerJoinedSession()
+    func incrementDoneButtonCounter()
+    func toTopicView(timeline: Timeline)
 //    func didReceivePlayer(data: Data)
 //    func didReceiveCounter(data: Data)
 //    func didReceiveTimeline(data: Data)
 }
-struct Counter: Codable {
-    var counter: String?
-}
+
 class MCController: NSObject, MCSessionDelegate {
     
     // MARK: - Shared Instance
@@ -112,12 +111,11 @@ class MCController: NSObject, MCSessionDelegate {
     }
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
-
         
         if let player = DataManager.shared.decodePlayer(from: data){
             playerArray.append(player)
             peerIDDict[player] = peerID
-            
+            print("I am in the player handler")
             if !isAdvertiser {
                 do {
                     //player receives the advertiser (player object) and then send itself (player) back to advertiser
@@ -128,19 +126,37 @@ class MCController: NSObject, MCSessionDelegate {
                     print("Error sending self to advertiser: \(e)")
                 }
             }
+            return
         }
+        
         if let counter = DataManager.shared.decodeCounter(from: data){
             if(isAdvertiser){
                 delegate?.incrementDoneButtonCounter()
             }
+            print("INside counter function")
+            return
         }
         if let timeline = DataManager.shared.decodeTimeline(from: data){
             if(isAdvertiser){
                 //do timeline things
             }
+            return
         }
-        else {
-            //handle worst case scenario
+        
+        if let event = DataManager.shared.decodeEvent(from: data){
+            print("Event received")
+            if(!isAdvertiser){
+                print("Received timeline topics: \(event.timeline.possibleTopics)")
+                print("Event String Received \(event.instruction)")
+                switch event.instruction{
+                case .toTopics:
+                    delegate?.toTopicView(timeline: event.timeline)
+                    
+                default:
+                    return
+                }
+            }
+            return
         }
 
     }
@@ -157,19 +173,15 @@ class MCController: NSObject, MCSessionDelegate {
         // Nothing to do here
     }
     
-    func sendEvent(event: Event, timeline: Timeline, toPeers peer: MCPeerID) {
+    func sendEvent(withInstruction instruction: Event.Instruction, timeline: Timeline, toPeers peer: MCPeerID) {
         
-        guard let eventData = event.rawValue.data(using: .utf8),
-            let timelineData = DataManager.shared.encodeTimeline(timeline: timeline) else {return}
+        let event = Event(withInstruction: instruction, timeline: timeline)
+        print("TIMELINE TOPICS:  \(timeline.possibleTopics)")
         
-        var eventObject: [String: Data] = ["event": eventData]
-        eventObject["timeline"] = timelineData
-        
-        guard let eventObjectData = DataManager.shared.encodeEventObject(eventObject: eventObject) else {return}
-        
-        let data = NSKeyedArchiver.archivedData(withRootObject: eventObjectData)
+        guard let eventData = DataManager.shared.encodeEvent(event: event) else {return}
+
         print("Event Object Data Prepared")
-        try? session.send(data, toPeers: [peer], with: .reliable)
+        try? session.send(eventData, toPeers: [peer], with: .reliable)
         print("Event Object Data Sent")
 
     }
