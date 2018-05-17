@@ -9,14 +9,14 @@
 import UIKit
 
 class GameController {
-
+    
     static let shared = GameController()
     var currentGame: Game
     var timelines: [Timeline] = []
     var time = 0
     var timer: Timer = Timer()
     var isDrawingRound: Bool
-    
+    var turnOrder: [UUID:Player] = [:]
     private init() {
         currentGame = Game(players: [], timeLines: [])
         isDrawingRound = false
@@ -24,8 +24,7 @@ class GameController {
     
     // MARK: - Public Functions
     
-    func startNewGame() {
-        let players: [Player] = []
+    func startNewGame(players: [Player]) {
         let timelines = createTimelines(forPlayers: players)
         currentGame = Game(players: players, timeLines: timelines)
         getTopics()
@@ -45,7 +44,8 @@ class GameController {
     
     func startTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerTicked), userInfo: nil, repeats: true)
-    } 
+    }
+    
     
     // MARK: - Private Functions
     
@@ -62,6 +62,7 @@ class GameController {
         for player in players {
             let newTimeline = TimelineController.createTimeline(forPlayer: player)
             timelines.append(newTimeline)
+            turnOrder[newTimeline.id] = player
         }
         
         return timelines

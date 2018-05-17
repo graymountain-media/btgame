@@ -73,6 +73,8 @@ class SetupViewController: UIViewController {
     
     @objc fileprivate func startGame() {
         print("Start game tapped")
+        GameController.shared.startNewGame(players: MCController.shared.playerArray)
+        self.navigationController?.pushViewController(TopicViewController(), animated: true)
     }
     
     fileprivate func setTableViewConstraints(){
@@ -140,6 +142,12 @@ extension SetupViewController: MCControllerDelegate {
         print("player added")
         DispatchQueue.main.async {
             self.tableView.reloadData()
+        }
+    }
+    func incrementDoneButtonCounter() {
+        doneButtonTappedCounter += 1
+        if(doneButtonTappedCounter >= MCController.shared.currentGamePeers.count-1){
+            startButton.isEnabled = true 
         }
     }
     
