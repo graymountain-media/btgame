@@ -14,24 +14,24 @@ class CanvasView: UIView {
     var startPoint = CGPoint()
     var touchPoint = CGPoint()
     
-    lazy var canvasView: UIView = {
-        let cv = UIView()
-        cv.frame = CGRect(x: 0, y: 300, width: 300, height: 300)
-        cv.backgroundColor = .white
-        
-        return cv
-    }()
+//    lazy var canvasView: UIView = {
+//        let cv = UIView()
+//        cv.frame = CGRect(x: 0, y: 300, width: 300, height: 300)
+//        cv.backgroundColor = .white
+//        
+//        return cv
+//    }()
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
-        if let point = touch?.location(in: canvasView) {
+        if let point = touch?.location(in: viewWithTag(1)) {
             startPoint = point
         }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
-        if let point = touch?.location(in: canvasView) {
+        if let point = touch?.location(in: viewWithTag(1)) {
             touchPoint = point
         }
         path.move(to: startPoint)
@@ -46,8 +46,8 @@ class CanvasView: UIView {
         strokeLayer.fillColor = nil
         strokeLayer.strokeColor = UIColor.black.cgColor
         strokeLayer.path = path.cgPath
-        canvasView.layer.addSublayer(strokeLayer)
-        canvasView.setNeedsDisplay()
+        viewWithTag(1)?.layer.addSublayer(strokeLayer)
+        viewWithTag(1)?.setNeedsDisplay()
     }
     
     /*

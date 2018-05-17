@@ -35,7 +35,6 @@
 		A1BCCC3620AB789C00A4AC7D /* Topics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC3520AB789C00A4AC7D /* Topics.swift */; };
 		BAA4C23920ADE0020083A5A0 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA4C23820ADE0020083A5A0 /* CanvasView.swift */; };
 		BAA4C23B20ADE0220083A5A0 /* InstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA4C23A20ADE0220083A5A0 /* InstructionsViewController.swift */; };
-		BAA4C23D20ADE03E0083A5A0 /* CanvasController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA4C23C20ADE03E0083A5A0 /* CanvasController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,7 +68,6 @@
 		A1BCCC3520AB789C00A4AC7D /* Topics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Topics.swift; sourceTree = "<group>"; };
 		BAA4C23820ADE0020083A5A0 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 		BAA4C23A20ADE0220083A5A0 /* InstructionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsViewController.swift; sourceTree = "<group>"; };
-		BAA4C23C20ADE03E0083A5A0 /* CanvasController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,7 +139,6 @@
 				A1BCCC1E20AB2BBA00A4AC7D /* PlayerController.swift */,
 				A1BCCC2020AB2BC400A4AC7D /* RoundController.swift */,
 				A1BCCC2220AB2BCF00A4AC7D /* TimelineController.swift */,
-				BAA4C23C20ADE03E0083A5A0 /* CanvasController.swift */,
 			);
 			path = ModelControllers;
 			sourceTree = "<group>";
@@ -263,7 +260,6 @@
 				A1BCCC0F20AB2ACC00A4AC7D /* Round.swift in Sources */,
 				A1BCCC2E20AB2C2000A4AC7D /* GuessViewController.swift in Sources */,
 				A1BCCC1B20AB2B9C00A4AC7D /* GameController.swift in Sources */,
-				BAA4C23D20ADE03E0083A5A0 /* CanvasController.swift in Sources */,
 				3BD076B820AB389F00BA7C43 /* Extensions.swift in Sources */,
 				A1BCCC1820AB2B7700A4AC7D /* NetworkController.swift in Sources */,
 				BAA4C23B20ADE0220083A5A0 /* InstructionsViewController.swift in Sources */,

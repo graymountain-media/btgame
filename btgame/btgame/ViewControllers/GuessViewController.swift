@@ -10,26 +10,26 @@ import UIKit
 
 class GuessViewController: UIViewController {
 
+    var image = UIImage()
+    static let shared = GuessViewController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+        self.view.addSubview(viewContainer)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    lazy var viewContainer: UIView = {
+        let vc = UIView()
+        vc.frame = CGRect(x: 0, y: 0, width: self.view.frame.width/1, height: self.view.frame.height/1)
+        vc.backgroundColor = .red
+        return vc
+    }()
+    
+    let previousSketch: UIImageView = {
+        let ps = UIImageView()
+        ps.frame = CGRect(x: 0, y: 100, width: 450, height: 500)
+        ps.backgroundColor = .white
+        return ps
+    }()
 }
