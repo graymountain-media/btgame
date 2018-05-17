@@ -17,10 +17,11 @@ class CanvasViewController: UIViewController {
         super.viewDidLoad()
         canvasView.clipsToBounds = true
         canvasView.isMultipleTouchEnabled = false
-        
+        self.view.addSubview(bankrollButton)
         self.view.addSubview(canvasView)
         self.view.addSubview(topicLabel)
         self.view.addBackground()
+        canvasView.tag = 1
     }
     
     lazy var topicLabel: UILabel = {
@@ -35,40 +36,55 @@ class CanvasViewController: UIViewController {
         return lbl
     }()
     
-    lazy var canvasView: UIView = {
-        let cv = UIView()
-        cv.frame = CGRect(x: 0, y: self.view.frame.height/4, width: self.view.frame.width/1, height: self.view.frame.height/2)
+    lazy var canvasView: CanvasView = {
+        let cv = CanvasView()
+        cv.frame = CGRect(x: 0, y: self.view.frame.height/8, width: self.view.frame.width/1, height: self.view.frame.height/3)
         cv.backgroundColor = .white
-        
+        cv.draw()
         return cv
     }()
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let touch = touches.first
-        if let point = touch?.location(in: canvasView) {
-            startPoint = point
-        }
-    }
+    lazy var bankrollButton: UIButton = {
+        let btn = UIButton()
+        btn.frame = CGRect(x: 132, y: 375, width: 150, height: 50)
+        btn.setTitle("Lets count cards", for: .normal)
+        btn.titleLabel?.font = UIFont(name: "Times New Roman", size: 20)
+        btn.backgroundColor = .gray
+        btn.addTarget(self, action: #selector(self.goToNextView(_:)), for: .touchDown)
+        return btn
+    }()
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let touch = touches.first
-        if let point = touch?.location(in: canvasView) {
-            touchPoint = point
-        }
-        path.move(to: startPoint)
-        path.addLine(to: touchPoint)
-        startPoint = touchPoint
-        
-        draw()
-    }
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        let touch = touches.first
+//        if let point = touch?.location(in: canvasView) {
+//            startPoint = point
+//        }
+//    }
+//    
+//    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        let touch = touches.first
+//        if let point = touch?.location(in: canvasView) {
+//            touchPoint = point
+//        }
+//        path.move(to: startPoint)
+//        path.addLine(to: touchPoint)
+//        startPoint = touchPoint
+//        
+//        draw()
+//    }
+//    
+//    func draw() {
+//        let strokeLayer = CAShapeLayer()
+//        strokeLayer.fillColor = nil
+//        strokeLayer.strokeColor = UIColor.black.cgColor
+//        strokeLayer.path = path.cgPath
+//        canvasView.layer.addSublayer(strokeLayer)
+//        canvasView.setNeedsDisplay()
+//    }
     
-    func draw() {
-        let strokeLayer = CAShapeLayer()
-        strokeLayer.fillColor = nil
-        strokeLayer.strokeColor = UIColor.black.cgColor
-        strokeLayer.path = path.cgPath
-        canvasView.layer.addSublayer(strokeLayer)
-        canvasView.setNeedsDisplay()
+    @objc func goToNextView(_ sender: UIButton) {
+        let nextView = GuessViewController()
+        self.navigationController?.show(nextView, sender: sender)
     }
 }
 
