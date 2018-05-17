@@ -389,7 +389,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6K47ASRSPN;
+				DEVELOPMENT_TEAM = 4CG8J8CVZL;
 				INFOPLIST_FILE = "$(SRCROOT)/btgame/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -407,7 +407,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6K47ASRSPN;
+				DEVELOPMENT_TEAM = 4CG8J8CVZL;
 				INFOPLIST_FILE = "$(SRCROOT)/btgame/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

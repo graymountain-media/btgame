@@ -30,7 +30,7 @@ class DataManager {
             return nil
         }
     }
-    
+    // This is used for the done button counter (browser sends a '1' to advertiser when they tap the done button)
     func encodeCounter(dict: [String:Int]) -> Data? {
         do {
             let encodedDict = try JSONEncoder().encode(dict)
@@ -49,5 +49,35 @@ class DataManager {
             print("Error decoding player: \(error.localizedDescription)")
             return nil
         }
+    }
+    
+    func encodeTimeline(timeline: Timeline) -> Data? {
+        do {
+            let encodedTimeline = try JSONEncoder().encode(timeline)
+            return encodedTimeline
+        } catch {
+            print("Error encoding timeline: \(error.localizedDescription)")
+        }
+        return nil
+    }
+    
+    func decodeTimeline(from data: Data) -> Timeline? {
+        do {
+            let timeline = try JSONDecoder().decode(Timeline.self, from: data)
+            return timeline
+        } catch {
+            print("Error decoding player: \(error.localizedDescription)")
+            return nil
+        }
+    }
+    
+    func decodeData(data: Data) -> [String:Data]? {
+        do {
+            let decodedData = try JSONDecoder().decode([String:Data].self, from: data)
+            return decodedData
+        } catch {
+            print("Error encoding player: \(error.localizedDescription)")
+        }
+        return nil
     }
 }

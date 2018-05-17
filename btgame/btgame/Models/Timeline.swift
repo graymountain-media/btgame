@@ -9,12 +9,14 @@
 import Foundation
 
 class Timeline: Codable {
+    var id: UUID
     var owner: Player
     var rounds: [Round]
     
     init(owner: Player) {
         self.rounds = []
         self.owner = owner
+        self.id = UUID()
     }
 }
 
