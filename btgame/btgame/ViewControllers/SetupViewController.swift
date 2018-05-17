@@ -109,9 +109,10 @@ extension SetupViewController: MCBrowserViewControllerDelegate {
         tableView.reloadData()
         print("Done pressed")
         startButtonStatus()
-        let counterDict = ["counter" : 1]
+        let string = "counterString"
+        let counter = Counter(counter: string)
         do {
-            guard let data = DataManager.shared.encodeCounter(dict: counterDict) else {return}
+            guard let data = DataManager.shared.encodeCounter(counter: counter) else {return}
             try MCController.shared.session.send(data, toPeers: [MCController.shared.peerIDDict[MCController.shared.playerArray[1]]!], with: .reliable)
         } catch let e {
             print("Error sending count: \(e)")
@@ -121,7 +122,7 @@ extension SetupViewController: MCBrowserViewControllerDelegate {
     
     fileprivate func startButtonStatus(){
         doneButtonTappedCounter += 1
-        print(doneButtonTappedCounter)
+        print("Done count: \(doneButtonTappedCounter)")
         if doneButtonTappedCounter >= (MCController.shared.currentGamePeers.count - 1) {
             startButton.isEnabled = true
         }else {
@@ -137,7 +138,7 @@ extension SetupViewController: MCBrowserViewControllerDelegate {
 }
 
 extension SetupViewController: MCControllerDelegate {
-    
+
     func playerJoinedSession() {
         print("player added")
         DispatchQueue.main.async {
@@ -145,12 +146,8 @@ extension SetupViewController: MCControllerDelegate {
         }
     }
     func incrementDoneButtonCounter() {
-        doneButtonTappedCounter += 1
-        if(doneButtonTappedCounter >= MCController.shared.currentGamePeers.count-1){
-            startButton.isEnabled = true 
-        }
+        startButtonStatus()
     }
-    
 }
 
 extension SetupViewController: UITableViewDataSource {

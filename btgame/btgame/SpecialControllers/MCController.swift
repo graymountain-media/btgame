@@ -13,10 +13,15 @@ import MultipeerConnectivity
 import CoreBluetooth
 
 protocol MCControllerDelegate {
-    func playerJoinedSession()
-    func incrementDoneButtonCounter() 
+   func playerJoinedSession()
+   func incrementDoneButtonCounter()
+//    func didReceivePlayer(data: Data)
+//    func didReceiveCounter(data: Data)
+//    func didReceiveTimeline(data: Data)
 }
-
+struct Counter: Codable {
+    var counter: String?
+}
 class MCController: NSObject, MCSessionDelegate {
     
     // MARK: - Shared Instance
@@ -88,7 +93,7 @@ class MCController: NSObject, MCSessionDelegate {
             if isAdvertiser {
                 do {
                     guard let data = DataManager.shared.encodePlayer(player: playerArray[0]) else {return}
-                    
+                    print("The advertiser sent himself to a browser")
                     try session.send(data, toPeers: [peerID], with: .reliable)
                 } catch let e{
                     print("Error sending advertiser player object: \(e)")
@@ -96,8 +101,10 @@ class MCController: NSObject, MCSessionDelegate {
             }
             
             
+            
         case MCSessionState.connecting:
             print("Connecting to session")
+            
             
         default:
             print("Did not connect to session")
@@ -105,41 +112,37 @@ class MCController: NSObject, MCSessionDelegate {
     }
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
-        // turn data to person object
-        let decodedData = DataManager.shared.decodeData(data: data)
-        let typeString = decodedData?.keys.first
-        print("TypeString: \(typeString)")
+
         
-        switch(typeString){
-        case "counter":
-            if(isAdvertiser){
-                delegate?.incrementDoneButtonCounter()
-            }
-        case "player":
-            guard let player = DataManager.shared.decodePlayer(from: data) else { return }
+        if let player = DataManager.shared.decodePlayer(from: data){
             playerArray.append(player)
             peerIDDict[player] = peerID
             
             if !isAdvertiser {
                 do {
-                    guard let data = DataManager.shared.encodePlayer(player: playerArray[0]) else {return}
+                    //player receives the advertiser (player object) and then send itself (player) back to advertiser
+                    let browserPlayer = playerArray[0]
+                    guard let data = DataManager.shared.encodePlayer(player: browserPlayer) else { return }
                     try session.send(data, toPeers: [peerID], with: .reliable)
                 } catch let e {
                     print("Error sending self to advertiser: \(e)")
                 }
             }
-            
-        case "timeline":
-            guard let timeline = DataManager.shared.decodeTimeline(from: data) else { return }
-            if(isAdvertiser){
-                
-            }
-        default:
-            print("default case")
         }
-        
-        
-        
+        if let counter = DataManager.shared.decodeCounter(from: data){
+            if(isAdvertiser){
+                delegate?.incrementDoneButtonCounter()
+            }
+        }
+        if let timeline = DataManager.shared.decodeTimeline(from: data){
+            if(isAdvertiser){
+                //do timeline things
+            }
+        }
+        else {
+            //handle worst case scenario
+        }
+
     }
     
     func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
@@ -153,4 +156,6 @@ class MCController: NSObject, MCSessionDelegate {
     func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL?, withError error: Error?) {
         // Nothing to do here
     }
+    
+    
 }

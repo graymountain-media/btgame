@@ -9,6 +9,7 @@
 import UIKit
 
 class DataManager {
+
     static let shared = DataManager()
 
     func encodePlayer(player: Player) -> Data? {
@@ -31,22 +32,22 @@ class DataManager {
         }
     }
     // This is used for the done button counter (browser sends a '1' to advertiser when they tap the done button)
-    func encodeCounter(dict: [String:Int]) -> Data? {
+    func encodeCounter(counter: Counter) -> Data? {
         do {
-            let encodedDict = try JSONEncoder().encode(dict)
-            return encodedDict
+            let encodedCounter = try JSONEncoder().encode(counter)
+            return encodedCounter
         } catch {
-            print("Error encoding player: \(error.localizedDescription)")
+            print("Error encoding counter: \(error.localizedDescription)")
         }
         return nil
     }
     
-    func decodeCounter(from data: Data) -> [String:Int]? {
+    func decodeCounter(from data: Data) -> Counter? {
         do {
-            let dict = try JSONDecoder().decode([String:Int].self, from: data)
-            return dict
+            let decodedCounter = try JSONDecoder().decode(Counter.self, from: data)
+            return decodedCounter
         } catch {
-            print("Error decoding player: \(error.localizedDescription)")
+            print("Error decoding counter: \(error.localizedDescription)")
             return nil
         }
     }
@@ -66,18 +67,8 @@ class DataManager {
             let timeline = try JSONDecoder().decode(Timeline.self, from: data)
             return timeline
         } catch {
-            print("Error decoding player: \(error.localizedDescription)")
+            print("Error decoding timeline: \(error.localizedDescription)")
             return nil
         }
-    }
-    
-    func decodeData(data: Data) -> [String:Data]? {
-        do {
-            let decodedData = try JSONDecoder().decode([String:Data].self, from: data)
-            return decodedData
-        } catch {
-            print("Error encoding player: \(error.localizedDescription)")
-        }
-        return nil
     }
 }
