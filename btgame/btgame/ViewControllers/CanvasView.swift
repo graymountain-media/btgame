@@ -22,6 +22,16 @@ class CanvasView: UIView {
 //        return cv
 //    }()
     
+    func makeImage(withView view: UIView) -> UIImage? {
+        let renderer = UIGraphicsImageRenderer(size: (viewWithTag(1)?.bounds.size)!)
+        let image = renderer.image { ctx in
+            view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
+        }
+        
+        print("\(image)")
+        return image
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
         if let point = touch?.location(in: viewWithTag(1)) {

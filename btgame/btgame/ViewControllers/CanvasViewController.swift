@@ -17,7 +17,7 @@ class CanvasViewController: UIViewController {
         super.viewDidLoad()
         canvasView.clipsToBounds = true
         canvasView.isMultipleTouchEnabled = false
-        self.view.addSubview(bankrollButton)
+        self.view.addSubview(testSegueButton)
         self.view.addSubview(canvasView)
         self.view.addSubview(topicLabel)
         self.view.addBackground()
@@ -38,49 +38,21 @@ class CanvasViewController: UIViewController {
     
     lazy var canvasView: CanvasView = {
         let cv = CanvasView()
-        cv.frame = CGRect(x: 0, y: self.view.frame.height/8, width: self.view.frame.width/1, height: self.view.frame.height/3)
+        cv.frame = CGRect(x: 0, y: 250, width: 300, height: 300)
         cv.backgroundColor = .white
         cv.draw()
         return cv
     }()
     
-    lazy var bankrollButton: UIButton = {
+    lazy var testSegueButton: UIButton = {
         let btn = UIButton()
         btn.frame = CGRect(x: 132, y: 375, width: 150, height: 50)
-        btn.setTitle("Lets count cards", for: .normal)
+        btn.setTitle("perform segue", for: .normal)
         btn.titleLabel?.font = UIFont(name: "Times New Roman", size: 20)
         btn.backgroundColor = .gray
         btn.addTarget(self, action: #selector(self.goToNextView(_:)), for: .touchDown)
         return btn
     }()
-    
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        let touch = touches.first
-//        if let point = touch?.location(in: canvasView) {
-//            startPoint = point
-//        }
-//    }
-//    
-//    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        let touch = touches.first
-//        if let point = touch?.location(in: canvasView) {
-//            touchPoint = point
-//        }
-//        path.move(to: startPoint)
-//        path.addLine(to: touchPoint)
-//        startPoint = touchPoint
-//        
-//        draw()
-//    }
-//    
-//    func draw() {
-//        let strokeLayer = CAShapeLayer()
-//        strokeLayer.fillColor = nil
-//        strokeLayer.strokeColor = UIColor.black.cgColor
-//        strokeLayer.path = path.cgPath
-//        canvasView.layer.addSublayer(strokeLayer)
-//        canvasView.setNeedsDisplay()
-//    }
     
     @objc func goToNextView(_ sender: UIButton) {
         let nextView = GuessViewController()
