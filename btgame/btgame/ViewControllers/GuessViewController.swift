@@ -11,13 +11,16 @@
  class GuessViewController: UIViewController {
     
     var timeline: Timeline?
-    var image = UIImage()
-    static let shared = GuessViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.addSubview(viewContainer)
+        self.view.addSubview(previousSketch)
+        let passedTimeline = timeline
+        guard let data = passedTimeline?.rounds.last?.imageData else { return }
+        let image = UIImage(data: data)
+        previousSketch.image = image
     }
     
     lazy var viewContainer: UIView = {
@@ -31,12 +34,15 @@
         let ps = UIImageView()
         ps.frame = CGRect(x: 0, y: 100, width: 450, height: 500)
         ps.backgroundColor = .white
+        ps.contentMode = .scaleAspectFit
         return ps
     }()
     
     let guessTextField: UITextField = {
         let gtf = UITextField()
         gtf.frame = CGRect(x: 50, y: 600, width: 350, height: 70)
+        gtf.backgroundColor = .white
+        gtf.textColor = .black
         return gtf
     }()
  }

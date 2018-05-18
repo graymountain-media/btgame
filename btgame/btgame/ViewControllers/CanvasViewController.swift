@@ -29,12 +29,13 @@ class CanvasViewController: UIViewController {
     
     lazy var topicLabel: UILabel = {
         let lbl = UILabel()
+        let passedTimeline = timeline
         lbl.frame = CGRect(x: self.view.frame.width/4, y: self.view.frame.height/8, width: self.view.frame.width/2, height: self.view.frame.height/16)
         lbl.backgroundColor = .white
         lbl.layer.cornerRadius = 15.0
-        lbl.text = "selectedTopic"
         lbl.textAlignment = .center
         lbl.textColor = .red
+        lbl.text = "\(passedTimeline?.rounds.last?.guess)"
         
         return lbl
     }()
