@@ -16,9 +16,8 @@ protocol MCControllerDelegate {
     func playerJoinedSession()
     func incrementDoneButtonCounter()
     func toTopicView(timeline: Timeline)
-//    func didReceivePlayer(data: Data)
-//    func didReceiveCounter(data: Data)
-//    func didReceiveTimeline(data: Data)
+    func toCanvasView(timeline: Timeline)
+    func toGuessView(timeline: Timeline)
 }
 
 class MCController: NSObject, MCSessionDelegate {
@@ -156,7 +155,12 @@ class MCController: NSObject, MCSessionDelegate {
                     if (GameController.shared.currentGame.returnedTimelines.count) == currentGamePeers.count {
                         GameController.shared.startNewRound()
                     }
+                case .toGuess:
+                    return
+                case .toCanvas:
+                    return
                 }
+                
             }
             return
         }

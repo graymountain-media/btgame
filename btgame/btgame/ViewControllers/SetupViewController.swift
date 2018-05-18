@@ -162,6 +162,13 @@ extension SetupViewController: MCControllerDelegate {
     func incrementDoneButtonCounter() {
         startButtonStatus()
     }
+    func toCanvasView(timeline: Timeline) {
+        
+    }
+    
+    func toGuessView(timeline: Timeline) {
+        
+    }
 }
 
 extension SetupViewController: UITableViewDataSource {
