@@ -145,16 +145,18 @@ class MCController: NSObject, MCSessionDelegate {
         if let event = DataManager.shared.decodeEvent(from: data){
             print("Event received")
             if(!isAdvertiser){
-                
+                print("EVENT INSTRUCTION: \(event.instruction.rawValue)")
+                print("EVENT INSTRUCTION: \(event.timeline)")
                 switch event.instruction{
                 case .toTopics:
                     delegate?.toTopicView(timeline: event.timeline)
                     GameController.shared.startTimer()
                 case .endRoundReturn:
-                    GameController.shared.currentGame.returnedTimelines.append(event.timeline)
-                    if (GameController.shared.currentGame.returnedTimelines.count) == currentGamePeers.count {
-                        GameController.shared.startNewRound()
-                    }
+                    return
+                    //                    GameController.shared.currentGame.returnedTimelines.append(event.timeline)
+//                    if (GameController.shared.currentGame.returnedTimelines.count) == currentGamePeers.count {
+//                        GameController.shared.startNewRound()
+//                    }
                 case .toGuess:
                     delegate?.toGuessView(timeline: event.timeline)
                     GameController.shared.startTimer()
@@ -165,8 +167,21 @@ class MCController: NSObject, MCSessionDelegate {
                     return
                 }
                 
+            } else {
+                switch event.instruction{
+                case .toTopics:
+                    return
+                case .endRoundReturn:
+                    GameController.shared.currentGame.returnedTimelines.append(event.timeline)
+                    if (GameController.shared.currentGame.returnedTimelines.count) == currentGamePeers.count {
+                        GameController.shared.startNewRound()
+                    }
+                case .toGuess:
+                    return
+                case .toCanvas:
+                    return
+                }
             }
-            return
         }
 
     }
