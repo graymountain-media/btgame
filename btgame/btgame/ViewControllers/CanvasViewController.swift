@@ -9,9 +9,11 @@
 import UIKit
 
 class CanvasViewController: UIViewController {
+    
     var path = UIBezierPath()
     var startPoint = CGPoint()
     var touchPoint = CGPoint()
+    var timeline: Timeline?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +40,7 @@ class CanvasViewController: UIViewController {
     
     lazy var canvasView: CanvasView = {
         let cv = CanvasView()
-        cv.frame = CGRect(x: 0, y: 250, width: 300, height: 300)
+        cv.frame = CGRect(x: 0, y: 150, width: 300, height: 300)
         cv.backgroundColor = .white
         cv.draw()
         return cv
@@ -46,18 +48,19 @@ class CanvasViewController: UIViewController {
     
     lazy var testSegueButton: UIButton = {
         let btn = UIButton()
-        btn.frame = CGRect(x: 132, y: 375, width: 150, height: 50)
+        btn.frame = CGRect(x: 132, y: 450, width: 150, height: 50)
         btn.setTitle("perform segue", for: .normal)
         btn.titleLabel?.font = UIFont(name: "Times New Roman", size: 20)
-        btn.backgroundColor = .gray
-        btn.addTarget(self, action: #selector(self.goToNextView(_:)), for: .touchDown)
+        btn.backgroundColor = .white
+//        btn.addTarget(self, action: #selector(self.goToNextView(_:)), for: .touchDown)
         return btn
     }()
     
-    @objc func goToNextView(_ sender: UIButton) {
-        let nextView = GuessViewController()
-        self.navigationController?.show(nextView, sender: sender)
-    }
+//    @objc func goToNextView(_ sender: UIButton) {
+//        let nextView = GuessViewController()
+//        nextView.previousSketch.image = canvasView.makeImage(withView: canvasView)
+//        self.navigationController?.show(nextView, sender: sender)
+//    }
 }
 
 extension UIView {
@@ -73,3 +76,18 @@ extension UIView {
     }
 }
 
+extension CanvasViewController: MCControllerDelegate {
+    func playerJoinedSession() {}
+    func incrementDoneButtonCounter() {}
+    func toTopicView(timeline: Timeline) {}
+
+}
+
+extension CanvasViewController: GameControllerDelegate {
+    func roundEnded() -> Timeline {
+        let newRound = Round(owner: MCController.shared.playerArray[0], image: canvasView.makeImage(withView: canvasView), guess: nil, isImage: true)
+        guard let timeline = timeline else { return Timeline(owner: MCController.shared.playerArray[0]) }
+        timeline.rounds.append(newRound)
+        return timeline
+    }
+}

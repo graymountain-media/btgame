@@ -1,15 +1,16 @@
  //
-//  GuessViewController.swift
-//  btgame
-//
-//  Created by Jake Gray on 5/15/18.
-//  Copyright © 2018 Jake Gray. All rights reserved.
-//
-
-import UIKit
-
-class GuessViewController: UIViewController {
-
+ //  GuessViewController.swift
+ //  btgame
+ //
+ //  Created by Jake Gray on 5/15/18.
+ //  Copyright © 2018 Jake Gray. All rights reserved.
+ //
+ 
+ import UIKit
+ 
+ class GuessViewController: UIViewController {
+    
+    var timeline: Timeline?
     var image = UIImage()
     static let shared = GuessViewController()
     
@@ -32,4 +33,25 @@ class GuessViewController: UIViewController {
         ps.backgroundColor = .white
         return ps
     }()
-}
+    
+    let guessTextField: UITextField = {
+        let gtf = UITextField()
+        gtf.frame = CGRect(x: 50, y: 600, width: 350, height: 70)
+        return gtf
+    }()
+ }
+ 
+ extension GuessViewController: MCControllerDelegate {
+    func playerJoinedSession() {}
+    func incrementDoneButtonCounter() {}
+    func toTopicView(timeline: Timeline) {}
+ }
+ 
+ extension GuessViewController: GameControllerDelegate {
+    func roundEnded() -> Timeline {
+        let newRound = Round(owner: MCController.shared.playerArray[0], image: nil, guess: guessTextField.text, isImage: false)
+        guard let timeline = timeline else { return Timeline(owner: MCController.shared.playerArray[0]) }
+        timeline.rounds.append(newRound)
+        return timeline
+    }
+ }

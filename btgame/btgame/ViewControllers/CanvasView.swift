@@ -27,7 +27,6 @@ class CanvasView: UIView {
         let image = renderer.image { ctx in
             view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
         }
-        
         print("\(image)")
         return image
     }
