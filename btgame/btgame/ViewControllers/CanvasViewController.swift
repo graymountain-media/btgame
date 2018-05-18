@@ -14,6 +14,7 @@ class CanvasViewController: UIViewController {
     var startPoint = CGPoint()
     var touchPoint = CGPoint()
     var timeline: Timeline?
+    var seeconds = 30
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +23,7 @@ class CanvasViewController: UIViewController {
 //        self.view.addSubview(testSegueButton)
         self.view.addSubview(canvasView)
         self.view.addSubview(topicLabel)
+        self.view.addSubview(timerLabel)
         self.view.addBackground()
         canvasView.tag = 1
 //        GameController.shared.startTimer()
@@ -35,7 +37,7 @@ class CanvasViewController: UIViewController {
         lbl.layer.cornerRadius = 15.0
         lbl.textAlignment = .center
         lbl.textColor = .red
-        lbl.text = "\(passedTimeline?.rounds.last?.guess)"
+        lbl.text = "\(String(describing: passedTimeline?.rounds.last?.guess))"
         
         return lbl
     }()
@@ -48,6 +50,15 @@ class CanvasViewController: UIViewController {
         return cv
     }()
     
+    lazy var timerLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.frame = CGRect(x: self.view.frame.width/6, y: self.view.frame.height/8 * 7, width: self.view.frame.width/4, height: self.view.frame.height/12)
+//        lbl.backgroundColor = .gray
+        lbl.textColor = .white
+        lbl.text = "\(seeconds)"
+        lbl.font = UIFont(name: "Times New Roman", size: 30)
+        return lbl
+    }()
 //    lazy var redButton: UIButton = {
 //        let btn = UIButton()
 //        return btn
