@@ -76,7 +76,7 @@ class SetupViewController: UIViewController {
         GameController.shared.startNewGame(players: MCController.shared.playerArray)
         DispatchQueue.main.async {
             let destinationVC = TopicViewController()
-            for timeline in GameController.shared.timelineOrder {
+            for timeline in GameController.shared.orderedTimelines {
                 if timeline.owner == MCController.shared.playerArray[0] {
                     destinationVC.timeline = timeline
                 }

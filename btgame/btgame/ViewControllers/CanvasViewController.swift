@@ -126,6 +126,16 @@ extension CanvasViewController: MCControllerDelegate {
 }
 
 extension CanvasViewController: GameControllerDelegate {
+    func advertiserToCanvasView(withTimeLine: Timeline) {
+        
+    }
+    
+    func advertiserToGuessView(withTimeLine: Timeline) {
+        let guessView = GuessViewController()
+        guessView.timeline = timeline
+        navigationController?.pushViewController(guessView, animated: true)
+    }
+    
     func roundEnded() -> Timeline {
         let newRound = Round(owner: MCController.shared.playerArray[0], image: canvasView.makeImage(withView: canvasView), guess: nil, isImage: true)
         guard let timeline = timeline else { return Timeline(owner: MCController.shared.playerArray[0]) }

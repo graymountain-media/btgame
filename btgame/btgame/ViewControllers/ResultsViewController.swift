@@ -13,7 +13,7 @@ class ResultsViewController: UICollectionViewController, UICollectionViewDelegat
     let game = Game(players: [], timeLines: [])
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+//        super.viewDidLoad()
         
         navigationItem.title = "Results"
         

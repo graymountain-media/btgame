@@ -60,6 +60,15 @@
  }
  
  extension GuessViewController: GameControllerDelegate {
+    func advertiserToCanvasView(withTimeLine: Timeline) {
+        let canvasView = CanvasViewController()
+        canvasView.timeline = timeline
+        navigationController?.pushViewController(canvasView, animated: true)
+    }
+    
+    func advertiserToGuessView(withTimeLine: Timeline) {
+    }
+    
     func roundEnded() -> Timeline {
         let newRound = Round(owner: MCController.shared.playerArray[0], image: nil, guess: guessTextField.text, isImage: false)
         guard let timeline = timeline else { return Timeline(owner: MCController.shared.playerArray[0]) }

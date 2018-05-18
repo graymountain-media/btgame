@@ -143,27 +143,17 @@ class MCController: NSObject, MCSessionDelegate {
 //        }
         
         if let event = DataManager.shared.decodeEvent(from: data){
-            print("Event received")
             if(!isAdvertiser){
-                print("EVENT INSTRUCTION: \(event.instruction.rawValue)")
-                print("EVENT INSTRUCTION: \(event.timeline)")
                 switch event.instruction{
                 case .toTopics:
                     delegate?.toTopicView(timeline: event.timeline)
-                    GameController.shared.startTimer()
                 case .endRoundReturn:
                     return
-                    //                    GameController.shared.currentGame.returnedTimelines.append(event.timeline)
-//                    if (GameController.shared.currentGame.returnedTimelines.count) == currentGamePeers.count {
-//                        GameController.shared.startNewRound()
-//                    }
                 case .toGuess:
                     delegate?.toGuessView(timeline: event.timeline)
-                    GameController.shared.startTimer()
                     return
                 case .toCanvas:
                     delegate?.toCanvasView(timeline: event.timeline)
-                    GameController.shared.startTimer()
                     return
                 }
                 
@@ -172,9 +162,9 @@ class MCController: NSObject, MCSessionDelegate {
                 case .toTopics:
                     return
                 case .endRoundReturn:
-                    GameController.shared.currentGame.returnedTimelines.append(event.timeline)
-                    print("SPECIAL RETURNED TIMELINES: \(GameController.shared.currentGame.returnedTimelines)")
-                    if (GameController.shared.currentGame.returnedTimelines.count) == currentGamePeers.count {
+                    GameController.shared.returnedTimelines.append(event.timeline)
+                    print("SPECIAL RETURNED TIMELINES: \(GameController.shared.returnedTimelines)")
+                    if (GameController.shared.returnedTimelines.count) == currentGamePeers.count {
                         GameController.shared.startNewRound()
                     }
                 case .toGuess:
