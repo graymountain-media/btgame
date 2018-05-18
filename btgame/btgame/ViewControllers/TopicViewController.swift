@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import MultipeerConnectivity
 
 class TopicViewController: UIViewController {
     
     var displayName: String?
     var timeline: Timeline?
     var buttons: [UIButton] = []
+    var selectedTopic: String = ""
     
     let containerView: UIView = {
         
@@ -94,11 +96,11 @@ class TopicViewController: UIViewController {
         view.addSubview(containerView)
         navigationItem.leftBarButtonItem = nil
         
-        
-        
         // Contstraints
         setupContainerView()
         setTopics()
+        guard let timeline = timeline else {return}
+        selectedTopic = timeline.possibleTopics[0]
     }
     
     func setupContainerView() {
@@ -175,10 +177,8 @@ class TopicViewController: UIViewController {
                                  height: 0)
     }
     
-    @objc func firstChoiceButtonTapped() {
-        let resultsViewController = ResultsViewController(collectionViewLayout: UICollectionViewFlowLayout())
-        navigationController?.pushViewController(resultsViewController, animated: true)
-        
+    @objc func buttonTapped(button: ) {
+        selectedTopic = b
     }
     
     func setTopics(){
@@ -188,4 +188,30 @@ class TopicViewController: UIViewController {
         }
     }
     
+}
+extension TopicViewController: GameControllerDelegate {
+    func roundEnded() -> Timeline {
+        let newRound = Round(owner: Player(displayName: "Starter Topic", id: MCPeerID(displayName: "Starter") , isAdvertiser: false), image: nil, guess: selectedTopic, isImage: false)
+        
+        guard let timeline = self.timeline else {return Timeline(owner: MCController.shared.playerArray[0])}
+        
+        timeline.rounds.append(newRound)
+        return timeline
+    }
+    
+    
+}
+
+extension TopicViewController: MCControllerDelegate{
+    
+    func toCanvasView(timeline: Timeline) {
+        let canvasView = CanvasViewController()
+        canvasView.timeline = timeline
+        navigationController?.pushViewController(canvasView, animated: true)
+    }
+    
+    func playerJoinedSession() {}
+    func incrementDoneButtonCounter() {}
+    func toTopicView(timeline: Timeline) {}
+    func toGuessView(timeline: Timeline) {}
 }

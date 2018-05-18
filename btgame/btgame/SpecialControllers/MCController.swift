@@ -128,19 +128,19 @@ class MCController: NSObject, MCSessionDelegate {
             return
         }
         
-        if let counter = DataManager.shared.decodeCounter(from: data){
+        if let _ = DataManager.shared.decodeCounter(from: data){
             if(isAdvertiser){
                 delegate?.incrementDoneButtonCounter()
             }
-            print("INside counter function")
+            print("Inside counter function")
             return
         }
-        if let timeline = DataManager.shared.decodeTimeline(from: data){
-            if(isAdvertiser){
-                //do timeline things
-            }
-            return
-        }
+//        if let timeline = DataManager.shared.decodeTimeline(from: data){
+//            if(isAdvertiser){
+//                //do timeline things
+//            }
+//            return
+//        }
         
         if let event = DataManager.shared.decodeEvent(from: data){
             print("Event received")
@@ -156,8 +156,12 @@ class MCController: NSObject, MCSessionDelegate {
                         GameController.shared.startNewRound()
                     }
                 case .toGuess:
+                    delegate?.toGuessView(timeline: event.timeline)
+                    GameController.shared.startTimer()
                     return
                 case .toCanvas:
+                    delegate?.toCanvasView(timeline: event.timeline)
+                    GameController.shared.startTimer()
                     return
                 }
                 
