@@ -12,7 +12,7 @@ class Game {
     let id: UUID
     let numRounds: Int
     var timelines: [Timeline]
-    var returnTimelines: [Timeline]
+    var returnedTimelines: [Timeline]
     var timeLimit: Int
     var players: [Player]
     var topics: [String]
@@ -21,7 +21,7 @@ class Game {
         self.id = UUID()
         self.numRounds = players.count
         self.timelines = timelines
-        self.returnTimelines = []
+        self.returnedTimelines = []
         self.timeLimit = timeLimit
         self.players = players
         self.topics = []
