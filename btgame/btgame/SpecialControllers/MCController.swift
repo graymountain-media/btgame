@@ -146,14 +146,16 @@ class MCController: NSObject, MCSessionDelegate {
         if let event = DataManager.shared.decodeEvent(from: data){
             print("Event received")
             if(!isAdvertiser){
-                print("Received timeline topics: \(event.timeline.possibleTopics)")
-                print("Event String Received \(event.instruction)")
+                
                 switch event.instruction{
                 case .toTopics:
                     delegate?.toTopicView(timeline: event.timeline)
-                    
-                default:
-                    return
+                    GameController.shared.startTimer()
+                case .endRoundReturn:
+                    GameController.shared.currentGame.returnedTimelines.append(event.timeline)
+                    if (GameController.shared.currentGame.returnedTimelines.count) == currentGamePeers.count {
+                        GameController.shared.startNewRound()
+                    }
                 }
             }
             return

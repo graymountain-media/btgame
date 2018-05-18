@@ -14,6 +14,7 @@ class Event: Codable {
     
     enum Instruction: String, Codable {
         case toTopics
+        case endRoundReturn
     }
     
     init(withInstruction instruction: Instruction, timeline: Timeline) {

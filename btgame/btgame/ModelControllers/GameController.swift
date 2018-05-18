@@ -8,6 +8,9 @@
 
 import UIKit
 
+protocol GameControllerDelegate: class {
+    func roundEnded() -> Timeline
+}
 class GameController {
     
     static let shared = GameController()
@@ -17,6 +20,8 @@ class GameController {
     var timer: Timer = Timer()
     var isDrawingRound: Bool
     var turnOrder: [UUID:Player] = [:]
+    
+    weak var delegate: GameControllerDelegate?
     
     private init() {
         currentGame = Game(players: [], timelines: [])
@@ -51,8 +56,24 @@ class GameController {
         }
     }
     
-    func endRound(forPlayer player: Player, withImage image: UIImage?, guess: String?, timeline: Timeline) {
-        RoundController.createRound(withImage: image, orGuess: guess, owner: player, inTimeline: timeline )
+    func startNewRound () {
+        
+    }
+    
+    func endRound() {
+        
+        guard let timeline = delegate?.roundEnded() else {
+            print("No timline returned from view")
+            return
+        }
+        
+        if (!MCController.shared.isAdvertiser) {
+            MCController.shared.sendEvent(withInstruction: .endRoundReturn, timeline: timeline, toPeers: MCController.shared.peerIDDict[MCController.shared.playerArray[1]]!)
+        } else {
+            currentGame.returnedTimelines.append(timeline)
+        }
+        
+        
     }
     
     // MARK: Timer
@@ -72,7 +93,7 @@ class GameController {
     @objc private func timerTicked() {
         time -= 1
         if time == 0 {
-            //FIXME: GO to next phase
+            endRound()
             resetTimer()
         }
     }
