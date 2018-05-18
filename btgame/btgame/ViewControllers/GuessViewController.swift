@@ -42,9 +42,15 @@
  }
  
  extension GuessViewController: MCControllerDelegate {
+    func toGuessView(timeline: Timeline) {}
     func playerJoinedSession() {}
     func incrementDoneButtonCounter() {}
     func toTopicView(timeline: Timeline) {}
+    func toCanvasView(timeline: Timeline) {
+        let nextView = CanvasViewController()
+        nextView.timeline = timeline
+        self.navigationController?.pushViewController(nextView, animated: true)
+    }
  }
  
  extension GuessViewController: GameControllerDelegate {

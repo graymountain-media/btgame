@@ -24,6 +24,7 @@ class CanvasViewController: UIViewController {
         self.view.addSubview(topicLabel)
         self.view.addBackground()
         canvasView.tag = 1
+//        GameController.shared.startTimer()
     }
     
     lazy var topicLabel: UILabel = {
@@ -56,7 +57,7 @@ class CanvasViewController: UIViewController {
         return btn
     }()
     
-//    @objc func goToNextView(_ sender: UIButton) {
+//    @objc func goToNextView(_ sender: Any) {
 //        let nextView = GuessViewController()
 //        nextView.previousSketch.image = canvasView.makeImage(withView: canvasView)
 //        self.navigationController?.show(nextView, sender: sender)
@@ -77,10 +78,15 @@ extension UIView {
 }
 
 extension CanvasViewController: MCControllerDelegate {
+    func toCanvasView(timeline: Timeline) {}
     func playerJoinedSession() {}
     func incrementDoneButtonCounter() {}
     func toTopicView(timeline: Timeline) {}
-
+    func toGuessView(timeline: Timeline) {
+        let nextView = GuessViewController()
+        nextView.timeline = timeline
+        self.navigationController?.pushViewController(nextView, animated: true)
+    }
 }
 
 extension CanvasViewController: GameControllerDelegate {
