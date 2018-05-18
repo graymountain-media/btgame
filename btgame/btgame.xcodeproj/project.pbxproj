@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		3BD076B620AB384900BA7C43 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD076B520AB384900BA7C43 /* Constants.swift */; };
 		3BD076B820AB389F00BA7C43 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD076B720AB389F00BA7C43 /* Extensions.swift */; };
+		603D02A120ADE31C0021BE63 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D02A020ADE31C0021BE63 /* ImageCollectionViewCell.swift */; };
+		603D02A320ADE32C0021BE63 /* GuessCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D02A220ADE32C0021BE63 /* GuessCollectionViewCell.swift */; };
+		603D02A520AE1B830021BE63 /* PlayerResultsTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D02A420AE1B830021BE63 /* PlayerResultsTabBar.swift */; };
+		603D02A720AE3DDA0021BE63 /* ResultsTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D02A620AE3DDA0021BE63 /* ResultsTestViewController.swift */; };
+		603D02A920AE49EF0021BE63 /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D02A820AE49EF0021BE63 /* ImageTableViewCell.swift */; };
+		6087AC9F20AF2B4400153E27 /* GuessTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6087AC9E20AF2B4400153E27 /* GuessTableViewCell.swift */; };
 		A107EFC820ACD60E00EFBC59 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A107EFC720ACD60E00EFBC59 /* DataManager.swift */; };
 		A140781C20AE150B0077C85C /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = A140781B20AE150B0077C85C /* Event.swift */; };
 		A140781E20AE351E0077C85C /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A140781D20AE351E0077C85C /* Counter.swift */; };
@@ -40,6 +46,12 @@
 /* Begin PBXFileReference section */
 		3BD076B520AB384900BA7C43 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3BD076B720AB389F00BA7C43 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		603D02A020ADE31C0021BE63 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		603D02A220ADE32C0021BE63 /* GuessCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuessCollectionViewCell.swift; sourceTree = "<group>"; };
+		603D02A420AE1B830021BE63 /* PlayerResultsTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerResultsTabBar.swift; sourceTree = "<group>"; };
+		603D02A620AE3DDA0021BE63 /* ResultsTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsTestViewController.swift; sourceTree = "<group>"; };
+		603D02A820AE49EF0021BE63 /* ImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
+		6087AC9E20AF2B4400153E27 /* GuessTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuessTableViewCell.swift; sourceTree = "<group>"; };
 		A107EFC720ACD60E00EFBC59 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		A140781B20AE150B0077C85C /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		A140781D20AE351E0077C85C /* Counter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Counter.swift; sourceTree = "<group>"; };
@@ -155,6 +167,12 @@
 				BAA4C23A20ADE0220083A5A0 /* InstructionsViewController.swift */,
 				A1BCCC2D20AB2C2000A4AC7D /* GuessViewController.swift */,
 				A1BCCC2F20AB2C2D00A4AC7D /* ResultsViewController.swift */,
+				603D02A620AE3DDA0021BE63 /* ResultsTestViewController.swift */,
+				603D02A820AE49EF0021BE63 /* ImageTableViewCell.swift */,
+				6087AC9E20AF2B4400153E27 /* GuessTableViewCell.swift */,
+				603D02A420AE1B830021BE63 /* PlayerResultsTabBar.swift */,
+				603D02A020ADE31C0021BE63 /* ImageCollectionViewCell.swift */,
+				603D02A220ADE32C0021BE63 /* GuessCollectionViewCell.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -247,20 +265,26 @@
 				A1BCCC1120AB2B3900A4AC7D /* Timeline.swift in Sources */,
 				3BD076B620AB384900BA7C43 /* Constants.swift in Sources */,
 				A1BCCC2320AB2BCF00A4AC7D /* TimelineController.swift in Sources */,
+				603D02A520AE1B830021BE63 /* PlayerResultsTabBar.swift in Sources */,
 				A1BCCC1620AB2B6F00A4AC7D /* MCController.swift in Sources */,
 				A1BCCC2620AB2BF900A4AC7D /* RegisterViewController.swift in Sources */,
+				603D02A320ADE32C0021BE63 /* GuessCollectionViewCell.swift in Sources */,
 				A1BCCC2120AB2BC400A4AC7D /* RoundController.swift in Sources */,
 				A1BCCC1F20AB2BBA00A4AC7D /* PlayerController.swift in Sources */,
 				BAA4C23920ADE0020083A5A0 /* CanvasView.swift in Sources */,
 				A1BCCC2A20AB2C0900A4AC7D /* TopicViewController.swift in Sources */,
 				A1BCCC3020AB2C2D00A4AC7D /* ResultsViewController.swift in Sources */,
 				A1BCCC1320AB2B3F00A4AC7D /* Game.swift in Sources */,
+				603D02A720AE3DDA0021BE63 /* ResultsTestViewController.swift in Sources */,
 				A1BCCC3420AB2D1200A4AC7D /* WelcomeViewController.swift in Sources */,
 				A1BCCC0D20AB2ABF00A4AC7D /* Player.swift in Sources */,
 				A1BCCC0F20AB2ACC00A4AC7D /* Round.swift in Sources */,
+				6087AC9F20AF2B4400153E27 /* GuessTableViewCell.swift in Sources */,
 				A1BCCC2E20AB2C2000A4AC7D /* GuessViewController.swift in Sources */,
 				A1BCCC1B20AB2B9C00A4AC7D /* GameController.swift in Sources */,
+				603D02A120ADE31C0021BE63 /* ImageCollectionViewCell.swift in Sources */,
 				3BD076B820AB389F00BA7C43 /* Extensions.swift in Sources */,
+				603D02A920AE49EF0021BE63 /* ImageTableViewCell.swift in Sources */,
 				A1BCCC1820AB2B7700A4AC7D /* NetworkController.swift in Sources */,
 				BAA4C23B20ADE0220083A5A0 /* InstructionsViewController.swift in Sources */,
 				A1BCCC2820AB2C0000A4AC7D /* SetupViewController.swift in Sources */,
