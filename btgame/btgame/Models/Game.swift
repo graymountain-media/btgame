@@ -11,7 +11,6 @@ import Foundation
 class Game {
     let id: UUID
     let numberOfRounds: Int
-    var timelines: [Timeline]
     var returnedTimelines: [Timeline] {
         didSet{
             print("RETURNED TIMELINES: \(returnedTimelines)")
@@ -24,7 +23,6 @@ class Game {
     init(players: [Player], timelines: [Timeline], timeLimit: Int = 15) {
         self.id = UUID()
         self.numberOfRounds = players.count
-        self.timelines = timelines
         self.returnedTimelines = []
         self.timeLimit = timeLimit
         self.players = players

@@ -18,13 +18,13 @@ class GameController {
     
     static let shared = GameController()
     var currentGame: Game
-//    var timelines: [Timeline] = []
     var time = 0
     var timer: Timer = Timer()
     var isDrawingRound: Bool
     var playerOrder: [Player] = []
-    var timelineOrder: [Timeline] = []
-    var roundNumber = 1
+    var orderedTimelines: [Timeline] = []
+    var returnedTimelines: [Timeline] = []
+    var roundNumber = 0
     var nextRoundInstruction = Event.Instruction.toCanvas
     
     weak var delegate: GameControllerDelegate?
@@ -39,9 +39,7 @@ class GameController {
     func startNewGame(players: [Player]) {
         createTurnOrder()
         createTimelines(forPlayers: players)
-        print("START NEW GAME TIMELINES: \(timelineOrder)")
-        print("START NEW GAME PLAYER ORDER: \(playerOrder)")
-        currentGame = Game(players: players, timelines: timelineOrder)
+        currentGame = Game(players: players, timelines: orderedTimelines)
         getTopics()
         time = currentGame.timeLimit
         roundNumber = 1
@@ -60,28 +58,19 @@ class GameController {
     }
     
     func distributeTopics(){
-        print("Distribute topics")
-        print(timelineOrder)
-        for timeline in timelineOrder {
-            print(timeline.owner)
+        for timeline in orderedTimelines {
             if timeline.owner != currentGame.players[0] {
-                
                 guard let peerID = MCController.shared.peerIDDict[timeline.owner] else {
                     print("Failed sending first round")
                     return}
-                print("send timeline")
                 MCController.shared.sendEvent(withInstruction: .toTopics, timeline: timeline, toPeers: peerID)
             }
         }
     }
     
     func startNewRound () {
-        
-        //increment turn number
         roundNumber += 1
-            //determine whether to continue
         if roundNumber > currentGame.numberOfRounds {
-            //End game
         }
         isDrawingRound = !isDrawingRound
         if isDrawingRound {
@@ -89,16 +78,14 @@ class GameController {
         } else {
             nextRoundInstruction = .toGuess
         }
+        shiftTimelines()
         
-        //shift turn order
-        shiftRounds()
-        //send out newturn event
         for (index,player) in playerOrder.enumerated() {
             if player.isAdvertiser != true {
                 guard let peerID = MCController.shared.peerIDDict[player] else {return}
-                MCController.shared.sendEvent(withInstruction: nextRoundInstruction, timeline: timelineOrder[index], toPeers: peerID)
+                MCController.shared.sendEvent(withInstruction: nextRoundInstruction, timeline: orderedTimelines[index], toPeers: peerID)
             } else {
-                sendAdvertiserToNextView(withTimeline: timelineOrder[index])
+                sendAdvertiserToNextView(withTimeline: orderedTimelines[index])
             }
         }
     }
@@ -111,56 +98,24 @@ class GameController {
         }
     }
     
-    fileprivate func shiftRounds(){
+    fileprivate func shiftTimelines(){
         guard let player = playerOrder.popLast() else {return}
         playerOrder.insert(player, at: 0)
     }
     
     func endRound(withTimeline timeline: Timeline) {
         
-//        guard let timeline = delegate?.roundEnded() else {
-//            print("No timline returned from view")
-//            return
-//        }
-        
         if (!MCController.shared.isAdvertiser) {
             MCController.shared.sendEvent(withInstruction: .endRoundReturn, timeline: timeline, toPeers: MCController.shared.peerIDDict[MCController.shared.playerArray[1]]!)
         } else {
-            currentGame.returnedTimelines.append(timeline)
-        }
-        
-        
-    }
-    
-    // MARK: Timer
-    
-    func resetTimer() {
-        time = currentGame.timeLimit
-        timer.invalidate()
-    }
-    
-    func startTimer() {
-        print("timer started")
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerTicked), userInfo: nil, repeats: true)
-    }
-    
-    
-    // MARK: - Private Functions
-    
-    @objc private func timerTicked() {
-        time -= 1
-        print(time)
-        if time == 0 {
-            print("Wrong timer")
-           // endRound()
-            resetTimer()
+            returnedTimelines.append(timeline)
         }
     }
     
     private func createTimelines(forPlayers players: [Player]) {
         for player in playerOrder {
             let newTimeline = TimelineController.createTimeline(forPlayer: player)
-            timelineOrder.append(newTimeline)
+            orderedTimelines.append(newTimeline)
         }
     }
     
@@ -176,7 +131,7 @@ class GameController {
             }
         }
         
-        for timeline in currentGame.timelines {
+        for timeline in orderedTimelines {
             for _ in 1...4{
                 let index = getNumber()
                 timeline.possibleTopics.append(topics_all[Int(index)])
