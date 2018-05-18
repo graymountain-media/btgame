@@ -15,6 +15,8 @@ class TopicViewController: UIViewController {
     var timeline: Timeline?
     var buttons: [UIButton] = []
     var selectedTopic: String = ""
+    var timer = Timer()
+    var time = GameController.shared.currentGame.timeLimit
     
     let containerView: UIView = {
         
@@ -36,7 +38,7 @@ class TopicViewController: UIViewController {
         return label
     }()
     
-    let firstChoiceButton: UIButton = {
+    lazy var firstChoiceButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = UIColor.black
         button.setTitle("Topic", for: .normal)
@@ -45,11 +47,11 @@ class TopicViewController: UIViewController {
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         button.layer.cornerRadius = 15
         button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(firstChoiceButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         return button
     }()
     
-    let secondChoiceButton: UIButton = {
+    lazy var secondChoiceButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = UIColor.black
         button.setTitle("Topic", for: .normal)
@@ -58,10 +60,11 @@ class TopicViewController: UIViewController {
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         button.layer.cornerRadius = 15
         button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         return button
     }()
     
-    let thirdChoiceButton: UIButton = {
+    lazy var thirdChoiceButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = UIColor.black
         button.setTitle("Topic", for: .normal)
@@ -70,10 +73,11 @@ class TopicViewController: UIViewController {
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         button.layer.cornerRadius = 15
         button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         return button
     }()
     
-    let fourthChoiceButton: UIButton = {
+    lazy var fourthChoiceButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = UIColor.black
         button.setTitle("Topic", for: .normal)
@@ -82,11 +86,13 @@ class TopicViewController: UIViewController {
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         button.layer.cornerRadius = 15
         button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         return button
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        MCController.shared.delegate = self
         buttons = [firstChoiceButton,secondChoiceButton,thirdChoiceButton,fourthChoiceButton]
         
         view.backgroundColor = UIColor.blue
@@ -101,6 +107,29 @@ class TopicViewController: UIViewController {
         setTopics()
         guard let timeline = timeline else {return}
         selectedTopic = timeline.possibleTopics[0]
+        startTimer()
+    }
+    
+    // MARK: Timer
+    
+    func resetTimer() {
+        time = GameController.shared.currentGame.timeLimit
+        timer.invalidate()
+    }
+    
+    func startTimer() {
+        print("timer started")
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerTicked), userInfo: nil, repeats: true)
+    }
+    
+    @objc private func timerTicked() {
+        time -= 1
+        print(time)
+        if time == 0 {
+            let timeline = roundEnded()
+            GameController.shared.endRound(withTimeline: timeline)
+            resetTimer()
+        }
     }
     
     func setupContainerView() {
@@ -177,8 +206,9 @@ class TopicViewController: UIViewController {
                                  height: 0)
     }
     
-    @objc func buttonTapped(button: ) {
-        selectedTopic = b
+    @objc func buttonTapped(button: UIButton) {
+        guard let topic = button.titleLabel?.text else {return}
+        selectedTopic = topic
     }
     
     func setTopics(){

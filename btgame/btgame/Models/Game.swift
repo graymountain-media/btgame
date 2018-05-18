@@ -12,7 +12,11 @@ class Game {
     let id: UUID
     let numberOfRounds: Int
     var timelines: [Timeline]
-    var returnedTimelines: [Timeline]
+    var returnedTimelines: [Timeline] {
+        didSet{
+            print("RETURNED TIMELINES: \(returnedTimelines)")
+        }
+    }
     var timeLimit: Int
     var players: [Player]
     var topics: [String]

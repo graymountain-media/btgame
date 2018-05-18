@@ -33,12 +33,14 @@ class GameController {
     // MARK: - Public Functions
     
     func startNewGame(players: [Player]) {
+        createTurnOrder()
         createTimelines(forPlayers: players)
+        print("START NEW GAME TIMELINES: \(timelineOrder)")
+        print("START NEW GAME PLAYER ORDER: \(playerOrder)")
         currentGame = Game(players: players, timelines: timelineOrder)
         getTopics()
         time = currentGame.timeLimit
         roundNumber = 1
-        createTurnOrder()
         distributeTopics()
     }
     
@@ -53,8 +55,12 @@ class GameController {
     }
     
     func distributeTopics(){
-        for timeline in currentGame.timelines {
+        print("Distribute topics")
+        print(timelineOrder)
+        for timeline in timelineOrder {
+            print(timeline.owner)
             if timeline.owner != currentGame.players[0] {
+                
                 guard let peerID = MCController.shared.peerIDDict[timeline.owner] else {
                     print("Failed sending first round")
                     return}
@@ -92,12 +98,12 @@ class GameController {
         playerOrder.insert(player, at: 0)
     }
     
-    func endRound() {
+    func endRound(withTimeline timeline: Timeline) {
         
-        guard let timeline = delegate?.roundEnded() else {
-            print("No timline returned from view")
-            return
-        }
+//        guard let timeline = delegate?.roundEnded() else {
+//            print("No timline returned from view")
+//            return
+//        }
         
         if (!MCController.shared.isAdvertiser) {
             MCController.shared.sendEvent(withInstruction: .endRoundReturn, timeline: timeline, toPeers: MCController.shared.peerIDDict[MCController.shared.playerArray[1]]!)
@@ -116,6 +122,7 @@ class GameController {
     }
     
     func startTimer() {
+        print("timer started")
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerTicked), userInfo: nil, repeats: true)
     }
     
@@ -124,8 +131,10 @@ class GameController {
     
     @objc private func timerTicked() {
         time -= 1
+        print(time)
         if time == 0 {
-            endRound()
+            print("Wrong timer")
+           // endRound()
             resetTimer()
         }
     }
