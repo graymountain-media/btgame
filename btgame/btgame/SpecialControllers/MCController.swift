@@ -173,6 +173,7 @@ class MCController: NSObject, MCSessionDelegate {
                     return
                 case .endRoundReturn:
                     GameController.shared.currentGame.returnedTimelines.append(event.timeline)
+                    print("SPECIAL RETURNED TIMELINES: \(GameController.shared.currentGame.returnedTimelines)")
                     if (GameController.shared.currentGame.returnedTimelines.count) == currentGamePeers.count {
                         GameController.shared.startNewRound()
                     }
