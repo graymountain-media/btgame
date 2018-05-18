@@ -56,7 +56,7 @@ class CanvasView: UIView {
         strokeLayer.fillColor = nil
         strokeLayer.strokeColor = UIColor.black.cgColor
         strokeLayer.path = path.cgPath
-        strokeLayer.lineWidth = 20
+        strokeLayer.lineWidth = 10
         viewWithTag(1)?.layer.addSublayer(strokeLayer)
         viewWithTag(1)?.setNeedsDisplay()
 
