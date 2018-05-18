@@ -10,7 +10,7 @@ import Foundation
 
 class Game {
     let id: UUID
-    let numRounds: Int
+    let numberOfRounds: Int
     var timelines: [Timeline]
     var returnedTimelines: [Timeline]
     var timeLimit: Int
@@ -19,7 +19,7 @@ class Game {
     
     init(players: [Player], timelines: [Timeline], timeLimit: Int = 15) {
         self.id = UUID()
-        self.numRounds = players.count
+        self.numberOfRounds = players.count
         self.timelines = timelines
         self.returnedTimelines = []
         self.timeLimit = timeLimit

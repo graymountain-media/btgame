@@ -14,6 +14,8 @@ class Event: Codable {
     
     enum Instruction: String, Codable {
         case toTopics
+        case toCanvas
+        case toGuess
         case endRoundReturn
     }
     

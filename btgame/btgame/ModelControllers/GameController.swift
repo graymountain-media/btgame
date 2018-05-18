@@ -19,7 +19,9 @@ class GameController {
     var time = 0
     var timer: Timer = Timer()
     var isDrawingRound: Bool
-    var turnOrder: [UUID:Player] = [:]
+    var playerOrder: [Player] = []
+    var timelineOrder: [Timeline] = []
+    var roundNumber = 1
     
     weak var delegate: GameControllerDelegate?
     
@@ -31,19 +33,25 @@ class GameController {
     // MARK: - Public Functions
     
     func startNewGame(players: [Player]) {
-        let timelines = createTimelines(forPlayers: players)
-        currentGame = Game(players: players, timelines: timelines)
+        createTimelines(forPlayers: players)
+        currentGame = Game(players: players, timelines: timelineOrder)
         getTopics()
         time = currentGame.timeLimit
+        roundNumber = 1
         createTurnOrder()
         distributeTopics()
     }
     
     func createTurnOrder(){
-        for i in 0...currentGame.players.count - 1 {
-            turnOrder[currentGame.timelines[i].id] = currentGame.timelines[i].owner
+        let isBefore = arc4random_uniform(2)
+        for player in MCController.shared.playerArray {            if isBefore == 1 {
+                playerOrder.insert(player, at: 0)
+            } else {
+                playerOrder.append(player)
+            }
         }
     }
+    
     func distributeTopics(){
         for timeline in currentGame.timelines {
             if timeline.owner != currentGame.players[0] {
@@ -57,7 +65,31 @@ class GameController {
     }
     
     func startNewRound () {
+        var nextRoundINstruction = Event.Instruction.toCanvas
+        //increment turn number
+        roundNumber += 1
+            //determine whether to continue
+        if roundNumber > currentGame.numberOfRounds {
+            //End game
+        }
+        if (timelineOrder[0].rounds.last?.isImage)! {
+            nextRoundINstruction = .toGuess
+        } else {
+            nextRoundINstruction = .toCanvas
+        }
         
+        //shift turn order
+        shiftRounds()
+        //send out newturn event
+        for (index,player) in playerOrder.enumerated() {
+            guard let peerID = MCController.shared.peerIDDict[player] else {return}
+            MCController.shared.sendEvent(withInstruction: nextRoundINstruction, timeline: timelineOrder[index], toPeers: peerID)
+        }
+    }
+    
+    fileprivate func shiftRounds(){
+        guard let player = playerOrder.popLast() else {return}
+        playerOrder.insert(player, at: 0)
     }
     
     func endRound() {
@@ -98,15 +130,11 @@ class GameController {
         }
     }
     
-    private func createTimelines(forPlayers players: [Player]) -> [Timeline] {
-        var timelines: [Timeline] = []
-        for player in players {
+    private func createTimelines(forPlayers players: [Player]) {
+        for player in playerOrder {
             let newTimeline = TimelineController.createTimeline(forPlayer: player)
-            timelines.append(newTimeline)
-            turnOrder[newTimeline.id] = player
+            timelineOrder.append(newTimeline)
         }
-        
-        return timelines
     }
     
     private func getTopics(){
