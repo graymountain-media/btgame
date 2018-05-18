@@ -28,6 +28,13 @@ class TopicViewController: UIViewController {
         return view
     }()
     
+    lazy var timeLabel: UILabel = {
+        let label = UILabel()
+        label.text = String(self.time)
+        label.textAlignment = .right
+        return label
+    }()
+    
     let chooseTopicBelowLabel: UILabel = {
         let label = UILabel()
         label.text = "Choose one below"
@@ -124,6 +131,7 @@ class TopicViewController: UIViewController {
     
     @objc private func timerTicked() {
         time -= 1
+        timeLabel.text = String(time)
         print(time)
         if time == 0 {
             let timeline = roundEnded()
@@ -144,7 +152,18 @@ class TopicViewController: UIViewController {
         containerView.addSubview(secondChoiceButton)
         containerView.addSubview(thirdChoiceButton)
         containerView.addSubview(fourthChoiceButton)
+        containerView.addSubview(timeLabel)
         
+        timeLabel.anchor(top: containerView.topAnchor,
+                         left: containerView.leftAnchor,
+                         bottom: nil,
+                         right: containerView.rightAnchor,
+                         paddingTop: 0,
+                         paddingLeft: 0,
+                         paddingBottom: 0,
+                         paddingRight: 0,
+                         width: 0,
+                         height: 0)
         chooseTopicBelowLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
         chooseTopicBelowLabel.anchor(top: containerView.topAnchor,
                             left: nil,
@@ -220,6 +239,7 @@ class TopicViewController: UIViewController {
     
 }
 extension TopicViewController: GameControllerDelegate {
+    
     func roundEnded() -> Timeline {
         let newRound = Round(owner: Player(displayName: "Starter Topic", id: MCPeerID(displayName: "Starter") , isAdvertiser: false), image: nil, guess: selectedTopic, isImage: false)
         
@@ -229,15 +249,25 @@ extension TopicViewController: GameControllerDelegate {
         return timeline
     }
     
+    func advertiserToCanvasView(withTimeLine: Timeline) {
+        let canvasView = CanvasViewController()
+        canvasView.timeline = timeline
+        navigationController?.pushViewController(canvasView, animated: true)
+    }
+    
+    func advertiserToGuessView(withTimeLine: Timeline) {
+    }
     
 }
 
 extension TopicViewController: MCControllerDelegate{
     
     func toCanvasView(timeline: Timeline) {
-        let canvasView = CanvasViewController()
-        canvasView.timeline = timeline
-        navigationController?.pushViewController(canvasView, animated: true)
+        DispatchQueue.main.async {
+            let canvasView = CanvasViewController()
+            canvasView.timeline = timeline
+            self.navigationController?.pushViewController(canvasView, animated: true)
+        }
     }
     
     func playerJoinedSession() {}

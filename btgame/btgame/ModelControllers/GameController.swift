@@ -10,6 +10,9 @@ import UIKit
 
 protocol GameControllerDelegate: class {
     func roundEnded() -> Timeline
+    func advertiserToCanvasView(withTimeLine: Timeline)
+    func advertiserToGuessView(withTimeLine: Timeline)
+
 }
 class GameController {
     
@@ -22,6 +25,7 @@ class GameController {
     var playerOrder: [Player] = []
     var timelineOrder: [Timeline] = []
     var roundNumber = 1
+    var nextRoundInstruction = Event.Instruction.toCanvas
     
     weak var delegate: GameControllerDelegate?
     
@@ -46,7 +50,8 @@ class GameController {
     
     func createTurnOrder(){
         let isBefore = arc4random_uniform(2)
-        for player in MCController.shared.playerArray {            if isBefore == 1 {
+        for player in MCController.shared.playerArray {
+            if isBefore == 1 {
                 playerOrder.insert(player, at: 0)
             } else {
                 playerOrder.append(player)
@@ -71,25 +76,38 @@ class GameController {
     }
     
     func startNewRound () {
-        var nextRoundINstruction = Event.Instruction.toCanvas
+        
         //increment turn number
         roundNumber += 1
             //determine whether to continue
         if roundNumber > currentGame.numberOfRounds {
             //End game
         }
-        if (timelineOrder[0].rounds.last?.isImage)! {
-            nextRoundINstruction = .toGuess
+        isDrawingRound = !isDrawingRound
+        if isDrawingRound {
+            nextRoundInstruction = .toCanvas
         } else {
-            nextRoundINstruction = .toCanvas
+            nextRoundInstruction = .toGuess
         }
         
         //shift turn order
         shiftRounds()
         //send out newturn event
         for (index,player) in playerOrder.enumerated() {
-            guard let peerID = MCController.shared.peerIDDict[player] else {return}
-            MCController.shared.sendEvent(withInstruction: nextRoundINstruction, timeline: timelineOrder[index], toPeers: peerID)
+            if player.isAdvertiser != true {
+                guard let peerID = MCController.shared.peerIDDict[player] else {return}
+                MCController.shared.sendEvent(withInstruction: nextRoundInstruction, timeline: timelineOrder[index], toPeers: peerID)
+            } else {
+                sendAdvertiserToNextView(withTimeline: timelineOrder[index])
+            }
+        }
+    }
+    
+    func sendAdvertiserToNextView(withTimeline timeline: Timeline){
+        if isDrawingRound {
+            delegate?.advertiserToCanvasView(withTimeLine: timeline)
+        } else {
+            delegate?.advertiserToGuessView(withTimeLine: timeline)
         }
     }
     
