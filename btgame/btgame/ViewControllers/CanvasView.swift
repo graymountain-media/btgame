@@ -53,10 +53,11 @@ class CanvasView: UIView {
     func draw() {
         let strokeLayer = CAShapeLayer()
         strokeLayer.fillColor = nil
-        strokeLayer.strokeColor = UIColor.black.cgColor
         strokeLayer.path = path.cgPath
         viewWithTag(1)?.layer.addSublayer(strokeLayer)
         viewWithTag(1)?.setNeedsDisplay()
+
+        strokeLayer.strokeColor = UIColor.black.cgColor
     }
     
     /*

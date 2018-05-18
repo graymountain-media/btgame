@@ -19,7 +19,7 @@ class CanvasViewController: UIViewController {
         super.viewDidLoad()
         canvasView.clipsToBounds = true
         canvasView.isMultipleTouchEnabled = false
-        self.view.addSubview(testSegueButton)
+//        self.view.addSubview(testSegueButton)
         self.view.addSubview(canvasView)
         self.view.addSubview(topicLabel)
         self.view.addBackground()
@@ -42,21 +42,45 @@ class CanvasViewController: UIViewController {
     
     lazy var canvasView: CanvasView = {
         let cv = CanvasView()
-        cv.frame = CGRect(x: 0, y: 150, width: 300, height: 300)
+        cv.frame = CGRect(x: 0, y: self.view.frame.height/6, width: self.view.frame.width/1, height: self.view.frame.height/2.5)
         cv.backgroundColor = .white
         cv.draw()
         return cv
     }()
     
-    lazy var testSegueButton: UIButton = {
-        let btn = UIButton()
-        btn.frame = CGRect(x: 132, y: 450, width: 150, height: 50)
-        btn.setTitle("perform segue", for: .normal)
-        btn.titleLabel?.font = UIFont(name: "Times New Roman", size: 20)
-        btn.backgroundColor = .white
+//    lazy var redButton: UIButton = {
+//        let btn = UIButton()
+//        return btn
+//    }()
+//
+//    lazy var blueButton: UIButton = {
+//        let btn = UIButton()
+//        return btn
+//    }()
+//
+//    lazy var greenButton: UIButton = {
+//        let btn = UIButton()
+//        return btn
+//    }()
+//
+//    lazy var yellowButton: UIButton = {
+//        let btn = UIButton()
+//        return btn
+//    }()
+//
+//    lazy var orangeButton: UIButton = {
+//        let btn = UIButton()
+//        return btn
+//    }()
+//    lazy var testSegueButton: UIButton = {
+//        let btn = UIButton()
+//        btn.frame = CGRect(x: 132, y: 450, width: 150, height: 50)
+//        btn.setTitle("perform segue", for: .normal)
+//        btn.titleLabel?.font = UIFont(name: "Times New Roman", size: 20)
+//        btn.backgroundColor = .white
 //        btn.addTarget(self, action: #selector(self.goToNextView(_:)), for: .touchDown)
-        return btn
-    }()
+//        return btn
+//    }()
     
 //    @objc func goToNextView(_ sender: Any) {
 //        let nextView = GuessViewController()
