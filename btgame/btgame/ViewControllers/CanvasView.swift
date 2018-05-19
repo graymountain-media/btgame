@@ -13,6 +13,7 @@ class CanvasView: UIView {
     var path = UIBezierPath()
     var startPoint = CGPoint()
     var touchPoint = CGPoint()
+    var seconds = 3
     
 //    lazy var canvasView: UIView = {
 //        let cv = UIView()
@@ -55,8 +56,10 @@ class CanvasView: UIView {
         strokeLayer.fillColor = nil
         strokeLayer.strokeColor = UIColor.black.cgColor
         strokeLayer.path = path.cgPath
+        strokeLayer.lineWidth = 10
         viewWithTag(1)?.layer.addSublayer(strokeLayer)
         viewWithTag(1)?.setNeedsDisplay()
+
     }
     
     /*

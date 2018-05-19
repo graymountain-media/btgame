@@ -2,13 +2,14 @@
 //  ResultsViewController.swift
 //  btgame
 //
-//  Created by Jake Gray on 5/15/18.
+//  Created by Jake Gray on 5/19/18.
 //  Copyright © 2018 Jake Gray. All rights reserved.
 //
 
 import UIKit
 
 class ResultsViewController: UIViewController {
+
     
     var timelines: [Timeline]?
     var currentTimelineIndex = 0
@@ -152,7 +153,7 @@ extension ResultsViewController: UIScrollViewDelegate {
         let pageWidth = view.bounds.width
         let pageFraction = scrollView.contentOffset.x / pageWidth
         myPageControll.currentPage = Int(round(pageFraction))
-    }
+
 }
 
 

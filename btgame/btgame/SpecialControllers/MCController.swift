@@ -128,31 +128,43 @@ class MCController: NSObject, MCSessionDelegate {
             return
         }
         
-        if let counter = DataManager.shared.decodeCounter(from: data){
+        if let _ = DataManager.shared.decodeCounter(from: data){
             if(isAdvertiser){
                 delegate?.incrementDoneButtonCounter()
             }
-            print("INside counter function")
+            print("Inside counter function")
             return
         }
-        if let timeline = DataManager.shared.decodeTimeline(from: data){
-            if(isAdvertiser){
-                //do timeline things
-            }
-            return
-        }
+//        if let timeline = DataManager.shared.decodeTimeline(from: data){
+//            if(isAdvertiser){
+//                //do timeline things
+//            }
+//            return
+//        }
         
         if let event = DataManager.shared.decodeEvent(from: data){
-            print("Event received")
             if(!isAdvertiser){
-                
                 switch event.instruction{
                 case .toTopics:
                     delegate?.toTopicView(timeline: event.timeline)
-                    GameController.shared.startTimer()
                 case .endRoundReturn:
-                    GameController.shared.currentGame.returnedTimelines.append(event.timeline)
-                    if (GameController.shared.currentGame.returnedTimelines.count) == currentGamePeers.count {
+                    return
+                case .toGuess:
+                    delegate?.toGuessView(timeline: event.timeline)
+                    return
+                case .toCanvas:
+                    delegate?.toCanvasView(timeline: event.timeline)
+                    return
+                }
+                
+            } else {
+                switch event.instruction{
+                case .toTopics:
+                    return
+                case .endRoundReturn:
+                    GameController.shared.returnedTimelines.append(event.timeline)
+                    print("SPECIAL RETURNED TIMELINES: \(GameController.shared.returnedTimelines)")
+                    if (GameController.shared.returnedTimelines.count) == currentGamePeers.count {
                         GameController.shared.startNewRound()
                     }
                 case .toGuess:
@@ -160,9 +172,7 @@ class MCController: NSObject, MCSessionDelegate {
                 case .toCanvas:
                     return
                 }
-                
             }
-            return
         }
 
     }

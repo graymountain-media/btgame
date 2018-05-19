@@ -27,6 +27,7 @@ class InstructionsViewController: UIViewController {
         let lbl = UILabel()
         lbl.frame = CGRect(x: self.view.frame.width/8, y: 50, width: self.view.frame.width/6, height: self.view.frame.height/8)
         lbl.text = "More players = More fun!"
+        lbl.font = UIFont(name: "Palatino-Roman", size: 50)
         return lbl
     }()
     

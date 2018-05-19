@@ -11,13 +11,16 @@
  class GuessViewController: UIViewController {
     
     var timeline: Timeline?
-    var image = UIImage()
-    static let shared = GuessViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.addSubview(viewContainer)
+        self.view.addSubview(previousSketch)
+        let passedTimeline = timeline
+        guard let data = passedTimeline?.rounds.last?.imageData else { return }
+        let image = UIImage(data: data)
+        previousSketch.image = image
     }
     
     lazy var viewContainer: UIView = {
@@ -31,23 +34,41 @@
         let ps = UIImageView()
         ps.frame = CGRect(x: 0, y: 100, width: 450, height: 500)
         ps.backgroundColor = .white
+        ps.contentMode = .scaleAspectFit
         return ps
     }()
     
     let guessTextField: UITextField = {
         let gtf = UITextField()
         gtf.frame = CGRect(x: 50, y: 600, width: 350, height: 70)
+        gtf.backgroundColor = .white
+        gtf.textColor = .black
         return gtf
     }()
  }
  
  extension GuessViewController: MCControllerDelegate {
+    func toGuessView(timeline: Timeline) {}
     func playerJoinedSession() {}
     func incrementDoneButtonCounter() {}
     func toTopicView(timeline: Timeline) {}
+    func toCanvasView(timeline: Timeline) {
+        let nextView = CanvasViewController()
+        nextView.timeline = timeline
+        self.navigationController?.pushViewController(nextView, animated: true)
+    }
  }
  
  extension GuessViewController: GameControllerDelegate {
+    func advertiserToCanvasView(withTimeLine: Timeline) {
+        let canvasView = CanvasViewController()
+        canvasView.timeline = timeline
+        navigationController?.pushViewController(canvasView, animated: true)
+    }
+    
+    func advertiserToGuessView(withTimeLine: Timeline) {
+    }
+    
     func roundEnded() -> Timeline {
         let newRound = Round(owner: MCController.shared.playerArray[0], image: nil, guess: guessTextField.text, isImage: false)
         guard let timeline = timeline else { return Timeline(owner: MCController.shared.playerArray[0]) }
