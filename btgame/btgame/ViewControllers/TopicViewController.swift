@@ -100,10 +100,11 @@ class TopicViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         MCController.shared.delegate = self
+        GameController.shared.delegate = self
         buttons = [firstChoiceButton,secondChoiceButton,thirdChoiceButton,fourthChoiceButton]
         
         view.backgroundColor = UIColor.blue
-        //        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        self.navigationController?.navigationBar.isHidden = true
         
         // Views
         view.addSubview(containerView)
@@ -239,6 +240,10 @@ class TopicViewController: UIViewController {
     
 }
 extension TopicViewController: GameControllerDelegate {
+    func advertiserToResultsView(withTimelines timelines: [Timeline]) {
+        
+    }
+    
     
     func roundEnded() -> Timeline {
         let newRound = Round(owner: Player(displayName: "Starter Topic", id: MCPeerID(displayName: "Starter") , isAdvertiser: false), image: nil, guess: selectedTopic, isImage: false)
@@ -250,9 +255,12 @@ extension TopicViewController: GameControllerDelegate {
     }
     
     func advertiserToCanvasView(withTimeLine: Timeline) {
-        let canvasView = CanvasViewController()
-        canvasView.timeline = timeline
-        navigationController?.pushViewController(canvasView, animated: true)
+        print("Advertiser to canvas view")
+        DispatchQueue.main.async {
+            let canvasView = CanvasViewController()
+            canvasView.timeline = withTimeLine
+            self.navigationController?.pushViewController(canvasView, animated: true)
+        }
     }
     
     func advertiserToGuessView(withTimeLine: Timeline) {
@@ -261,6 +269,10 @@ extension TopicViewController: GameControllerDelegate {
 }
 
 extension TopicViewController: MCControllerDelegate{
+    func toResultsView(timelines: [Timeline]) {
+        
+    }
+    
     
     func toCanvasView(timeline: Timeline) {
         DispatchQueue.main.async {

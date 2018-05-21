@@ -148,6 +148,10 @@ extension SetupViewController: MCBrowserViewControllerDelegate {
 }
 
 extension SetupViewController: MCControllerDelegate {
+    func toResultsView(timelines: [Timeline]) {
+        
+    }
+    
     func toTopicView(timeline: Timeline) {
         DispatchQueue.main.async {
             let destinationVC = TopicViewController()
