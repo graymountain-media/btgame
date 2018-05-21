@@ -26,4 +26,7 @@ struct Constants {
     
     //Custom Cell Identifiers
     static let playerCellIdentifier = "PlayerCell"
+    
+    static let GuessCell = "GuessCell"
+    static let ImageCell = "ImageCell"
 }

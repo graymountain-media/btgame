@@ -12,7 +12,6 @@ class ImageTableViewCell: UITableViewCell {
     
     var round: Round?
     
-    
     var playerNameLabel: UILabel = {
         
         let label = UILabel()
