@@ -21,6 +21,7 @@ class ResultsViewController: UIViewController {
         sv.translatesAutoresizingMaskIntoConstraints = false
         sv.isPagingEnabled = true
         sv.showsHorizontalScrollIndicator = true
+        sv.backgroundColor = .orange
         return sv
     }()
     
@@ -30,6 +31,7 @@ class ResultsViewController: UIViewController {
         sv.translatesAutoresizingMaskIntoConstraints = false
         sv.distribution = .fillEqually
         sv.axis = .horizontal
+        sv.backgroundColor = .red
         return sv
     }()
     
@@ -37,10 +39,10 @@ class ResultsViewController: UIViewController {
         
         let pc = UIPageControl()
         pc.translatesAutoresizingMaskIntoConstraints = false
-        pc.numberOfPages = GameController.shared.returnedTimelines.count
         pc.currentPageIndicatorTintColor = UIColor.red
         pc.currentPage = 1
         pc.pageIndicatorTintColor = UIColor.blue
+        pc.backgroundColor = .purple
         return pc
         
     }()
@@ -51,10 +53,12 @@ class ResultsViewController: UIViewController {
         view.backgroundColor = UIColor.white
         
         guard let timelines = timelines else { return }
+        print("Timelines: \(timelines)")
         
         tableViews = setupTableViews(with: timelines)
         setupScrollView()
         putTableViewsIntoStackView()
+        myPageControll.numberOfPages = timelines.count
         
         
         
@@ -75,26 +79,29 @@ class ResultsViewController: UIViewController {
         guard let timeline = timelines else { return }
         
         view.addSubview(myScrollView)
+        view.addSubview(myPageControll)
+        myScrollView.addSubview(myStackView)
+        
         myScrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         myScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         myScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        myScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        myScrollView.bottomAnchor.constraint(equalTo: myPageControll.topAnchor).isActive = true
         
         putTableViewsIntoStackView()
         
-        myScrollView.addSubview(myStackView)
+        
         
         myStackView.topAnchor.constraint(equalTo: myScrollView.topAnchor).isActive = true
         myStackView.leadingAnchor.constraint(equalTo: myScrollView.leadingAnchor).isActive = true
         myStackView.trailingAnchor.constraint(equalTo: myScrollView.trailingAnchor).isActive = true
-        myStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50).isActive = true
+        myStackView.bottomAnchor.constraint(equalTo: myScrollView.bottomAnchor, constant: -20).isActive = true
         myStackView.widthAnchor.constraint(equalToConstant: view.frame.width * CGFloat(timeline.count)).isActive = true
         
-        view.addSubview(myPageControll)
-        myPageControll.topAnchor.constraint(equalTo: myStackView.bottomAnchor, constant: 30).isActive = true
-        myPageControll.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        myPageControll.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        myStackView.widthAnchor.constraint(equalToConstant: view.frame.width * CGFloat(myStackView.arrangedSubviews.count)).isActive = true
+        
+        myPageControll.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        myPageControll.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        myPageControll.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        myPageControll.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         
 //        myPageControll.widthAnchor.constraint(equalToConstant: 100).isActive = true
         
@@ -116,6 +123,7 @@ class ResultsViewController: UIViewController {
             tableView.tag = index
             tableView.dataSource = self
             tableView.delegate = self
+            tableView.backgroundColor = .yellow
             tableViews.append(tableView)
         }
         

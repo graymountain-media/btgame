@@ -20,7 +20,7 @@ class Game {
     var players: [Player]
     var topics: [String]
     
-    init(players: [Player], timelines: [Timeline], timeLimit: Int = 8) {
+    init(players: [Player], timelines: [Timeline], timeLimit: Int = 4) {
         self.id = UUID()
         self.numberOfRounds = players.count
         self.returnedTimelines = []

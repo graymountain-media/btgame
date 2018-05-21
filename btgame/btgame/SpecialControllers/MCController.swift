@@ -136,12 +136,6 @@ class MCController: NSObject, MCSessionDelegate {
             print("Inside counter function")
             return
         }
-//        if let timeline = DataManager.shared.decodeTimeline(from: data){
-//            if(isAdvertiser){
-//                //do timeline things
-//            }
-//            return
-//        }
         
         if let event = DataManager.shared.decodeEvent(from: data){
             if(!isAdvertiser){
@@ -157,7 +151,9 @@ class MCController: NSObject, MCSessionDelegate {
                     delegate?.toCanvasView(timeline: event.timeline)
                     return
                 case .endGame:
+                    print("print end game")
                     delegate?.toResultsView(timelines: event.finalTimelines)
+                    print("DATA RECEIVED: \(event.finalTimelines)")
                     return
                 }
                 
