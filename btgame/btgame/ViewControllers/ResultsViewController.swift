@@ -37,7 +37,7 @@ class ResultsViewController: UIViewController {
         
         let pc = UIPageControl()
         pc.translatesAutoresizingMaskIntoConstraints = false
-        pc.numberOfPages = 4
+        pc.numberOfPages = GameController.shared.returnedTimelines.count
         pc.currentPageIndicatorTintColor = UIColor.red
         pc.currentPage = 1
         pc.pageIndicatorTintColor = UIColor.blue
@@ -72,6 +72,8 @@ class ResultsViewController: UIViewController {
     }
     func setupScrollView() {
         
+        guard let timeline = timelines else { return }
+        
         view.addSubview(myScrollView)
         myScrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         myScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -86,15 +88,15 @@ class ResultsViewController: UIViewController {
         myStackView.leadingAnchor.constraint(equalTo: myScrollView.leadingAnchor).isActive = true
         myStackView.trailingAnchor.constraint(equalTo: myScrollView.trailingAnchor).isActive = true
         myStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50).isActive = true
-        myStackView.widthAnchor.constraint(equalToConstant: view.frame.width * 4).isActive = true
+        myStackView.widthAnchor.constraint(equalToConstant: view.frame.width * CGFloat(timeline.count)).isActive = true
         
         view.addSubview(myPageControll)
         myPageControll.topAnchor.constraint(equalTo: myStackView.bottomAnchor, constant: 30).isActive = true
         myPageControll.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         myPageControll.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        myPageControll.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        myStackView.widthAnchor.constraint(equalToConstant: view.frame.width * CGFloat(myStackView.arrangedSubviews.count)).isActive = true
         
-        //        myStackView.widthAnchor.constraint(equalToConstant: view.frame.width * CGFloat(myStackView.arrangedSubviews.count)).isActive = true
+//        myPageControll.widthAnchor.constraint(equalToConstant: 100).isActive = true
         
     }
     
