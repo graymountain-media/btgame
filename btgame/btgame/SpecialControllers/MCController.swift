@@ -18,6 +18,7 @@ protocol MCControllerDelegate {
     func toTopicView(timeline: Timeline)
     func toCanvasView(timeline: Timeline)
     func toGuessView(timeline: Timeline)
+    func toResultsView(timelines: [Timeline])
 }
 
 class MCController: NSObject, MCSessionDelegate {
@@ -61,7 +62,7 @@ class MCController: NSObject, MCSessionDelegate {
         peerID = MCPeerID(displayName: name)
         
         // May need to change
-        session = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .required)
+        session = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .none)
         session.delegate = self
         
         currentGamePeers.append(peerID)
@@ -155,6 +156,9 @@ class MCController: NSObject, MCSessionDelegate {
                 case .toCanvas:
                     delegate?.toCanvasView(timeline: event.timeline)
                     return
+                case .endGame:
+                    delegate?.toResultsView(timelines: event.finalTimelines)
+                    return
                 }
                 
             } else {
@@ -163,13 +167,16 @@ class MCController: NSObject, MCSessionDelegate {
                     return
                 case .endRoundReturn:
                     GameController.shared.returnedTimelines.append(event.timeline)
-                    print("SPECIAL RETURNED TIMELINES: \(GameController.shared.returnedTimelines)")
-                    if (GameController.shared.returnedTimelines.count) == currentGamePeers.count {
+                    let topics = GameController.shared.returnedTimelines.compactMap({$0.rounds[0].guess})
+                    print("SPECIAL RETURNED TIMELINES: \(topics)")
+                    if (GameController.shared.returnedTimelines.count) >= currentGamePeers.count {
                         GameController.shared.startNewRound()
                     }
                 case .toGuess:
                     return
                 case .toCanvas:
+                    return
+                case .endGame:
                     return
                 }
             }
@@ -200,6 +207,18 @@ class MCController: NSObject, MCSessionDelegate {
         try? session.send(eventData, toPeers: [peer], with: .reliable)
         print("Event Object Data Sent")
 
+    }
+    
+    func sendFinalEvent(withInstruction instruction: Event.Instruction, timelines: [Timeline], toPeers peer: MCPeerID) {
+        
+        let event = Event(withInstruction: instruction, timelines: timelines)
+        
+        guard let eventData = DataManager.shared.encodeEvent(event: event) else {return}
+        
+        print("Event Object Data Prepared")
+        try? session.send(eventData, toPeers: [peer], with: .reliable)
+        print("Event Object Data Sent")
+        
     }
 
 }
