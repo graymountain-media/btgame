@@ -24,6 +24,6 @@ class Event: Codable {
     init(withInstruction instruction: Instruction, timeline: Timeline = Timeline(owner: MCController.shared.playerArray[0]), timelines: [Timeline] = []) {
         self.instruction = instruction
         self.timeline = timeline
-        self.finalTimelines = []
+        self.finalTimelines = timelines
     }
 }
