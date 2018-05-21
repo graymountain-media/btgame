@@ -136,10 +136,13 @@
         }
     }
     func toResultsView(timelines: [Timeline]) {
+        print("Guess view did end game")
         DispatchQueue.main.async {
             let resultsView = ResultsViewController()
             resultsView.timelines = timelines
+            print("DELEGATE TIMELINES: \(timelines)")
             self.navigationController?.pushViewController(resultsView, animated: true)
+            
         }
     }
  }

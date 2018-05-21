@@ -154,8 +154,10 @@ class GameController {
                         sortedTimelines.append(timeline)
                     }
                 }
+                print("Browser timelines: \(sortedTimelines)")
                 
                 guard let peerID = MCController.shared.peerIDDict[player] else {return}
+                print("Peer ID \(peerID)")
                 MCController.shared.sendFinalEvent(withInstruction: .endGame, timelines: sortedTimelines, toPeers: peerID)
 
             } else {
