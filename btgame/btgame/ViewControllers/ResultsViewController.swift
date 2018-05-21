@@ -8,91 +8,154 @@
 
 import UIKit
 
-class ResultsViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class ResultsViewController: UIViewController {
     
-    let game = Game(players: [], timeLines: [])
+    var timelines: [Timeline]?
+    var currentTimelineIndex = 0
+    var tableViews: [UITableView] = []
     
-    override func viewDidLoad() {
-//        super.viewDidLoad()
-        
-        navigationItem.title = "Results"
-        
-        collectionView?.backgroundColor = UIColor.white
-        collectionView?.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: "imageCellID")
-        collectionView?.register(GuessCollectionViewCell.self, forCellWithReuseIdentifier: "guessCellID")
-        setupPlayerResultsTabBar()
-        
-    }
     
-    let playerResultsTabBar: PlayerResultsTabBar = {
+    let myScrollView: UIScrollView = {
         
-        let pb = PlayerResultsTabBar()
-        return pb
+        let sv = UIScrollView()
+        sv.translatesAutoresizingMaskIntoConstraints = false
+        sv.isPagingEnabled = true
+        sv.showsHorizontalScrollIndicator = true
+        return sv
     }()
     
-    private func setupPlayerResultsTabBar() {
+    let myStackView: UIStackView = {
         
-        view.addSubview(playerResultsTabBar)
-        playerResultsTabBar.widthAnchor.constraint(equalTo: view.widthAnchor)
-        playerResultsTabBar.heightAnchor.constraint(equalToConstant: 50)
-        playerResultsTabBar.translatesAutoresizingMaskIntoConstraints = false
+        let sv = UIStackView()
+        sv.translatesAutoresizingMaskIntoConstraints = false
+        sv.distribution = .fillEqually
+        sv.axis = .horizontal
+        return sv
+    }()
+    
+    let myPageControll: UIPageControl = {
+        
+        let pc = UIPageControl()
+        pc.translatesAutoresizingMaskIntoConstraints = false
+        pc.numberOfPages = 4
+        pc.currentPageIndicatorTintColor = UIColor.red
+        pc.currentPage = 1
+        pc.pageIndicatorTintColor = UIColor.blue
+        return pc
+        
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.backgroundColor = UIColor.white
+        
+        guard let timelines = timelines else { return }
+        
+        tableViews = setupTableViews(with: timelines)
+        setupScrollView()
+        putTableViewsIntoStackView()
+        
+        
+        
+        //        tableView1.delegate = self
+        //        tablevView2.delegate = self
+        //        tableView3.delegate = self
+        //        tableView4.delegate = self
+        //        tableView1.dataSource = self
+        //        tablevView2.dataSource = self
+        //        tableView3.dataSource = self
+        //        tableView4.dataSource = self
+        //        myScrollView.delegate = self
+        
+        //       setupScrollView()
+    }
+    func setupScrollView() {
+        
+        view.addSubview(myScrollView)
+        myScrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        myScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        myScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        myScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        putTableViewsIntoStackView()
+        
+        myScrollView.addSubview(myStackView)
+        
+        myStackView.topAnchor.constraint(equalTo: myScrollView.topAnchor).isActive = true
+        myStackView.leadingAnchor.constraint(equalTo: myScrollView.leadingAnchor).isActive = true
+        myStackView.trailingAnchor.constraint(equalTo: myScrollView.trailingAnchor).isActive = true
+        myStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50).isActive = true
+        myStackView.widthAnchor.constraint(equalToConstant: view.frame.width * 4).isActive = true
+        
+        view.addSubview(myPageControll)
+        myPageControll.topAnchor.constraint(equalTo: myStackView.bottomAnchor, constant: 30).isActive = true
+        myPageControll.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        myPageControll.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        myPageControll.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        //        myStackView.widthAnchor.constraint(equalToConstant: view.frame.width * CGFloat(myStackView.arrangedSubviews.count)).isActive = true
         
     }
     
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    fileprivate func putTableViewsIntoStackView() {
         
-        let round = game.timeLines[0].rounds[indexPath.row]
-//        let round = true
-        
-        if round.isImage == true {
-            if round == true {
-                // create and return image cell
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCellID", for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
-                cell.playerNameLabel.text = "round.owner.displayName"
-                
-                if let data = round.imageData {
-                    cell.sketchImageView.image = UIImage(data: data)
-                } else {
-                    cell.sketchImageView.image = UIImage(named: "dinosaurdrawing")
-                    
-                    return cell
-                }
-            
-            //        return cell
-            
-        else {
-            //create and return guess cell
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "guessCellID", for: indexPath) as? GuessCollectionViewCell else { return UICollectionViewCell() }
-            //    cell.playerNameLabel.text = "round.owner.displayName"
-            //    cell.guessLabel.text = "round.guess"
-            
-            return cell
+        for tableView in tableViews {
+            myStackView.addSubview(tableView)
         }
         
     }
-            
-            func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-                
-                let round = game.timeLines[0].rounds[indexPath.row]
-                let round = true
-                
-                if round.isImage == true {
-                    if round == true {
-                        
-                        return CGSize(width: view.frame.width, height: 250)
-                        
-                    } else {
-                        
-                        return CGSize(width: view.frame.width, height: 100)
-                    }
-                }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    fileprivate func setupTableViews(with timelines: [Timeline]) -> [UITableView] {
         
-        return 0
+        var tableViews: [UITableView] = []
+        for (index, _) in timelines.enumerated() {
+            let tableView = UITableView()
+            tableView.tag = index
+            tableView.dataSource = self
+            tableView.delegate = self
+            tableViews.append(tableView)
+        }
+        
+        return tableViews
+    }
+    
+}
+
+extension ResultsViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        guard let timelines = timelines else { return UITableViewCell() }
+        
+        if timelines[currentTimelineIndex].rounds[indexPath.row].isImage {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.ImageCell, for: indexPath) as? ImageTableViewCell else { return UITableViewCell() }
+            cell.round = timelines[currentTimelineIndex].rounds[indexPath.row]
+            cell.layoutSubviews()
+            return cell
+        } else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.GuessCell, for: indexPath) as? GuessTableViewCell else { return UITableViewCell() }
+            cell.round = timelines[currentTimelineIndex].rounds[indexPath.row]
+            cell.layoutSubviews()
+            return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let timelines = timelines else { return 1 }
+        return timelines[currentTimelineIndex].rounds.count
     }
 }
+
+extension ResultsViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let pageWidth = view.bounds.width
+        let pageFraction = scrollView.contentOffset.x / pageWidth
+        myPageControll.currentPage = Int(round(pageFraction))
+    }
+}
+
+
+
+
+
