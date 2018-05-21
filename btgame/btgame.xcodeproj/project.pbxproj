@@ -16,6 +16,8 @@
 		A107EFC820ACD60E00EFBC59 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A107EFC720ACD60E00EFBC59 /* DataManager.swift */; };
 		A140781C20AE150B0077C85C /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = A140781B20AE150B0077C85C /* Event.swift */; };
 		A140781E20AE351E0077C85C /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A140781D20AE351E0077C85C /* Counter.swift */; };
+		A151121320B37511001A8F46 /* SetupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A151121220B37511001A8F46 /* SetupTableViewCell.swift */; };
+		A151121520B380A7001A8F46 /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A151121420B380A7001A8F46 /* BrowserViewController.swift */; };
 		A1BCCBFB20AA4BA600A4AC7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCBFA20AA4BA600A4AC7D /* AppDelegate.swift */; };
 		A1BCCC0220AA4BA700A4AC7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1BCCC0120AA4BA700A4AC7D /* Assets.xcassets */; };
 		A1BCCC0520AA4BA700A4AC7D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1BCCC0320AA4BA700A4AC7D /* LaunchScreen.storyboard */; };
@@ -51,6 +53,8 @@
 		A107EFC720ACD60E00EFBC59 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		A140781B20AE150B0077C85C /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		A140781D20AE351E0077C85C /* Counter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Counter.swift; sourceTree = "<group>"; };
+		A151121220B37511001A8F46 /* SetupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupTableViewCell.swift; sourceTree = "<group>"; };
+		A151121420B380A7001A8F46 /* BrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
 		A1BCCBF720AA4BA600A4AC7D /* btgame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = btgame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1BCCBFA20AA4BA600A4AC7D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A1BCCC0120AA4BA700A4AC7D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -157,6 +161,8 @@
 				A1BCCC3320AB2D1200A4AC7D /* WelcomeViewController.swift */,
 				A1BCCC2520AB2BF900A4AC7D /* RegisterViewController.swift */,
 				A1BCCC2720AB2C0000A4AC7D /* SetupViewController.swift */,
+				A151121220B37511001A8F46 /* SetupTableViewCell.swift */,
+				A151121420B380A7001A8F46 /* BrowserViewController.swift */,
 				A1BCCC2920AB2C0900A4AC7D /* TopicViewController.swift */,
 				A1BCCC2B20AB2C1000A4AC7D /* CanvasViewController.swift */,
 				BAA4C23820ADE0020083A5A0 /* CanvasView.swift */,
@@ -260,6 +266,7 @@
 				3BD076B620AB384900BA7C43 /* Constants.swift in Sources */,
 				A1BCCC2320AB2BCF00A4AC7D /* TimelineController.swift in Sources */,
 				A1BCCC1620AB2B6F00A4AC7D /* MCController.swift in Sources */,
+				A151121320B37511001A8F46 /* SetupTableViewCell.swift in Sources */,
 				A1BCCC2620AB2BF900A4AC7D /* RegisterViewController.swift in Sources */,
 				603D02A320ADE32C0021BE63 /* GuessCollectionViewCell.swift in Sources */,
 				A1BCCC2120AB2BC400A4AC7D /* RoundController.swift in Sources */,
@@ -279,6 +286,7 @@
 				603D02A920AE49EF0021BE63 /* ImageTableViewCell.swift in Sources */,
 				A1BCCC1820AB2B7700A4AC7D /* NetworkController.swift in Sources */,
 				BAA4C23B20ADE0220083A5A0 /* InstructionsViewController.swift in Sources */,
+				A151121520B380A7001A8F46 /* BrowserViewController.swift in Sources */,
 				A1BCCC2820AB2C0000A4AC7D /* SetupViewController.swift in Sources */,
 				A107EFC820ACD60E00EFBC59 /* DataManager.swift in Sources */,
 				A140781E20AE351E0077C85C /* Counter.swift in Sources */,
