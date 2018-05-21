@@ -11,7 +11,6 @@
 		3BD076B820AB389F00BA7C43 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD076B720AB389F00BA7C43 /* Extensions.swift */; };
 		603D02A120ADE31C0021BE63 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D02A020ADE31C0021BE63 /* ImageCollectionViewCell.swift */; };
 		603D02A320ADE32C0021BE63 /* GuessCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D02A220ADE32C0021BE63 /* GuessCollectionViewCell.swift */; };
-		603D02A520AE1B830021BE63 /* PlayerResultsTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D02A420AE1B830021BE63 /* PlayerResultsTabBar.swift */; };
 		603D02A920AE49EF0021BE63 /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D02A820AE49EF0021BE63 /* ImageTableViewCell.swift */; };
 		6087AC9F20AF2B4400153E27 /* GuessTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6087AC9E20AF2B4400153E27 /* GuessTableViewCell.swift */; };
 		A107EFC820ACD60E00EFBC59 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A107EFC720ACD60E00EFBC59 /* DataManager.swift */; };
@@ -46,7 +45,6 @@
 		3BD076B720AB389F00BA7C43 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		603D02A020ADE31C0021BE63 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		603D02A220ADE32C0021BE63 /* GuessCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuessCollectionViewCell.swift; sourceTree = "<group>"; };
-		603D02A420AE1B830021BE63 /* PlayerResultsTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerResultsTabBar.swift; sourceTree = "<group>"; };
 		603D02A820AE49EF0021BE63 /* ImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
 		6087AC9E20AF2B4400153E27 /* GuessTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuessTableViewCell.swift; sourceTree = "<group>"; };
 		A107EFC720ACD60E00EFBC59 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -164,7 +162,6 @@
 				A1BCCC2D20AB2C2000A4AC7D /* GuessViewController.swift */,
 				603D02A820AE49EF0021BE63 /* ImageTableViewCell.swift */,
 				6087AC9E20AF2B4400153E27 /* GuessTableViewCell.swift */,
-				603D02A420AE1B830021BE63 /* PlayerResultsTabBar.swift */,
 				603D02A020ADE31C0021BE63 /* ImageCollectionViewCell.swift */,
 				603D02A220ADE32C0021BE63 /* GuessCollectionViewCell.swift */,
 			);
@@ -259,7 +256,6 @@
 				A1BCCC1120AB2B3900A4AC7D /* Timeline.swift in Sources */,
 				3BD076B620AB384900BA7C43 /* Constants.swift in Sources */,
 				A1BCCC2320AB2BCF00A4AC7D /* TimelineController.swift in Sources */,
-				603D02A520AE1B830021BE63 /* PlayerResultsTabBar.swift in Sources */,
 				A1BCCC1620AB2B6F00A4AC7D /* MCController.swift in Sources */,
 				A1BCCC2620AB2BF900A4AC7D /* RegisterViewController.swift in Sources */,
 				603D02A320ADE32C0021BE63 /* GuessCollectionViewCell.swift in Sources */,
