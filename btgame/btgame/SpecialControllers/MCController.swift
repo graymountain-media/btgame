@@ -21,6 +21,10 @@ protocol MCControllerDelegate {
     func toResultsView(timelines: [Timeline])
 }
 
+protocol DoneButtonDelegate {
+func playerDidPressDone(player: Player)
+}
+
 class MCController: NSObject, MCSessionDelegate {
     
     // MARK: - Shared Instance
@@ -31,6 +35,7 @@ class MCController: NSObject, MCSessionDelegate {
     var isAdvertiser = false
     var displayName: String?
     var delegate: MCControllerDelegate?
+    var doneDelegate: DoneButtonDelegate?
     var session: MCSession!
     var peerID: MCPeerID!
     var browser: MCBrowserViewController!
@@ -132,8 +137,9 @@ class MCController: NSObject, MCSessionDelegate {
         if let _ = DataManager.shared.decodeCounter(from: data){
             if(isAdvertiser){
                 delegate?.incrementDoneButtonCounter()
+                let player = (peerIDDict as NSDictionary).allKeys(for: peerID) as! [Player]
+                doneDelegate?.playerDidPressDone(player: player[0])
             }
-            print("Inside counter function")
             return
         }
         

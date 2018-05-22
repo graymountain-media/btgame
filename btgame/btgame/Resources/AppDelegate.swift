@@ -25,6 +25,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = navigationController
         navigationController.navigationBar.barTintColor = UIColor.mainScheme1()
         navigationController.navigationBar.tintColor = UIColor.mainComplement1()
+        application.statusBarStyle = .lightContent
+        navigationController.interactivePopGestureRecognizer?.isEnabled = false
+        
+        let textAttributes = [NSAttributedStringKey.foregroundColor:UIColor.white]
+        navigationController.navigationBar.titleTextAttributes = textAttributes
+        
         window?.backgroundColor = UIColor.mainComplement1()
         
         

@@ -11,22 +11,14 @@ import UIKit
 class RegisterViewController: UIViewController {
     
     var isAdvertiser: Bool = false
-    let containerView: UIView = {
-        
-        let view = UIView()
-        view.backgroundColor = UIColor.white
-        view.translatesAutoresizingMaskIntoConstraints = false
-//        view.layer.cornerRadius = 25
-        view.layer.masksToBounds = true
-        return view
-    }()
     
     let enterNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Player Name"
+        label.text = "Please enter your name."
+        label.font = UIFont(name: "andes", size: 20)
         label.textColor = UIColor.black
         label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 40)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .light)
         label.lineBreakMode = NSLineBreakMode.byWordWrapping
         label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -35,91 +27,78 @@ class RegisterViewController: UIViewController {
     
     let playerNameTextField: UITextField = {
         let tf = UITextField()
-        tf.placeholder = "  Enter your name here..."
+        tf.placeholder = "John Smith"
         tf.backgroundColor = UIColor.white
         tf.translatesAutoresizingMaskIntoConstraints = false
-        tf.layer.cornerRadius = 5
-        tf.layer.borderWidth = 1.0
-        tf.layer.masksToBounds = true
-        tf.layer.borderColor = UIColor.black.cgColor
-        
-        
+        tf.setPadding()
         return tf
     }()
     
     let submitButton: UIButton = {
         let button = UIButton(type: .system)
-        button.backgroundColor = UIColor.black
-        button.setTitle("Submit", for: .normal)
+        button.backgroundColor = UIColor.mainScheme2()
+        button.setTitle("Next", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(UIColor.white, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 40)
-        button.layer.cornerRadius = 15
+        button.layer.cornerRadius = 5
         button.layer.masksToBounds = true
         button.addTarget(self, action: #selector(submitButtonTapped), for: .touchUpInside)
         return button
     }()
     
+    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(screenTapped))
+    
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = UIColor.blue
-        
-        
-        // Views
-        view.addSubview(containerView)
-        
+        view.backgroundColor = UIColor.mainOffWhite()
+        self.title = "Player Name"
         
         
         // Contstraints
-        setupContainerView()
+        setupView()
         
+        playerNameTextField.becomeFirstResponder()
     }
     
-    func setupContainerView() {
+    override func viewWillAppear(_ animated: Bool) {
+        MCController.shared.advertiserAssistant?.stop()
+        MCController.shared.currentGamePeers = []
+        MCController.shared.playerArray = []
+    }
+    
+    func setupView() {
+        view.addSubview(enterNameLabel)
+        view.addSubview(playerNameTextField)
+        view.addSubview(submitButton)
         
-        containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        containerView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
-        containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        containerView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        
-        containerView.addSubview(enterNameLabel)
-        containerView.addSubview(playerNameTextField)
-        containerView.addSubview(submitButton)
-        
-        enterNameLabel.anchor(top: containerView.topAnchor,
-                              left: containerView.leftAnchor,
+        enterNameLabel.anchor(top: playerNameTextField.topAnchor,
+                              left: view.safeAreaLayoutGuide.leftAnchor,
                               bottom: nil,
-                              right: containerView.rightAnchor,
-                              paddingTop: 100,
+                              right: view.safeAreaLayoutGuide.rightAnchor,
+                              paddingTop: 8,
                               paddingLeft: 20,
                               paddingBottom: 0,
                               paddingRight: 20,
                               width: 0,
                               height: 100)
         
-        playerNameTextField.anchor(top: enterNameLabel.bottomAnchor,
-                                   left: containerView.leftAnchor,
+        playerNameTextField.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+                                   left: view.safeAreaLayoutGuide.leftAnchor,
                                    bottom: nil,
-                                   right: containerView.rightAnchor,
-                                   paddingTop: 50,
-                                   paddingLeft: 40,
+                                   right: view.safeAreaLayoutGuide.rightAnchor,
+                                   paddingTop: 0,
+                                   paddingLeft: 0,
                                    paddingBottom: 0,
-                                   paddingRight: 40,
+                                   paddingRight: 0,
                                    width: 0,
-                                   height: 40)
+                                   height: 44)
         
-        submitButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-        submitButton.anchor(top: playerNameTextField.bottomAnchor,
-                            left: nil,
-                            bottom: nil,
-                            right: nil,
-                            paddingTop: 30,
-                            paddingLeft: 0,
-                            paddingBottom: 0,
-                            paddingRight: 0,
-                            width: 150,
-                            height: 40)
+        submitButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        submitButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        submitButton.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        submitButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
 
     }
     
@@ -134,6 +113,10 @@ class RegisterViewController: UIViewController {
         MCController.shared.setupMC()
         let destinationVC = SetupViewController()
         navigationController?.pushViewController(destinationVC, animated: true)
+        
+    }
+    
+    @objc func screenTapped() {
         
     }
 
