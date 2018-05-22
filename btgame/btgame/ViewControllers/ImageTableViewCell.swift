@@ -47,9 +47,9 @@ class ImageTableViewCell: UITableViewCell {
                                left: contentView.leftAnchor,
                                bottom: contentView.bottomAnchor,
                                right: nil,
-                               paddingTop: 8,
-                               paddingLeft: 16,
-                               paddingBottom: 8,
+                               paddingTop: 0,
+                               paddingLeft: 0,
+                               paddingBottom: 0,
                                paddingRight: 0,
                                width: 0,
                                height: 0)
@@ -59,10 +59,10 @@ class ImageTableViewCell: UITableViewCell {
                                left: playerNameLabel.rightAnchor,
                                bottom: contentView.bottomAnchor,
                                right: contentView.rightAnchor,
-                               paddingTop: 16,
-                               paddingLeft: 8,
-                               paddingBottom: -16,
-                               paddingRight: 16,
+                               paddingTop: 0,
+                               paddingLeft: 0,
+                               paddingBottom: 0,
+                               paddingRight: 0,
                                width: 0,
                                height: 0)
         
