@@ -35,7 +35,7 @@ class SetupTableViewCell: UITableViewCell {
     }
     
     func setupCell() {
-        self.backgroundColor = UIColor.mainComplement1()
+        self.backgroundColor = UIColor.white
         self.addSubview(playerNameLabel)
         self.addSubview(readyUpIcon)
         
@@ -46,6 +46,10 @@ class SetupTableViewCell: UITableViewCell {
     func updateCell(withPlayerName name: String) {
         setupCell()
         playerNameLabel.text = name
+    }
+    
+    func donePressed(){
+        readyUpIcon.isHidden = false
     }
 
 }
