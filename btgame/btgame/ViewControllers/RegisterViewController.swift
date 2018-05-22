@@ -29,7 +29,7 @@ class RegisterViewController: UIViewController {
         tf.placeholder = "John Smith"
         tf.backgroundColor = UIColor.white
         tf.translatesAutoresizingMaskIntoConstraints = false
-
+        tf.setPadding()
         return tf
     }()
     
@@ -47,6 +47,8 @@ class RegisterViewController: UIViewController {
     
     let tapGesture = UITapGestureRecognizer(target: self, action: #selector(screenTapped))
     
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.mainOffWhite()
@@ -56,6 +58,12 @@ class RegisterViewController: UIViewController {
         setupView()
         
         playerNameTextField.becomeFirstResponder()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        MCController.shared.advertiserAssistant?.stop()
+        MCController.shared.currentGamePeers = []
+        MCController.shared.playerArray = []
     }
     
     func setupView() {
