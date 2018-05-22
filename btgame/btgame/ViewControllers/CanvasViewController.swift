@@ -14,7 +14,7 @@ class CanvasViewController: UIViewController {
     var startPoint = CGPoint()
     var touchPoint = CGPoint()
     var timeline: Timeline?
-    var seeconds = 30
+    var seconds = 30
     var timer = Timer()
     var time = GameController.shared.currentGame.timeLimit
     
@@ -26,15 +26,28 @@ class CanvasViewController: UIViewController {
         
         canvasView.clipsToBounds = true
         canvasView.isMultipleTouchEnabled = false
+        gradiantLayer()
         self.view.addSubview(canvasView)
         self.view.addSubview(topicLabel)
         self.view.addSubview(timerLabel)
-        self.view.addBackground()
+//        self.view.addBackground()
         canvasView.tag = 1
         
         guard let timeline = timeline, let topic = timeline.rounds.last?.guess else {return}
         topicLabel.text = topic
         startTimer()
+    }
+    
+    lazy var viewContainer: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.mainScheme1()
+        return view
+    }()
+    func gradiantLayer() {
+    let lyr = CAGradientLayer()
+    lyr.frame = self.view.bounds
+    lyr.colors = [UIColor.mainScheme1().cgColor, UIColor.mainComplement1().cgColor]
+        self.view.layer.addSublayer(lyr)
     }
     
     lazy var topicLabel: UILabel = {
@@ -51,7 +64,7 @@ class CanvasViewController: UIViewController {
     
     lazy var canvasView: CanvasView = {
         let cv = CanvasView()
-        cv.frame = CGRect(x: 0, y: self.view.frame.height/6, width: self.view.frame.width/1, height: self.view.frame.height/2.5)
+        cv.frame = CGRect(x: 5, y: self.view.frame.height/6, width: self.view.frame.width - 10, height: self.view.frame.height/1.5)
         cv.backgroundColor = .white
         cv.draw()
         return cv
@@ -62,7 +75,7 @@ class CanvasViewController: UIViewController {
         lbl.frame = CGRect(x: self.view.frame.width/6, y: self.view.frame.height/8 * 7, width: self.view.frame.width/4, height: self.view.frame.height/12)
 //        lbl.backgroundColor = .gray
         lbl.textColor = .white
-        lbl.text = "\(seeconds)"
+        lbl.text = "\(seconds)"
         lbl.font = UIFont(name: "Times New Roman", size: 30)
         return lbl
     }()
@@ -90,21 +103,6 @@ class CanvasViewController: UIViewController {
 //        let btn = UIButton()
 //        return btn
 //    }()
-//    lazy var testSegueButton: UIButton = {
-//        let btn = UIButton()
-//        btn.frame = CGRect(x: 132, y: 450, width: 150, height: 50)
-//        btn.setTitle("perform segue", for: .normal)
-//        btn.titleLabel?.font = UIFont(name: "Times New Roman", size: 20)
-//        btn.backgroundColor = .white
-//        btn.addTarget(self, action: #selector(self.goToNextView(_:)), for: .touchDown)
-//        return btn
-//    }()
-    
-//    @objc func goToNextView(_ sender: Any) {
-//        let nextView = GuessViewController()
-//        nextView.previousSketch.image = canvasView.makeImage(withView: canvasView)
-//        self.navigationController?.show(nextView, sender: sender)
-//    }
     
     // MARK: Timer
     
@@ -128,20 +126,22 @@ class CanvasViewController: UIViewController {
             resetTimer()
         }
     }
+    
 }
 
-extension UIView {
-    func addBackground() {
-        let width = self.frame.width/1
-        let height = self.frame.height/1
-        let imageViewBackground = UIImageView(frame: CGRect(x: 0, y: 0, width: width, height: height))
-        imageViewBackground.image = UIImage(named: "Background")
-        imageViewBackground.contentMode = UIViewContentMode.scaleAspectFill
+//extension UIView {
+//    func addBackground() {
+//
+//        let width = self.frame.width/1
+//        let height = self.frame.height/1
+//        let imageViewBackground = UIImageView(frame: CGRect(x: 0, y: 0, width: width, height: height))
+//        imageViewBackground.image = UIImage(named: "Background")
+//        imageViewBackground.contentMode = UIViewContentMode.scaleAspectFill
         
-        self.addSubview(imageViewBackground)
-        self.sendSubview(toBack: imageViewBackground)
-    }
-}
+//        self.addSubview(imageViewBackground)
+//        self.sendSubview(toBack: imageViewBackground)
+//    }
+//}
 
 extension CanvasViewController: MCControllerDelegate {
     func toCanvasView(timeline: Timeline) {}
