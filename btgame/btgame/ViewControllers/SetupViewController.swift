@@ -131,7 +131,7 @@ extension SetupViewController: MCBrowserViewControllerDelegate {
     fileprivate func startButtonStatus(){
         doneButtonTappedCounter += 1
         DispatchQueue.main.async {
-            if self.doneButtonTappedCounter >= (MCController.shared.currentGamePeers.count - 1)  {
+            if self.doneButtonTappedCounter >= (MCController.shared.currentGamePeers.count - 1) && MCController.shared.currentGamePeers.count >= 3  {
                 self.startButton.isEnabled = true
             }else {
                 self.startButton.isEnabled = false
@@ -206,16 +206,23 @@ extension SetupViewController: UITableViewDataSource, UITableViewDelegate {
         playerLabel.text = "Players"
         playerLabel.translatesAutoresizingMaskIntoConstraints = false
         
+        let instructionLabel = UILabel()
+        instructionLabel.text = "(need at least 3 to start)"
+        instructionLabel.font = UIFont.systemFont(ofSize: 10, weight: .light)
+        instructionLabel.translatesAutoresizingMaskIntoConstraints = false
+        
         let readyLabel = UILabel()
         readyLabel.text = "Ready"
-        readyLabel.textAlignment = .center
+        readyLabel.textAlignment = .right
         readyLabel.translatesAutoresizingMaskIntoConstraints = false
 
         view.addSubview(playerLabel)
+        view.addSubview(instructionLabel)
         view.addSubview(readyLabel)
         
-        playerLabel.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: readyLabel.leftAnchor, paddingTop: 0, paddingLeft: 16, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        readyLabel.anchor(top: view.topAnchor, left: nil, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 74, height: 0)
+        playerLabel.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 16, paddingBottom: 0, paddingRight: 4, width: 60, height: 0)
+        instructionLabel.anchor(top: view.topAnchor, left: playerLabel.rightAnchor, bottom: view.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 200, height: 0)
+        readyLabel.anchor(top: view.topAnchor, left: instructionLabel.rightAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 16, width: 0, height: 0)
         
         return view
     }

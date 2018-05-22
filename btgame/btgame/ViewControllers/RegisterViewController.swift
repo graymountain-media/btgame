@@ -15,6 +15,7 @@ class RegisterViewController: UIViewController {
     let enterNameLabel: UILabel = {
         let label = UILabel()
         label.text = "Please enter your name."
+        label.font = UIFont(name: "andes", size: 20)
         label.textColor = UIColor.black
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 14, weight: .light)
@@ -29,7 +30,7 @@ class RegisterViewController: UIViewController {
         tf.placeholder = "John Smith"
         tf.backgroundColor = UIColor.white
         tf.translatesAutoresizingMaskIntoConstraints = false
-
+        tf.setPadding()
         return tf
     }()
     
@@ -47,15 +48,24 @@ class RegisterViewController: UIViewController {
     
     let tapGesture = UITapGestureRecognizer(target: self, action: #selector(screenTapped))
     
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.mainOffWhite()
         self.title = "Player Name"
         
+        
         // Contstraints
         setupView()
         
         playerNameTextField.becomeFirstResponder()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        MCController.shared.advertiserAssistant?.stop()
+        MCController.shared.currentGamePeers = []
+        MCController.shared.playerArray = []
     }
     
     func setupView() {
