@@ -13,59 +13,42 @@ class ImageTableViewCell: UITableViewCell {
     var round: Round?
     
     var playerNameLabel: UILabel = {
-        
         let label = UILabel()
         label.backgroundColor = UIColor.white
-        label.layer.cornerRadius = 5
         label.layer.masksToBounds = true
-        label.text = "Emily"
         label.font = UIFont.boldSystemFont(ofSize: 15)
-        label.textColor = UIColor.black
+        label.textColor = UIColor.mainScheme1()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .left
+        label.textAlignment = .center
+        label.layer.borderColor = UIColor.mainScheme1().cgColor
+        label.layer.borderWidth = 1.0
         return label
     }()
     
     var sketchImageView: UIImageView = {
         
         let imageView = UIImageView()
-        imageView.backgroundColor = UIColor.blue
-        imageView.image = UIImage(named: "dinosaurdrawing")
+        imageView.backgroundColor = UIColor.mainOffWhite()
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        contentView.addSubview(playerNameLabel)
+        self.backgroundColor = UIColor.white
         contentView.addSubview(sketchImageView)
+        contentView.addSubview(playerNameLabel)
+        sketchImageView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        sketchImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+        sketchImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        sketchImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
         
-        // set x, y, width, height
-        playerNameLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 1/4)
-        playerNameLabel.anchor(top: contentView.topAnchor,
-                               left: contentView.leftAnchor,
-                               bottom: contentView.bottomAnchor,
-                               right: nil,
-                               paddingTop: 0,
-                               paddingLeft: 0,
-                               paddingBottom: 0,
-                               paddingRight: 0,
-                               width: 0,
-                               height: 0)
-        
-        sketchImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 3/4)
-        sketchImageView.anchor(top: contentView.topAnchor,
-                               left: playerNameLabel.rightAnchor,
-                               bottom: contentView.bottomAnchor,
-                               right: contentView.rightAnchor,
-                               paddingTop: 0,
-                               paddingLeft: 0,
-                               paddingBottom: 0,
-                               paddingRight: 0,
-                               width: 0,
-                               height: 0)
-        
+        playerNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        playerNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        playerNameLabel.widthAnchor.constraint(equalToConstant: 100.0) .isActive = true
+        playerNameLabel.heightAnchor.constraint(equalToConstant: 30.0) .isActive = true
+
     }
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -77,7 +60,6 @@ class ImageTableViewCell: UITableViewCell {
                 }
             }
         }
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
