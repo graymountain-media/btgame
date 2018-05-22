@@ -13,7 +13,7 @@ class InstructionsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        view.backgroundColor = UIColor.mainScheme3()
     }
     
     lazy var container: UIView = {
@@ -37,15 +37,4 @@ class InstructionsViewController: UIViewController {
         lbl.text = "Rule 1: Everybody needs to pick a word out of the 4 supplied options."
         return lbl
     }()
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
