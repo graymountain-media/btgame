@@ -15,6 +15,7 @@ class RegisterViewController: UIViewController {
     let enterNameLabel: UILabel = {
         let label = UILabel()
         label.text = "Please enter your name."
+        label.font = UIFont(name: "andes", size: 20)
         label.textColor = UIColor.black
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 14, weight: .light)
@@ -53,6 +54,7 @@ class RegisterViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor.mainOffWhite()
         self.title = "Player Name"
+        
         
         // Contstraints
         setupView()
