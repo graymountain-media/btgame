@@ -9,11 +9,26 @@
 import UIKit
 
 class InstructionsViewController: UIViewController {
-
+    
+    let dismissButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Back", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitleColor(UIColor.mainScheme1(), for: .normal)
+        button.titleLabel?.textAlignment = .center
+        button.titleLabel?.font = UIFont(name: "HoeflerText-Black", size: 20)
+        button.layer.cornerRadius = 5
+        button.addTarget(self, action: #selector(dismissButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor.mainScheme3()
+        view.backgroundColor = UIColor.mainOffWhite()
+        view.addSubview(dismissButton)
+        
+        setupDismissButton()
     }
     
     lazy var container: UIView = {
@@ -37,4 +52,18 @@ class InstructionsViewController: UIViewController {
         lbl.text = "Rule 1: Everybody needs to pick a word out of the 4 supplied options."
         return lbl
     }()
+    
+    func setupDismissButton() {
+        
+        dismissButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40).isActive = true
+        dismissButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        dismissButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1/4).isActive = true
+        dismissButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+    }
+    
+    @objc func dismissButtonTapped() {
+        
+        dismiss(animated: true, completion: nil)
+    }
 }
