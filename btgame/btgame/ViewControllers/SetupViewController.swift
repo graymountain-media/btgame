@@ -19,7 +19,7 @@ class SetupViewController: UIViewController {
     
     let playerTableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = UIColor.mainComplement1()
+        tableView.backgroundColor = UIColor.mainOffWhite()
         return tableView
     }()
     
@@ -27,6 +27,8 @@ class SetupViewController: UIViewController {
         let view = UIBarButtonItem(title: "Start Game", style: UIBarButtonItemStyle.plain, target: self, action: #selector(startGame))
         return view
     }()
+    
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +38,7 @@ class SetupViewController: UIViewController {
         }
         else {
             MCController.shared.delegate = self
+            MCController.shared.doneDelegate = self
             cbManager.delegate = self
             setupTableView()
             setTableViewConstraints()
@@ -47,11 +50,9 @@ class SetupViewController: UIViewController {
             else {
                 let browserVC = (MCController.shared.browser)!
                 browserVC.delegate = self
-//                browserVC.setupView()
                 present(browserVC, animated: true, completion: nil)
             }
         }
-        
     }
     
     
@@ -130,7 +131,7 @@ extension SetupViewController: MCBrowserViewControllerDelegate {
     fileprivate func startButtonStatus(){
         doneButtonTappedCounter += 1
         DispatchQueue.main.async {
-            if self.doneButtonTappedCounter >= (MCController.shared.currentGamePeers.count - 1) {
+            if self.doneButtonTappedCounter >= (MCController.shared.currentGamePeers.count - 1)  {
                 self.startButton.isEnabled = true
             }else {
                 self.startButton.isEnabled = false
@@ -141,6 +142,8 @@ extension SetupViewController: MCBrowserViewControllerDelegate {
     func browserViewControllerWasCancelled(_ browserViewController: MCBrowserViewController) {
         dismiss(animated: true, completion: nil)
         //checks the status of bluetooth enum cases are: poweredOff, poweredOn, resetting, unauthorized, unknown, unsupported
+        MCController.shared.currentGamePeers = []
+        MCController.shared.playerArray = []
         navigationController?.popViewController(animated: true)
     }
 }
@@ -154,9 +157,8 @@ extension SetupViewController: MCControllerDelegate {
         DispatchQueue.main.async {
             let destinationVC = TopicViewController()
             destinationVC.timeline = timeline
-            self.navigationController?.pushViewController(destinationVC, animated: true)
+            self.present(destinationVC, animated: true, completion: nil)
         }
-        
     }
 
     func playerJoinedSession() {
@@ -179,6 +181,9 @@ extension SetupViewController: UITableViewDataSource, UITableViewDelegate {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.playerCellIdentifier, for: indexPath) as? SetupTableViewCell else {return UITableViewCell()}
         
         cell.updateCell(withPlayerName: MCController.shared.currentGamePeers[indexPath.row].displayName)
+        if indexPath.row == 0 {
+            cell.donePressed()
+        }
         
         return cell
     }
@@ -213,5 +218,19 @@ extension SetupViewController: UITableViewDataSource, UITableViewDelegate {
         readyLabel.anchor(top: view.topAnchor, left: nil, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 74, height: 0)
         
         return view
+    }
+}
+extension SetupViewController: DoneButtonDelegate {
+    func playerDidPressDone(player: Player) {
+        DispatchQueue.main.async {
+            print(player.displayName)
+            guard let index = MCController.shared.playerArray.index(of: player) else {
+                print("Error getting index")
+                return}
+            guard let cell = self.playerTableView.cellForRow(at: IndexPath(row: index, section: 0)) as? SetupTableViewCell else {
+                print("Error getting cell")
+                return}
+            cell.donePressed()
+        }
     }
 }
