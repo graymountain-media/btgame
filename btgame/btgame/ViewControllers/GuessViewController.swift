@@ -20,12 +20,14 @@
         GameController.shared.delegate = self
         MCController.shared.delegate = self
         self.navigationController?.navigationBar.isHidden = true
-        self.view.backgroundColor = .red
+        self.view.backgroundColor = UIColor.mainScheme3()
         
         self.view.addSubview(guessTextField)
         self.view.addSubview(previousSketch)
         self.view.addSubview(timeLabel)
-        setupView()
+        self.view.addSubview(barLabel)
+        
+        //        setupView()
         
         let passedTimeline = timeline
         guard let data = passedTimeline?.rounds.last?.imageData else { return }
@@ -34,69 +36,49 @@
         startTimer()
     }
     
-    lazy var viewContainer: UIView = {
-        let vc = UIView()
-//        vc.frame = CGRect(x: 0, y: 0, width: self.view.frame.width/1, height: self.view.frame.height/1)
-        vc.backgroundColor = .red
-        return vc
-    }()
+    //    lazy var viewContainer: UIView = {
+    //        let vc = UIView()
+    //        vc.frame = CGRect(x: 0, y: 0, width: self.view.frame.width/1, height: self.view.frame.height/1)
+    //        vc.backgroundColor = .red
+    //        return vc
+    //    }()
     
-    let previousSketch: UIImageView = {
+    lazy var previousSketch: UIImageView = {
         let ps = UIImageView()
-//        ps.frame = CGRect(x: 0, y: 100, width: 450, height: 500)
+        ps.frame = CGRect(x: 0, y: self.view.frame.height/6, width: self.view.frame.width/1, height: self.view.frame.height/1.5)
         ps.backgroundColor = .white
         ps.contentMode = .scaleAspectFit
         return ps
     }()
     
-    let guessTextField: UITextField = {
+    lazy var guessTextField: UITextField = {
         let gtf = UITextField()
-//        gtf.frame = CGRect(x: 50, y: 600, width: 350, height: 70)
+        gtf.frame = CGRect(x: 0, y: self.view.frame.height - 140 , width: self.view.frame.width, height: 60)
         gtf.backgroundColor = .white
+        gtf.font = UIFont(name: "Times New Roman", size: 30)
         gtf.textColor = .black
         gtf.placeholder = "Enter Guess"
+        gtf.layer.borderColor = UIColor.black.cgColor
+        gtf.layer.borderWidth = 2.0
         return gtf
     }()
     
-    let timeLabel: UILabel = {
+    lazy var timeLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .green
+        label.frame = CGRect(x: self.view.frame.width - 80, y: 0, width: 80, height: 80)
+        label.backgroundColor = UIColor.mainScheme1()
+        label.font = UIFont(name: "Times New Roman", size: 40)
+        label.textAlignment = .center
+        label.textColor = UIColor(red: 251.0/255.0, green: 254.0/255.0, blue: 60.0/255.0, alpha: 1.0)
         return label
     }()
     
-    func setupView(){
-        previousSketch.anchor(top: view.safeAreaLayoutGuide.topAnchor,
-                              left: view.safeAreaLayoutGuide.leftAnchor,
-                              bottom: nil,
-                              right: view.safeAreaLayoutGuide.rightAnchor,
-                              paddingTop: 40,
-                              paddingLeft: 0,
-                              paddingBottom: 0,
-                              paddingRight: 0,
-                              width: 0,
-                              height: 300)
-        
-        guessTextField.anchor(top: previousSketch.bottomAnchor,
-                              left: view.safeAreaLayoutGuide.leftAnchor,
-                              bottom: nil,
-                              right: view.safeAreaLayoutGuide.rightAnchor,
-                              paddingTop: 8,
-                              paddingLeft: 16,
-                              paddingBottom: 0,
-                              paddingRight: 16,
-                              width: 0,
-                              height: 44)
-        timeLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor,
-                         left: view.safeAreaLayoutGuide.leftAnchor,
-                         bottom: nil,
-                         right: view.safeAreaLayoutGuide.rightAnchor,
-                         paddingTop: 0,
-                         paddingLeft: 0,
-                         paddingBottom: 0,
-                         paddingRight: 0,
-                         width: 0,
-                         height: 0)
-    }
+    lazy var barLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.backgroundColor = UIColor.mainScheme1()
+        lbl.frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 80, height: 80)
+        return lbl
+    }()
     
     // MARK: Timer
     
