@@ -2,110 +2,96 @@
 import UIKit
 
 class ResultsViewController: UIViewController {
-    
     var timelines: [Timeline]?
-    var currentTimelineIndex = 0 {
-        didSet{
-            for tableView in tableViews {
-                tableView.reloadData()
-            }
-        }
-    }
+    var currentTimelineIndex = 0
     var tableViews: [UITableView] = []
 
-    let myScrollView: UIScrollView = {
+    let scrollView: UIScrollView = {
         let sv = UIScrollView()
         sv.translatesAutoresizingMaskIntoConstraints = false
         sv.isPagingEnabled = true
-        sv.showsHorizontalScrollIndicator = true
-        sv.backgroundColor = .orange
+        sv.showsHorizontalScrollIndicator = false
+        sv.backgroundColor = UIColor.mainScheme1()
         return sv
     }()
-    let myStackView: UIStackView = {
+    let stackView: UIStackView = {
         let sv = UIStackView()
         sv.translatesAutoresizingMaskIntoConstraints = false
         sv.distribution = .fillEqually
+        sv.alignment = .fill
         sv.axis = .horizontal
         sv.backgroundColor = .red
+        sv.spacing = 20
         return sv
     }()
     let pageControl: UIPageControl = {
         let pc = UIPageControl()
         pc.translatesAutoresizingMaskIntoConstraints = false
-        pc.currentPageIndicatorTintColor = UIColor.mainScheme3()
-        pc.currentPage = 1
-        pc.pageIndicatorTintColor = UIColor.mainHighlight()
-        pc.backgroundColor = UIColor.mainComplement1()
+        pc.currentPageIndicatorTintColor = UIColor.mainHighlight()
+        pc.currentPage = 0
+        pc.pageIndicatorTintColor = UIColor.mainOffWhite()
+    
         return pc
+    }()
+    let replayButton: UIButton = {
+        let view = UIButton()
+        view.backgroundColor = UIColor.mainScheme2()
+        view.layer.cornerRadius = 5
+        view.layer.masksToBounds = true
+        view.setTitleColor(UIColor.mainOffWhite(), for: .normal)
+        view.setTitle("Replay", for: .normal)
+        return view
+    }()
+    let exitButton: UIButton = {
+        let view = UIButton()
+        view.backgroundColor = UIColor.mainScheme2()
+        view.layer.cornerRadius = 5
+        view.layer.masksToBounds = true
+        view.setTitleColor(UIColor.mainOffWhite(), for: .normal)
+        view.setTitle("Exit", for: .normal)
+        return view
+        
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.mainComplement1()
+        view.backgroundColor = UIColor.mainScheme1()
         guard let timelines = timelines else { return }
-        print("timeline 1 count: \(timelines[0].rounds.count)")
-        print("timeline 2 count: \(timelines[1].rounds.count)")
-        print("here be data: \(timelines[0].rounds[0])")
-        print("here be data: \(timelines[0].rounds[1])")
-        print("here be data: \(timelines[0].rounds[2])")
-        print("here be data: \(timelines[0].rounds[3])")
-        print("here be data: \(timelines[0].rounds[4])")
-        print("here be data: \(timelines[1].rounds[0])")
-        print("here be data: \(timelines[1].rounds[1])")
-        print("here be data: \(timelines[1].rounds[2])")
-        print("here be data: \(timelines[1].rounds[3])")
-        print("here be data: \(timelines[1].rounds[4])")
         pageControl.numberOfPages = timelines.count
-        print("Timelines: \(timelines)")
-        
-        
-        setupScrollView()
-        
-        print("SetupScrollView called")
-        
-        print("putTableViewsIntoStackView called")
-        
+        //print("Timelines: \(timelines)")
+        setup()
     }
-    func setupScrollView() {
+    func setup() {
         guard let timelines = timelines else { return }
-        view.addSubview(myScrollView)
-        view.addSubview(pageControl)
+
+        view.addSubview(scrollView)
+        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -10).isActive = true
+        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 10).isActive = true
+        scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+
         tableViews = setupTableViews(with: timelines)
         putTableViewsIntoStackView()
-        myScrollView.addSubview(myStackView)
+        scrollView.addSubview(stackView)
+        view.addSubview(pageControl)
         
-        myScrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        //myScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        //myScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        myScrollView.bottomAnchor.constraint(equalTo: pageControl.topAnchor).isActive = true
-        myScrollView.widthAnchor.constraint(equalToConstant: view.frame.width * CGFloat(timelines.count)).isActive = true
-        
-        myStackView.topAnchor.constraint(equalTo: myScrollView.topAnchor).isActive = true
-        myStackView.bottomAnchor.constraint(equalTo: myScrollView.bottomAnchor, constant: -20).isActive = true
-        myStackView.widthAnchor.constraint(equalToConstant: view.frame.width * CGFloat(timelines.count)).isActive = true
-        myStackView.centerXAnchor.constraint(equalTo: myScrollView.centerXAnchor).isActive = true
-        myStackView.centerYAnchor.constraint(equalTo: myScrollView.centerYAnchor).isActive = true
-        myStackView.leadingAnchor.constraint(equalTo: myScrollView.leadingAnchor).isActive = true
-        myStackView.trailingAnchor.constraint(equalTo: myScrollView.trailingAnchor).isActive = true
-        
-        pageControl.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        pageControl.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        pageControl.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        
-//        myPageControll.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        
+        stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 10).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -10).isActive = true
+        stackView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+       //set the content size within the stack view
+        stackView.widthAnchor.constraint(equalToConstant: view.frame.width * CGFloat(timelines.count)).isActive = true
+        stackView.heightAnchor.constraint(equalToConstant: view.frame.height - 150).isActive = true
+
+
+        pageControl.topAnchor.constraint(equalTo: stackView.bottomAnchor).isActive = true
+        pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
     fileprivate func putTableViewsIntoStackView() {
-        for tableView in tableViews {
-            
-            myStackView.addArrangedSubview(tableView)
+        tableViews.forEach { (tableView) in
             tableView.translatesAutoresizingMaskIntoConstraints = false
-            tableView.topAnchor.constraint(equalTo: myStackView.topAnchor).isActive = true
-             tableView.bottomAnchor.constraint(equalTo: myStackView.bottomAnchor).isActive = true
-            guard let timelines = timelines else { return }
-            tableView.widthAnchor.constraint(equalTo:myStackView.widthAnchor, multiplier: CGFloat(1 / timelines.count)).isActive = true
+            stackView.addArrangedSubview(tableView)
         }
     }
     fileprivate func setupTableViews(with timelines: [Timeline]) -> [UITableView] {
@@ -113,7 +99,7 @@ class ResultsViewController: UIViewController {
         var tableViews: [UITableView] = []
         for (index, _) in timelines.enumerated() {
             let tableView = UITableView()
-            //tableView.tag = index
+            tableView.tag = index
             tableView.dataSource = self
             tableView.delegate = self
             tableView.register(GuessTableViewCell.self, forCellReuseIdentifier: Constants.GuessCell)
@@ -130,14 +116,16 @@ extension ResultsViewController: UITableViewDelegate, UITableViewDataSource {
         
         guard let timelines = timelines else { return UITableViewCell() }
         
-        if timelines[currentTimelineIndex].rounds[indexPath.row].isImage {
+        if timelines[tableView.tag].rounds[indexPath.row].isImage {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.ImageCell, for: indexPath) as? ImageTableViewCell else { return UITableViewCell() }
-            cell.round = timelines[currentTimelineIndex].rounds[indexPath.row]
+            cell.round = timelines[tableView.tag].rounds[indexPath.row]
+            cell.backgroundColor = UIColor.white
             cell.layoutSubviews()
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.GuessCell, for: indexPath) as? GuessTableViewCell else { return UITableViewCell() }
-            cell.round = timelines[currentTimelineIndex].rounds[indexPath.row]
+            cell.round = timelines[tableView.tag].rounds[indexPath.row]
+            cell.backgroundColor = UIColor.mainScheme3()
             cell.layoutSubviews()
             return cell
         }
@@ -148,20 +136,41 @@ extension ResultsViewController: UITableViewDelegate, UITableViewDataSource {
         print("Rounds count in timeline: \(timelines[currentTimelineIndex].id) are: \(timelines[currentTimelineIndex].rounds.count)")
         return timelines[currentTimelineIndex].rounds.count
     }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let timelines = timelines else { return 60.0 }
+        if timelines[tableView.tag].rounds[indexPath.row].isImage {
+            return CGFloat(view.frame.width)
+        } else {
+            return 60.0
+        }
+    }
 }
 
 extension ResultsViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let pageWidth = view.bounds.width
+        let pageWidth = scrollView.bounds.width
         let pageFraction = scrollView.contentOffset.x / pageWidth
         pageControl.currentPage = Int(round(pageFraction))
         currentTimelineIndex = pageControl.currentPage
     }
+}
 //    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
 //        <#code#>
 //    }
 
-}
+
+//        print("timeline 1 count: \(timelines[0].rounds.count)")
+//        print("timeline 2 count: \(timelines[1].rounds.count)")
+//        print("here be data: \(timelines[0].rounds[0])")
+//        print("here be data: \(timelines[0].rounds[1])")
+//        print("here be data: \(timelines[0].rounds[2])")
+//        print("here be data: \(timelines[0].rounds[3])")
+//        print("here be data: \(timelines[0].rounds[4])")
+//        print("here be data: \(timelines[1].rounds[0])")
+//        print("here be data: \(timelines[1].rounds[1])")
+//        print("here be data: \(timelines[1].rounds[2])")
+//        print("here be data: \(timelines[1].rounds[3])")
+//        print("here be data: \(timelines[1].rounds[4])")
 
 
 
