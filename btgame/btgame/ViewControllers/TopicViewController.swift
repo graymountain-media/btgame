@@ -18,105 +18,130 @@ class TopicViewController: UIViewController {
     var timer = Timer()
     var time = GameController.shared.currentGame.timeLimit
     
-    let containerView: UIView = {
-        
-        let view = UIView()
-        view.backgroundColor = UIColor.white
-        view.translatesAutoresizingMaskIntoConstraints = false
-//        view.layer.cornerRadius = 25
-        view.layer.masksToBounds = true
-        return view
-    }()
-    
-    lazy var timeLabel: UILabel = {
-        let label = UILabel()
-        label.text = String(self.time)
-        label.textAlignment = .right
-        return label
-    }()
-    
-    let chooseTopicBelowLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Choose one below"
-        label.textColor = UIColor.black
-        label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 35)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    lazy var firstChoiceButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.backgroundColor = UIColor.black
-        button.setTitle("Topic", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(UIColor.white, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        button.layer.cornerRadius = 15
-        button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var secondChoiceButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.backgroundColor = UIColor.black
-        button.setTitle("Topic", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(UIColor.white, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        button.layer.cornerRadius = 15
-        button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var thirdChoiceButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.backgroundColor = UIColor.black
-        button.setTitle("Topic", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(UIColor.white, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        button.layer.cornerRadius = 15
-        button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var fourthChoiceButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.backgroundColor = UIColor.black
-        button.setTitle("Topic", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(UIColor.white, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        button.layer.cornerRadius = 15
-        button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        return button
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         MCController.shared.delegate = self
         GameController.shared.delegate = self
         buttons = [firstChoiceButton,secondChoiceButton,thirdChoiceButton,fourthChoiceButton]
         
-        view.backgroundColor = UIColor.blue
         self.navigationController?.navigationBar.isHidden = true
         
         // Views
-        view.addSubview(containerView)
+        //        view.addSubview(containerView)
         navigationItem.leftBarButtonItem = nil
+        self.view.addSubview(chooseTopicBelowLabel)
+        self.view.addSubview(firstChoiceButton)
+        self.view.addSubview(secondChoiceButton)
+        self.view.addSubview(thirdChoiceButton)
+        self.view.addSubview(fourthChoiceButton)
+        self.view.addSubview(timeLabel)
+        self.view.addSubview(barLabel)
         
         // Contstraints
-        setupContainerView()
+        //        setupContainerView()
         setTopics()
         guard let timeline = timeline else {return}
         selectedTopic = timeline.possibleTopics[0]
         startTimer()
     }
+    
+    //    let containerView: UIView = {
+    //
+    //        let view = UIView()
+    //        view.backgroundColor = UIColor.white
+    //        view.translatesAutoresizingMaskIntoConstraints = false
+    ////        view.layer.cornerRadius = 25
+    //        view.layer.masksToBounds = true
+    //        return view
+    //    }()
+    
+    lazy var timeLabel: UILabel = {
+        let label = UILabel()
+        label.text = String(self.time)
+        label.frame = CGRect(x: self.view.frame.width - 80, y: 0, width: 80, height: 80)
+        label.textAlignment = .center
+        label.font = UIFont(name: "Times New Roman", size: 40)
+        label.textColor = UIColor(red: 251.0/255.0, green: 254.0/255.0, blue: 60.0/255.0, alpha: 1.0)
+        label.backgroundColor = UIColor.mainScheme1()
+        return label
+    }()
+    
+    lazy var barLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 80, height: 80)
+        lbl.backgroundColor = UIColor.mainScheme1()
+        return lbl
+    }()
+    
+    lazy var chooseTopicBelowLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Choose one below"
+        label.textColor = UIColor.black
+        label.textAlignment = .center
+        label.frame = CGRect(x: self.view.frame.width/2 - 150, y: self.view.frame.height/4 - 100, width: 300, height: 60)
+        label.font = UIFont.boldSystemFont(ofSize: 32)
+        return label
+    }()
+    
+    lazy var firstChoiceButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = UIColor.mainScheme1()
+        button.setTitle("Topic", for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 27)
+        //        button.layer.cornerRadius = 15
+        button.frame = CGRect(x: self.view.frame.width/4 - 50, y: self.view.frame.height/4, width: self.view.frame.width/2 + 100, height: 100)
+        button.layer.masksToBounds = true
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 2.0
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var secondChoiceButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = UIColor.mainScheme2()
+        button.setTitle("Topic", for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 27)
+        //        button.layer.cornerRadius = 15
+        button.frame = CGRect(x: self.view.frame.width/4 - 50, y: self.view.frame.height/4 + 100, width: self.view.frame.width/2 + 100, height: 100)
+        button.layer.masksToBounds = true
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 2.0
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var thirdChoiceButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = UIColor.mainScheme1()
+        button.setTitle("Topic", for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 27)
+        //        button.layer.cornerRadius = 15
+        button.frame = CGRect(x: self.view.frame.width/4 - 50, y: self.view.frame.height/4 + 200, width: self.view.frame.width/2 + 100, height: 100)
+        button.layer.masksToBounds = true
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 2.0
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var fourthChoiceButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = UIColor.mainScheme2()
+        button.setTitle("Topic", for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 27)
+        button.layer.masksToBounds = true
+        button.frame = CGRect(x: self.view.frame.width/4 - 50, y: self.view.frame.height/4 + 300, width: self.view.frame.width/2 + 100, height: 100)
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 2.0
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        return button
+    }()
+    
     
     // MARK: Timer
     
@@ -139,91 +164,6 @@ class TopicViewController: UIViewController {
             GameController.shared.endRound(withTimeline: timeline)
             resetTimer()
         }
-    }
-    
-    func setupContainerView() {
-        
-        containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        containerView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
-        containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        containerView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        
-        containerView.addSubview(chooseTopicBelowLabel)
-        containerView.addSubview(firstChoiceButton)
-        containerView.addSubview(secondChoiceButton)
-        containerView.addSubview(thirdChoiceButton)
-        containerView.addSubview(fourthChoiceButton)
-        containerView.addSubview(timeLabel)
-        
-        timeLabel.anchor(top: containerView.topAnchor,
-                         left: containerView.leftAnchor,
-                         bottom: nil,
-                         right: containerView.rightAnchor,
-                         paddingTop: 0,
-                         paddingLeft: 0,
-                         paddingBottom: 0,
-                         paddingRight: 0,
-                         width: 0,
-                         height: 0)
-        chooseTopicBelowLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-        chooseTopicBelowLabel.anchor(top: containerView.topAnchor,
-                            left: nil,
-                            bottom: nil,
-                            right: nil,
-                            paddingTop: 100,
-                            paddingLeft: 0,
-                            paddingBottom: 0,
-                            paddingRight: 0,
-                            width: 0,
-                            height: 0)
-        
-        firstChoiceButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-        firstChoiceButton.anchor(top: chooseTopicBelowLabel.bottomAnchor,
-                          left: nil,
-                          bottom: nil,
-                          right: nil,
-                          paddingTop: 100,
-                          paddingLeft: 0,
-                          paddingBottom: 0,
-                          paddingRight: 0,
-                          width: 150,
-                          height: 0)
-        
-        secondChoiceButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-        secondChoiceButton.anchor(top: firstChoiceButton.bottomAnchor,
-                          left: nil,
-                          bottom: nil,
-                          right: nil,
-                          paddingTop: 20,
-                          paddingLeft: 0,
-                          paddingBottom: 0,
-                          paddingRight: 0,
-                          width: 150,
-                          height: 0)
-        
-        thirdChoiceButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-        thirdChoiceButton.anchor(top: secondChoiceButton.bottomAnchor,
-                                 left: nil,
-                                 bottom: nil,
-                                 right: nil,
-                                 paddingTop: 20,
-                                 paddingLeft: 0,
-                                 paddingBottom: 0,
-                                 paddingRight: 0,
-                                 width: 150,
-                                 height: 0)
-        
-        fourthChoiceButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-        fourthChoiceButton.anchor(top: thirdChoiceButton.bottomAnchor,
-                                 left: nil,
-                                 bottom: nil,
-                                 right: nil,
-                                 paddingTop: 20,
-                                 paddingLeft: 0,
-                                 paddingBottom: 0,
-                                 paddingRight: 0,
-                                 width: 150,
-                                 height: 0)
     }
     
     @objc func buttonTapped(button: UIButton) {
