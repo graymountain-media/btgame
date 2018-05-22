@@ -10,6 +10,10 @@ import UIKit
 
 class WelcomeViewController: UIViewController {
     
+    var beginButtonCenter: CGPoint!
+    var hostButtonCenter: CGPoint!
+    var joinButtonCenter: CGPoint!
+    
     let containerView: UIView = {
         
         let view = UIView()
@@ -30,9 +34,8 @@ class WelcomeViewController: UIViewController {
     }()
     
     let beginGameButton: UIButton = {
-        let button = UIButton()
-//        button.backgroundColor = UIColor(r: 20, g: 150, b: 220)
-        button.setTitle("Begin", for: .normal)
+        let button = UIButton(type: .system)
+        button.setTitle("\(Constants.begin)", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(UIColor.black, for: .normal)
         button.titleLabel?.textAlignment = .center
@@ -45,31 +48,44 @@ class WelcomeViewController: UIViewController {
         button.layer.shadowOpacity = 0.5
         button.layer.borderColor = UIColor.black.cgColor
         button.layer.borderWidth = 2.0
+        button.addTarget(self, action: #selector(beginGameButtonTapped), for: .touchUpInside)
         return button
     }()
     
     let hostButton: UIButton = {
         let button = UIButton(type: .system)
-        button.backgroundColor = UIColor.black
         button.setTitle("\(Constants.host)", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(UIColor.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 40)
-        button.layer.cornerRadius = 15
+        button.titleLabel?.textAlignment = .center
+        button.titleLabel?.font = UIFont(name: "HoeflerText-Black", size: 30)
+        button.layer.cornerRadius = 50
+        button.layer.shadowRadius = 2.0
         button.layer.masksToBounds = true
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
+        button.layer.shadowOpacity = 0.5
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 2.0
         button.addTarget(self, action: #selector(hostButtonTapped), for: .touchUpInside)
         return button
     }()
     
     let joinButton: UIButton = {
         let button = UIButton(type: .system)
-        button.backgroundColor = UIColor.black
         button.setTitle("\(Constants.join)", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(UIColor.white, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 40)
-        button.layer.cornerRadius = 15
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.titleLabel?.textAlignment = .center
+        button.titleLabel?.font = UIFont(name: "HoeflerText-Black", size: 30)
+        button.layer.cornerRadius = 50
+        button.layer.shadowRadius = 2.0
         button.layer.masksToBounds = true
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
+        button.layer.shadowOpacity = 0.5
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 2.0
         button.addTarget(self, action: #selector(joinButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -87,6 +103,14 @@ class WelcomeViewController: UIViewController {
         return button
     }()
     
+    override func viewDidLayoutSubviews() {
+        
+        hostButtonCenter = hostButton.center
+        joinButtonCenter = joinButton.center
+        
+        hostButton.center = beginGameButton.center
+        joinButton.center = beginGameButton.center
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -134,60 +158,61 @@ class WelcomeViewController: UIViewController {
                           left: nil,
                           bottom: nil,
                           right: nil,
-                          paddingTop: 180,
+                          paddingTop: 35,
                           paddingLeft: 0,
                           paddingBottom: 0,
                           paddingRight: 0,
                           width: 100,
                           height: 100)
         
-//        hostButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-//        hostButton.anchor(top: welcomeLabel.bottomAnchor,
-//                          left: nil,
-//                          bottom: nil,
-//                          right: nil,
-//                          paddingTop: 150,
-//                          paddingLeft: 0,
-//                          paddingBottom: 0,
-//                          paddingRight: 0,
-//                          width: 150,
-//                          height: 0)
-//
-//        joinButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-//        joinButton.anchor(top: hostButton.bottomAnchor,
-//                          left: nil,
-//                          bottom: nil,
-//                          right: nil,
-//                          paddingTop: 20,
-//                          paddingLeft: 0,
-//                          paddingBottom: 0,
-//                          paddingRight: 0,
-//                          width: 150,
-//                          height: 0)
-//
-//        howToPlayButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-//        howToPlayButton.anchor(top: hostButton.bottomAnchor,
-//                          left: nil,
-//                          bottom: nil,
-//                          right: nil,
-//                          paddingTop: 20,
-//                          paddingLeft: 0,
-//                          paddingBottom: 0,
-//                          paddingRight: 0,
-//                          width: 150,
-//                          height: 0)
+//        hostButton.centerXAnchor.constraint(equalTo: beginGameButton.centerXAnchor)
+        hostButton.anchor(top: beginGameButton.bottomAnchor,
+                          left: containerView.leftAnchor,
+                          bottom: nil,
+                          right: nil,
+                          paddingTop: 25,
+                          paddingLeft: 45,
+                          paddingBottom: 0,
+                          paddingRight: 0,
+                          width: 100,
+                          height: 100)
+        
+        joinButton.centerXAnchor.constraint(equalTo: beginGameButton.centerXAnchor)
+        joinButton.anchor(top: beginGameButton.bottomAnchor,
+                          left: nil,
+                          bottom: nil,
+                          right: containerView.rightAnchor,
+                          paddingTop: 25,
+                          paddingLeft: 0,
+                          paddingBottom: 0,
+                          paddingRight: 45,
+                          width: 100,
+                          height: 100)
+
+        howToPlayButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
+        howToPlayButton.anchor(top: beginGameButton.bottomAnchor,
+                          left: nil,
+                          bottom: nil,
+                          right: nil,
+                          paddingTop: 180,
+                          paddingLeft: 0,
+                          paddingBottom: 0,
+                          paddingRight: 0,
+                          width: 150,
+                          height: 0)
     }
     
     @objc func beginGameButtonTapped() {
-        let registerViewController = RegisterViewController()
-        registerViewController.isAdvertiser = true
-        navigationController?.pushViewController(registerViewController, animated: true)
+        
+        
     }
     
     @objc func hostButtonTapped() {
-        let registerViewController = RegisterViewController()
+       let registerViewController = RegisterViewController()
         registerViewController.isAdvertiser = true
+        
         navigationController?.pushViewController(registerViewController, animated: true)
+        
     }
     
     @objc func joinButtonTapped() {
@@ -199,8 +224,8 @@ class WelcomeViewController: UIViewController {
     
     // MARK: FIX pushViewController to be shown
     @objc func howToPlayButtonTapped() {
-        let registerViewController = RegisterViewController()
-        registerViewController.isAdvertiser = true
-        navigationController?.pushViewController(registerViewController, animated: true)
+//        let registerViewController = RegisterViewController()
+//        registerViewController.isAdvertiser = true
+//        navigationController?.pushViewController(registerViewController, animated: true)
     }
 }
