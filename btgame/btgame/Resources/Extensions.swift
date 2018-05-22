@@ -17,7 +17,7 @@ extension UIColor {
         return UIColor(red: 238.0/255.0, green: 86.0/255.0, blue: 34.0/255.0, alpha: 1.0)
     }
     static func mainComplement1() -> UIColor {
-        return UIColor(red: 241.0/255.0, green: 250.0/255.0, blue: 238.0/255.0, alpha: 1.0)
+        return UIColor(red: 244.0/255.0, green: 251.0/255.0, blue: 242.0/255.0, alpha: 1.0)
     }
    
     
