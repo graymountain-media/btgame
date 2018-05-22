@@ -17,18 +17,20 @@ class SetupViewController: UIViewController {
     let cbManager = CBCentralManager()
     var doneButtonTappedCounter = 0
     
-    let tableView: UITableView = {
-        let view = UITableView()
-        return view
+    let playerTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = UIColor.mainComplement1()
+        return tableView
     }()
     
     lazy var startButton: UIBarButtonItem = {
-        let view = UIBarButtonItem(title: "Start", style: UIBarButtonItemStyle.plain, target: self, action: #selector(startGame))
+        let view = UIBarButtonItem(title: "Start Game", style: UIBarButtonItemStyle.plain, target: self, action: #selector(startGame))
         return view
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         if(cbManager.state == .poweredOff){
             turnOnBluetooth()
         }
@@ -41,13 +43,12 @@ class SetupViewController: UIViewController {
                 MCController.shared.advertiserAssistant?.start()
                 self.navigationItem.rightBarButtonItem = startButton
                 self.navigationItem.rightBarButtonItem?.isEnabled = false
-                print("*******IS ADVERTISING************")
             }
             else {
                 let browserVC = (MCController.shared.browser)!
                 browserVC.delegate = self
+//                browserVC.setupView()
                 present(browserVC, animated: true, completion: nil)
-                print("*******IS BROWSING************")
             }
         }
         
@@ -67,12 +68,12 @@ class SetupViewController: UIViewController {
     }
     
     fileprivate func setupTableView() {
-        tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: Constants.playerCellIdentifier)
+        playerTableView.dataSource = self
+        playerTableView.delegate = self
+        playerTableView.register(SetupTableViewCell.self, forCellReuseIdentifier: Constants.playerCellIdentifier)
     }
     
     @objc fileprivate func startGame() {
-        print("Start game tapped")
         GameController.shared.startNewGame(players: MCController.shared.playerArray)
         DispatchQueue.main.async {
             let destinationVC = TopicViewController()
@@ -86,8 +87,8 @@ class SetupViewController: UIViewController {
     }
     
     fileprivate func setTableViewConstraints(){
-        view.addSubview(tableView)
-        tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+        view.addSubview(playerTableView)
+        playerTableView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
                          left: view.leftAnchor,
                          bottom: view.safeAreaLayoutGuide.bottomAnchor,
                          right: view.rightAnchor,
@@ -104,7 +105,6 @@ extension SetupViewController: CBCentralManagerDelegate {
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         if central.state == .poweredOn {
-            print("Bluetooth on")
         } else if central.state == .poweredOff {
             turnOnBluetooth()
         }
@@ -114,8 +114,7 @@ extension SetupViewController: MCBrowserViewControllerDelegate {
     
     func browserViewControllerDidFinish(_ browserViewController: MCBrowserViewController) {
         dismiss(animated: true, completion: nil)
-        tableView.reloadData()
-        print("Done pressed")
+        playerTableView.reloadData()
         startButtonStatus()
         let string = "counterString"
         let counter = Counter(counter: string)
@@ -130,7 +129,6 @@ extension SetupViewController: MCBrowserViewControllerDelegate {
     
     fileprivate func startButtonStatus(){
         doneButtonTappedCounter += 1
-        print("Done count: \(doneButtonTappedCounter)")
         DispatchQueue.main.async {
             if self.doneButtonTappedCounter >= (MCController.shared.currentGamePeers.count - 1) {
                 self.startButton.isEnabled = true
@@ -162,34 +160,58 @@ extension SetupViewController: MCControllerDelegate {
     }
 
     func playerJoinedSession() {
-        print("player added")
         DispatchQueue.main.async {
-            self.tableView.reloadData()
+            self.playerTableView.reloadData()
         }
     }
+    
     func incrementDoneButtonCounter() {
         startButtonStatus()
     }
-    func toCanvasView(timeline: Timeline) {
-        
-    }
     
-    func toGuessView(timeline: Timeline) {
-        
-    }
+    func toCanvasView(timeline: Timeline) {}
+    func toGuessView(timeline: Timeline) {}
 }
 
-extension SetupViewController: UITableViewDataSource {
+extension SetupViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.playerCellIdentifier, for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.playerCellIdentifier, for: indexPath) as? SetupTableViewCell else {return UITableViewCell()}
         
-        cell.textLabel?.text = MCController.shared.currentGamePeers[indexPath.row].displayName
+        cell.updateCell(withPlayerName: MCController.shared.currentGamePeers[indexPath.row].displayName)
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return MCController.shared.currentGamePeers.count
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 40
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 40))
+        view.backgroundColor = UIColor.mainScheme3()
+        let playerLabel = UILabel()
+        playerLabel.text = "Players"
+        playerLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        let readyLabel = UILabel()
+        readyLabel.text = "Ready"
+        readyLabel.textAlignment = .center
+        readyLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(playerLabel)
+        view.addSubview(readyLabel)
+        
+        playerLabel.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: readyLabel.leftAnchor, paddingTop: 0, paddingLeft: 16, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        readyLabel.anchor(top: view.topAnchor, left: nil, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 74, height: 0)
+        
+        return view
     }
 }
