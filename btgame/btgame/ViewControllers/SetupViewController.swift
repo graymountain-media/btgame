@@ -132,7 +132,9 @@ extension SetupViewController: MCBrowserViewControllerDelegate {
     fileprivate func startButtonStatus(){
         doneButtonTappedCounter += 1
         DispatchQueue.main.async {
+
             if self.doneButtonTappedCounter >= (MCController.shared.currentGamePeers.count - 1) && MCController.shared.currentGamePeers.count >= Constants.requiredNumberOfPlayers  {
+
                 self.startButton.isEnabled = true
             }else {
                 self.startButton.isEnabled = false

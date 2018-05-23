@@ -17,30 +17,22 @@ class InstructionsViewController: UIViewController {
         return view
     }()
     
-    let funLabel: UILabel = {
-        let label = UILabel()
-        label.text = "More players = More fun!"
-        label.textColor = UIColor.mainScheme2()
-        label.font = UIFont(name: "HoeflerText-Black", size: 18)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let instructionOneLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Rule 1: Everybody needs to pick a word out of the 4 supplied options."
-        label.textColor = UIColor.mainScheme2()
-        label.font = UIFont(name: "HoeflerText-Black", size: 18)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.lineBreakMode = .byCharWrapping
-        return label
+    let instructionsTextView: UITextView = {
+        let tf = UITextView()
+        tf.text = "Objective: To laugh and have fun! \n\n1- Start round: All players select 1 topic to draw. \n\n2- Topics are then randomly passed to another player. \n\n3- Each player will have 60 seconds to draw topic passed to them. \n\n4- All sketches will then be passed to another player. \n\n5- Everyone will have 15 seconds to guess what their received drawing is. \n\n6- Guesses are then passed to the next player. \n\n7- Repeat steps 3 - 6 until all sketch and guessing rounds are complete and the final results are shown."
+        tf.textColor = UIColor.mainScheme1()
+        tf.font = UIFont(name: "HoeflerText-Black", size: 17.5)
+        tf.backgroundColor = UIColor.mainOffWhite()
+        tf.isUserInteractionEnabled = false
+        tf.translatesAutoresizingMaskIntoConstraints = false
+        return tf
     }()
     
     let dismissButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Back", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(UIColor.mainScheme1(), for: .normal)
+        button.setTitleColor(UIColor.mainScheme2(), for: .normal)
         button.titleLabel?.textAlignment = .center
         button.titleLabel?.font = UIFont(name: "HoeflerText-Black", size: 20)
         button.addTarget(self, action: #selector(dismissButtonTapped), for: .touchUpInside)
@@ -49,48 +41,26 @@ class InstructionsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = UIColor.mainOffWhite()
         view.addSubview(containerView)
         
         setupContainerView()
     }
     
-//    lazy var funLabel: UILabel = {
-//        let lbl = UILabel()
-//        lbl.frame = CGRect(x: self.view.frame.width/8, y: 50, width: self.view.frame.width/6, height: self.view.frame.height/8)
-//        lbl.text = "More players = More fun!"
-//        lbl.font = UIFont(name: "Palatino-Roman", size: 50)
-//        return lbl
-//    }()
-//
-//    lazy var instructionOneLabel: UILabel = {
-//        let lbl = UILabel()
-//        lbl.frame = CGRect(x: self.view.frame.width/8 , y: self.view.frame.height/6, width: self.view.frame.width/6, height: self.view.frame.height/8)
-//        lbl.text = "Rule 1: Everybody needs to pick a word out of the 4 supplied options."
-//        return lbl
-//    }()
-//
     func setupContainerView() {
         
-        containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        containerView.leadingAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        containerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        view.addSubview(instructionsTextView)
+        view.addSubview(dismissButton)
         
-        containerView.addSubview(funLabel)
-        funLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16).isActive = true
-        funLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12).isActive = true
+        instructionsTextView.topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true
+        instructionsTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
+        instructionsTextView.bottomAnchor.constraint(equalTo: dismissButton.topAnchor, constant: -12).isActive = true
+        instructionsTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
         
-        containerView.addSubview(instructionOneLabel)
-        instructionOneLabel.topAnchor.constraint(equalTo: funLabel.bottomAnchor, constant: 8).isActive = true
-        instructionOneLabel.leadingAnchor.constraint(equalTo: funLabel.leadingAnchor).isActive = true
-//        instructionOneLabel.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        
-        containerView.addSubview(dismissButton)
-        dismissButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-        dismissButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -40).isActive = true
-        dismissButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        dismissButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        dismissButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true
+        dismissButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
         
     }
     

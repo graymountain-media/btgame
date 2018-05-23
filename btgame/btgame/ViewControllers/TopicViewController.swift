@@ -75,11 +75,12 @@ class TopicViewController: UIViewController {
     
     lazy var chooseTopicBelowLabel: UILabel = {
         let label = UILabel()
-        label.text = "Choose one below"
+        label.text = "Dub n' Doodle"
         label.textColor = UIColor.black
         label.textAlignment = .center
         label.frame = CGRect(x: self.view.frame.width/2 - 150, y: self.view.frame.height/4 - 100, width: 300, height: 60)
-        label.font = UIFont.boldSystemFont(ofSize: 32)
+//        label.font = UIFont.boldSystemFont(ofSize: 32)
+        label.font = UIFont(name: "MarkerFelt-Wide", size: 32)
         return label
     }()
     
