@@ -53,7 +53,17 @@
     
     lazy var guessTextField: UITextField = {
         let gtf = UITextField()
-        gtf.frame = CGRect(x: 0, y: self.view.frame.height - 140 , width: self.view.frame.width, height: 60)
+//        gtf.frame = CGRect(x: 0, y: self.view.frame.height - 140 , width: self.view.frame.width, height: 60)
+        gtf.anchor(top: previousSketch.bottomAnchor,
+                   left: self.view.leftAnchor,
+                   bottom: nil,
+                   right: self.view.rightAnchor,
+                   paddingTop: 0,
+                   paddingLeft: 0,
+                   paddingBottom: 0,
+                   paddingRight: 0,
+                   width: self.view.frame.width,
+                   height: 60)
         gtf.backgroundColor = .white
         gtf.font = UIFont(name: "Times New Roman", size: 30)
         gtf.textColor = .black
