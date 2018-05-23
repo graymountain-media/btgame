@@ -157,7 +157,7 @@ extension SetupViewController: MCControllerDelegate {
         DispatchQueue.main.async {
             let destinationVC = TopicViewController()
             destinationVC.timeline = timeline
-            self.present(destinationVC, animated: true, completion: nil)
+            self.navigationController?.pushViewController(destinationVC, animated: true)
         }
     }
 
