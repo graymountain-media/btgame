@@ -22,6 +22,7 @@ class ImageTableViewCell: UITableViewCell {
         label.textAlignment = .center
         label.layer.borderColor = UIColor.mainScheme1().cgColor
         label.layer.borderWidth = 1.0
+        label.backgroundColor = UIColor.white
         return label
     }()
     
@@ -55,6 +56,7 @@ class ImageTableViewCell: UITableViewCell {
         if let round = round {
             if round.isImage {
                 if let image = round.imageData {
+                    self.backgroundColor = UIColor.mainScheme3()
                     sketchImageView.image = UIImage(data: image)
                     playerNameLabel.text = round.owner.displayName
                 }

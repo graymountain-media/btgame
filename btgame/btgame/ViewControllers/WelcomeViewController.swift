@@ -90,12 +90,18 @@ class WelcomeViewController: UIViewController {
         return button
     }()
     
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor.mainOffWhite()
         view.addSubview(containerView)
         setupContainerView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.isHidden = false
     }
     
     func setupContainerView() {
