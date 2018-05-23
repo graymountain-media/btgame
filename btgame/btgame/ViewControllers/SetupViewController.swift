@@ -79,6 +79,7 @@ class SetupViewController: UIViewController {
         DispatchQueue.main.async {
             let destinationVC = TopicViewController()
             for timeline in GameController.shared.orderedTimelines {
+                
                 if timeline.owner == MCController.shared.playerArray[0] {
                     destinationVC.timeline = timeline
                 }
@@ -131,7 +132,7 @@ extension SetupViewController: MCBrowserViewControllerDelegate {
     fileprivate func startButtonStatus(){
         doneButtonTappedCounter += 1
         DispatchQueue.main.async {
-            if self.doneButtonTappedCounter >= (MCController.shared.currentGamePeers.count - 1) && MCController.shared.currentGamePeers.count >= 3  {
+            if self.doneButtonTappedCounter >= (MCController.shared.currentGamePeers.count - 1) && MCController.shared.currentGamePeers.count >= Constants.requiredNumberOfPlayers  {
                 self.startButton.isEnabled = true
             }else {
                 self.startButton.isEnabled = false

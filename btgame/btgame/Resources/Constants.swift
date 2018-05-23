@@ -29,4 +29,7 @@ struct Constants {
     
     static let GuessCell = "GuessCell"
     static let ImageCell = "ImageCell"
+    
+    //Required num players
+    static let requiredNumberOfPlayers = 2
 }

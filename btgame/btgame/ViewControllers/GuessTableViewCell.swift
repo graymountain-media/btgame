@@ -24,6 +24,7 @@ class GuessTableViewCell: UITableViewCell {
         label.textAlignment = .center
         label.layer.borderColor = UIColor.mainScheme1().cgColor
         label.layer.borderWidth = 1.0
+        label.backgroundColor = UIColor.white
         return label
     }()
     
@@ -59,6 +60,7 @@ class GuessTableViewCell: UITableViewCell {
         super.layoutSubviews()
         if let round = round {
             if !round.isImage {
+                self.backgroundColor = UIColor.mainScheme3()
                 playerNameLabel.text = round.owner.displayName
                 guessLabel.text = round.guess
             }
