@@ -23,7 +23,7 @@ class WelcomeViewController: UIViewController {
         label.text = "\(Constants.gameName)"
         label.textColor = UIColor.mainScheme2()
         label.textAlignment = .center
-        label.font = UIFont(name: "zapfino", size: 35)
+        label.font = UIFont(name: "zapfino", size: 30)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -101,9 +101,9 @@ class WelcomeViewController: UIViewController {
     func setupContainerView() {
         
         containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        containerView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
+        containerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
         containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        containerView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
+        containerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
         
         containerView.addSubview(welcomeLabel)
         containerView.addSubview(beginGameButton)
@@ -113,36 +113,29 @@ class WelcomeViewController: UIViewController {
         
         welcomeLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
         welcomeLabel.anchor(top: containerView.topAnchor,
-                            left: nil,
+                            left: containerView.leftAnchor,
                             bottom: nil,
-                            right: nil,
+                            right: containerView.rightAnchor,
                             paddingTop: 50,
-                            paddingLeft: 0,
+                            paddingLeft: 12,
                             paddingBottom: 0,
-                            paddingRight: 0,
+                            paddingRight: 12,
                             width: 0,
                             height: 0)
         
         beginGameButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-        beginGameButton.anchor(top: welcomeLabel.bottomAnchor,
-                               left: nil,
-                               bottom: nil,
-                               right: nil,
-                               paddingTop: 45,
-                               paddingLeft: 0,
-                               paddingBottom: 0,
-                               paddingRight: 0,
-                               width: 130,
-                               height: 130)
+        beginGameButton.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
+        beginGameButton.widthAnchor.constraint(equalToConstant: 130).isActive = true
+        beginGameButton.heightAnchor.constraint(equalToConstant: 130).isActive = true
         
         howToPlayButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-        howToPlayButton.anchor(top: beginGameButton.bottomAnchor,
+        howToPlayButton.anchor(top: nil,
                                left: nil,
-                               bottom: nil,
+                               bottom: containerView.bottomAnchor,
                                right: nil,
-                               paddingTop: 180,
+                               paddingTop: 0,
                                paddingLeft: 0,
-                               paddingBottom: 0,
+                               paddingBottom: -40,
                                paddingRight: 0,
                                width: 0,
                                height: 0)
