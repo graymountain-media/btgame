@@ -11,6 +11,7 @@ class ResultsViewController: UIViewController {
         sv.translatesAutoresizingMaskIntoConstraints = false
         sv.isPagingEnabled = true
         sv.showsHorizontalScrollIndicator = false
+        //TODO: - disable vertical scrolling
         sv.backgroundColor = UIColor.mainScheme1()
         return sv
     }()
@@ -21,7 +22,6 @@ class ResultsViewController: UIViewController {
         sv.alignment = .fill
         sv.axis = .horizontal
         sv.backgroundColor = .red
-        sv.spacing = 20
         return sv
     }()
     let pageControl: UIPageControl = {
@@ -40,6 +40,7 @@ class ResultsViewController: UIViewController {
         view.layer.masksToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         view.setTitleColor(UIColor.mainOffWhite(), for: .normal)
+        view.addTarget(self, action: #selector(handleReplay), for: .touchUpInside)
         view.setTitle("Replay", for: .normal)
         return view
     }()
@@ -51,67 +52,101 @@ class ResultsViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.setTitleColor(UIColor.mainOffWhite(), for: .normal)
         view.setTitle("Exit", for: .normal)
+        view.addTarget(self, action: #selector(handleExit), for: .touchUpInside)
         return view
         
     }()
     let bottomBarView: UIView = {
         let view = UIView()
+        view.backgroundColor = UIColor.mainScheme1()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view 
+    }()
+    let starterTopicLabel: UILabel = {
+        let view = UILabel()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.text = "Starter Topic"
+        view.font = UIFont.boldSystemFont(ofSize: 20)
+        view.textColor = UIColor.mainOffWhite()
+        view.backgroundColor = UIColor.mainScheme1()
+        view.textAlignment = .center
         return view
     }()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.mainScheme1()
+        setupButtons()
         guard let timelines = timelines else { return }
+        guard let starterText = timelines[0].rounds[0].guess else { return }
+        starterTopicLabel.text = starterText
+        
+        scrollView.delegate = self
+        view.backgroundColor = UIColor.mainScheme1()
+        
         pageControl.numberOfPages = timelines.count
         //print("Timelines: \(timelines)")
         setup()
     }
+    private func setupButtons(){
+        if(MCController.shared.isAdvertiser == false) {
+            replayButton.isHidden = true
+        }
+        else {
+            replayButton.isHidden = false
+        }
+    }
     func setup() {
         guard let timelines = timelines else { return }
-
         view.addSubview(scrollView)
-        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -10).isActive = true
-        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 10).isActive = true
-        scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        view.addSubview(starterTopicLabel)
+        view.addSubview(bottomBarView)
+        bottomBarView.addSubview(pageControl)
+        bottomBarView.addSubview(replayButton)
+        bottomBarView.addSubview(exitButton)
+        
+        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        scrollView.topAnchor.constraint(equalTo: starterTopicLabel.bottomAnchor).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: bottomBarView.topAnchor).isActive = true
 
         tableViews = setupTableViews(with: timelines)
         putTableViewsIntoStackView()
         scrollView.addSubview(stackView)
-        view.addSubview(pageControl)
         
-        stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 10).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -10).isActive = true
+        starterTopicLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        starterTopicLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        starterTopicLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        starterTopicLabel.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
+        
+        stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
         stackView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
         stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
        //set the content size within the stack view
         stackView.widthAnchor.constraint(equalToConstant: view.frame.width * CGFloat(timelines.count)).isActive = true
-        stackView.heightAnchor.constraint(equalToConstant: view.frame.height - 70).isActive = true
-
-        view.addSubview(bottomBarView)
-        bottomBarView.topAnchor.constraint(equalTo: stackView.bottomAnchor).isActive = true
+        //stackView.heightAnchor.constraint(equalToConstant: view.frame.height - 70).isActive = true
+        stackView.heightAnchor.constraint(equalTo: scrollView.heightAnchor).isActive = true
+        
         bottomBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         bottomBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         bottomBarView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        bottomBarView.heightAnchor.constraint(equalToConstant: 70.0).isActive = true
         
-        bottomBarView.addSubview(pageControl)
-        bottomBarView.addSubview(replayButton)
-        bottomBarView.addSubview(exitButton)
+       
         pageControl.centerXAnchor.constraint(equalTo: bottomBarView.centerXAnchor).isActive = true
         pageControl.centerYAnchor.constraint(equalTo: bottomBarView.centerYAnchor).isActive = true
-        
+
         replayButton.topAnchor.constraint(equalTo: bottomBarView.topAnchor, constant: 13).isActive = true
         replayButton.leadingAnchor.constraint(equalTo: bottomBarView.leadingAnchor, constant: 10).isActive = true
-        replayButton.bottomAnchor.constraint(equalTo: bottomBarView.bottomAnchor, constant: 13).isActive = true
-        replayButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        replayButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
-        
+        replayButton.bottomAnchor.constraint(equalTo: bottomBarView.bottomAnchor, constant: -13).isActive = true
+        replayButton.widthAnchor.constraint(equalTo: bottomBarView.widthAnchor, multiplier: 0.3).isActive = true
+
         exitButton.topAnchor.constraint(equalTo: bottomBarView.topAnchor, constant: 13).isActive = true
-        exitButton.trailingAnchor.constraint(equalTo: bottomBarView.trailingAnchor, constant: 10).isActive = true
-        exitButton.bottomAnchor.constraint(equalTo: bottomBarView.bottomAnchor, constant: 13).isActive = true
-        exitButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        exitButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        exitButton.trailingAnchor.constraint(equalTo: bottomBarView.trailingAnchor, constant: -10).isActive = true
+        exitButton.bottomAnchor.constraint(equalTo: bottomBarView.bottomAnchor, constant: -13).isActive = true
+        exitButton.widthAnchor.constraint(equalTo: bottomBarView.widthAnchor, multiplier: 0.3).isActive = true
+
 
     }
     
@@ -131,9 +166,29 @@ class ResultsViewController: UIViewController {
             tableView.delegate = self
             tableView.register(GuessTableViewCell.self, forCellReuseIdentifier: Constants.GuessCell)
             tableView.register(ImageTableViewCell.self, forCellReuseIdentifier: Constants.ImageCell)
+            tableView.allowsSelection = false
             tableViews.append(tableView)
         }
         return tableViews
+    }
+    @objc private func handleExit(){
+        MCController.shared.advertiserAssistant?.stop()
+        MCController.shared.currentGamePeers = []
+        MCController.shared.playerArray = []
+        MCController.shared.peerIDDict = [:]
+        navigationController?.popToRootViewController(animated: true)
+    }
+    @objc private func handleReplay(){
+        GameController.shared.startNewGame(players: MCController.shared.playerArray)
+        DispatchQueue.main.async {
+            let destinationVC = TopicViewController()
+            for timeline in GameController.shared.orderedTimelines {
+                if timeline.owner == MCController.shared.playerArray[0] {
+                    destinationVC.timeline = timeline
+                }
+            }
+            self.navigationController?.pushViewController(destinationVC, animated: true)
+        }
     }
 }
 
@@ -146,13 +201,13 @@ extension ResultsViewController: UITableViewDelegate, UITableViewDataSource {
         if timelines[tableView.tag].rounds[indexPath.row].isImage {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.ImageCell, for: indexPath) as? ImageTableViewCell else { return UITableViewCell() }
             cell.round = timelines[tableView.tag].rounds[indexPath.row]
-            cell.backgroundColor = UIColor.white
+            
             cell.layoutSubviews()
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.GuessCell, for: indexPath) as? GuessTableViewCell else { return UITableViewCell() }
             cell.round = timelines[tableView.tag].rounds[indexPath.row]
-            cell.backgroundColor = UIColor.mainScheme3()
+            
             cell.layoutSubviews()
             return cell
         }
@@ -174,31 +229,25 @@ extension ResultsViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension ResultsViewController: UIScrollViewDelegate {
+    //TODO: - disable vertical scrolling
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        let pageWidth = scrollView.bounds.width
+//        let pageFraction = scrollView.contentOffset.x / pageWidth
+//        pageControl.currentPage = Int(round(pageFraction))
+//        currentTimelineIndex = pageControl.currentPage
+    }
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let pageWidth = scrollView.bounds.width
         let pageFraction = scrollView.contentOffset.x / pageWidth
         pageControl.currentPage = Int(round(pageFraction))
         currentTimelineIndex = pageControl.currentPage
+        guard let timelines = timelines else { return }
+        guard let starterText = timelines[currentTimelineIndex].rounds[0].guess else { return }
+        starterTopicLabel.text = starterText
+
     }
 }
-//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//        <#code#>
-//    }
-
-
-//        print("timeline 1 count: \(timelines[0].rounds.count)")
-//        print("timeline 2 count: \(timelines[1].rounds.count)")
-//        print("here be data: \(timelines[0].rounds[0])")
-//        print("here be data: \(timelines[0].rounds[1])")
-//        print("here be data: \(timelines[0].rounds[2])")
-//        print("here be data: \(timelines[0].rounds[3])")
-//        print("here be data: \(timelines[0].rounds[4])")
-//        print("here be data: \(timelines[1].rounds[0])")
-//        print("here be data: \(timelines[1].rounds[1])")
-//        print("here be data: \(timelines[1].rounds[2])")
-//        print("here be data: \(timelines[1].rounds[3])")
-//        print("here be data: \(timelines[1].rounds[4])")
-
 
 
 
