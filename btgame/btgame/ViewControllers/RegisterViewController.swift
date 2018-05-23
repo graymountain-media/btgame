@@ -15,10 +15,9 @@ class RegisterViewController: UIViewController {
     let enterNameLabel: UILabel = {
         let label = UILabel()
         label.text = "Please enter your name."
-        label.font = UIFont(name: "andes", size: 20)
+        label.font = UIFont.preferredFont(forTextStyle: .body)
         label.textColor = UIColor.black
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 14, weight: .light)
         label.lineBreakMode = NSLineBreakMode.byWordWrapping
         label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -28,6 +27,7 @@ class RegisterViewController: UIViewController {
     let playerNameTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "John Smith"
+        tf.text = UserDefaults.standard.string(forKey: "username") ?? ""
         tf.backgroundColor = UIColor.white
         tf.translatesAutoresizingMaskIntoConstraints = false
         tf.setPadding()
@@ -54,11 +54,9 @@ class RegisterViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor.mainOffWhite()
         self.title = "Player Name"
-        
-        
+
         // Contstraints
         setupView()
-        
         playerNameTextField.becomeFirstResponder()
     }
     
@@ -108,6 +106,8 @@ class RegisterViewController: UIViewController {
             return
         }
         print("REGISTER NAME: \(name)")
+        //persist name
+        UserDefaults.standard.set(name, forKey: "username")
         MCController.shared.displayName = name
         MCController.shared.isAdvertiser = self.isAdvertiser
         MCController.shared.setupMC()
