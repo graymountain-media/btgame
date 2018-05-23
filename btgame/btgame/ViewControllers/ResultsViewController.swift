@@ -38,6 +38,7 @@ class ResultsViewController: UIViewController {
         view.backgroundColor = UIColor.mainScheme2()
         view.layer.cornerRadius = 5
         view.layer.masksToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
         view.setTitleColor(UIColor.mainOffWhite(), for: .normal)
         view.setTitle("Replay", for: .normal)
         return view
@@ -47,10 +48,15 @@ class ResultsViewController: UIViewController {
         view.backgroundColor = UIColor.mainScheme2()
         view.layer.cornerRadius = 5
         view.layer.masksToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
         view.setTitleColor(UIColor.mainOffWhite(), for: .normal)
         view.setTitle("Exit", for: .normal)
         return view
         
+    }()
+    let bottomBarView: UIView = {
+        let view = UIView()
+        return view
     }()
     
     override func viewDidLoad() {
@@ -81,11 +87,32 @@ class ResultsViewController: UIViewController {
         stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
        //set the content size within the stack view
         stackView.widthAnchor.constraint(equalToConstant: view.frame.width * CGFloat(timelines.count)).isActive = true
-        stackView.heightAnchor.constraint(equalToConstant: view.frame.height - 150).isActive = true
+        stackView.heightAnchor.constraint(equalToConstant: view.frame.height - 70).isActive = true
 
+        view.addSubview(bottomBarView)
+        bottomBarView.topAnchor.constraint(equalTo: stackView.bottomAnchor).isActive = true
+        bottomBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        bottomBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        bottomBarView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        
+        bottomBarView.addSubview(pageControl)
+        bottomBarView.addSubview(replayButton)
+        bottomBarView.addSubview(exitButton)
+        pageControl.centerXAnchor.constraint(equalTo: bottomBarView.centerXAnchor).isActive = true
+        pageControl.centerYAnchor.constraint(equalTo: bottomBarView.centerYAnchor).isActive = true
+        
+        replayButton.topAnchor.constraint(equalTo: bottomBarView.topAnchor, constant: 13).isActive = true
+        replayButton.leadingAnchor.constraint(equalTo: bottomBarView.leadingAnchor, constant: 10).isActive = true
+        replayButton.bottomAnchor.constraint(equalTo: bottomBarView.bottomAnchor, constant: 13).isActive = true
+        replayButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        replayButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        
+        exitButton.topAnchor.constraint(equalTo: bottomBarView.topAnchor, constant: 13).isActive = true
+        exitButton.trailingAnchor.constraint(equalTo: bottomBarView.trailingAnchor, constant: 10).isActive = true
+        exitButton.bottomAnchor.constraint(equalTo: bottomBarView.bottomAnchor, constant: 13).isActive = true
+        exitButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        exitButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
 
-        pageControl.topAnchor.constraint(equalTo: stackView.bottomAnchor).isActive = true
-        pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
     fileprivate func putTableViewsIntoStackView() {
