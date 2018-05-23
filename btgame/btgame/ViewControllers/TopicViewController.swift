@@ -18,58 +18,25 @@ class TopicViewController: UIViewController {
     var timer = Timer()
     var time = GameController.shared.currentGame.timeLimit
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        MCController.shared.delegate = self
-        GameController.shared.delegate = self
-        buttons = [firstChoiceButton,secondChoiceButton,thirdChoiceButton,fourthChoiceButton]
-        
-        self.navigationController?.navigationBar.isHidden = true
-        
-        // Views
-        //        view.addSubview(containerView)
-        navigationItem.leftBarButtonItem = nil
-        self.view.addSubview(chooseTopicBelowLabel)
-        self.view.addSubview(firstChoiceButton)
-        self.view.addSubview(secondChoiceButton)
-        self.view.addSubview(thirdChoiceButton)
-        self.view.addSubview(fourthChoiceButton)
-        self.view.addSubview(timeLabel)
-        self.view.addSubview(barLabel)
-        
-        // Contstraints
-        //        setupContainerView()
-        setTopics()
-        guard let timeline = timeline else {return}
-        selectedTopic = timeline.possibleTopics[0]
-        startTimer()
-    }
     
-    //    let containerView: UIView = {
-    //
-    //        let view = UIView()
-    //        view.backgroundColor = UIColor.white
-    //        view.translatesAutoresizingMaskIntoConstraints = false
-    ////        view.layer.cornerRadius = 25
-    //        view.layer.masksToBounds = true
-    //        return view
-    //    }()
-    
-    lazy var timeLabel: UILabel = {
-        let label = UILabel()
-        label.text = String(self.time)
-        label.frame = CGRect(x: self.view.frame.width - 80, y: 0, width: 80, height: 80)
-        label.textAlignment = .center
-        label.font = UIFont(name: "Times New Roman", size: 40)
-        label.textColor = UIColor(red: 251.0/255.0, green: 254.0/255.0, blue: 60.0/255.0, alpha: 1.0)
-        label.backgroundColor = UIColor.mainScheme1()
-        return label
+    lazy var timerLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.backgroundColor = UIColor.mainOffWhite()
+        lbl.textColor = .black
+        lbl.text = String(self.time)
+        lbl.textAlignment = .center
+        lbl.font = UIFont(name: "Times New Roman", size: 40)
+        lbl.layer.borderColor = UIColor.mainScheme3().cgColor
+        lbl.layer.cornerRadius = 30
+        lbl.clipsToBounds = true
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        return lbl
     }()
     
     lazy var barLabel: UILabel = {
         let lbl = UILabel()
-        lbl.frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 80, height: 80)
         lbl.backgroundColor = UIColor.mainScheme1()
+        lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
     
@@ -79,7 +46,6 @@ class TopicViewController: UIViewController {
         label.textColor = UIColor.black
         label.textAlignment = .center
         label.frame = CGRect(x: self.view.frame.width/2 - 150, y: self.view.frame.height/4 - 100, width: 300, height: 60)
-//        label.font = UIFont.boldSystemFont(ofSize: 32)
         label.font = UIFont(name: "MarkerFelt-Wide", size: 32)
         return label
     }()
@@ -90,7 +56,6 @@ class TopicViewController: UIViewController {
         button.setTitle("Topic", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 27)
-        //        button.layer.cornerRadius = 15
         button.frame = CGRect(x: self.view.frame.width/4 - 50, y: self.view.frame.height/4, width: self.view.frame.width/2 + 100, height: 100)
         button.layer.masksToBounds = true
         button.layer.borderColor = UIColor.black.cgColor
@@ -143,6 +108,67 @@ class TopicViewController: UIViewController {
         return button
     }()
     
+    // MARK: - Life Cycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        MCController.shared.delegate = self
+        GameController.shared.delegate = self
+        
+        buttons = [firstChoiceButton,secondChoiceButton,thirdChoiceButton,fourthChoiceButton]
+        
+        self.navigationController?.navigationBar.isHidden = true
+        navigationItem.leftBarButtonItem = nil
+        
+        
+        setupView()
+        setTopics()
+        
+        guard let timeline = timeline else {return}
+        selectedTopic = timeline.possibleTopics[0]
+        
+        startTimer()
+    }
+    
+    
+    // MARK: - View Setup
+    
+    func setupView() {
+        
+        self.view.addSubview(chooseTopicBelowLabel)
+        self.view.addSubview(firstChoiceButton)
+        self.view.addSubview(secondChoiceButton)
+        self.view.addSubview(thirdChoiceButton)
+        self.view.addSubview(fourthChoiceButton)
+        self.view.addSubview(timerLabel)
+        self.view.addSubview(barLabel)
+        
+
+        view.addSubview(barLabel)
+        view.addSubview(timerLabel)
+        
+        barLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+                        left: view.safeAreaLayoutGuide.leftAnchor,
+                        bottom: nil,
+                        right: view.safeAreaLayoutGuide.rightAnchor,
+                        paddingTop: 0,
+                        paddingLeft: 0,
+                        paddingBottom: 0,
+                        paddingRight: 0,
+                        width: 0,
+                        height: 70)
+        
+        timerLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+                          left: nil,
+                          bottom: nil,
+                          right: view.safeAreaLayoutGuide.rightAnchor,
+                          paddingTop: 5,
+                          paddingLeft: 8,
+                          paddingBottom: 0,
+                          paddingRight: 8,
+                          width: 60,
+                          height: 60)
+    }
     
     // MARK: Timer
     
@@ -158,7 +184,7 @@ class TopicViewController: UIViewController {
     
     @objc private func timerTicked() {
         time -= 1
-        timeLabel.text = String(time)
+        timerLabel.text = String(time)
         print(time)
         if time == 0 {
             let timeline = roundEnded()
@@ -166,6 +192,8 @@ class TopicViewController: UIViewController {
             resetTimer()
         }
     }
+    
+    // MARK: - Methods
     
     @objc func buttonTapped(button: UIButton) {
         guard let topic = button.titleLabel?.text else {return}
@@ -180,6 +208,9 @@ class TopicViewController: UIViewController {
     }
     
 }
+
+// MARK: - GameController Delegate
+
 extension TopicViewController: GameControllerDelegate {
     func advertiserToResultsView(withTimelines timelines: [Timeline]) {
         
@@ -209,11 +240,12 @@ extension TopicViewController: GameControllerDelegate {
     
 }
 
+// MARK: - MCController Delegate
+
 extension TopicViewController: MCControllerDelegate{
     func toResultsView(timelines: [Timeline]) {
         
     }
-    
     
     func toCanvasView(timeline: Timeline) {
         DispatchQueue.main.async {

@@ -210,7 +210,7 @@ extension SetupViewController: UITableViewDataSource, UITableViewDelegate {
         playerLabel.translatesAutoresizingMaskIntoConstraints = false
         
         let instructionLabel = UILabel()
-        instructionLabel.text = "(need at least 3 to start)"
+        instructionLabel.text = "(minimum 3)"
         instructionLabel.font = UIFont.systemFont(ofSize: 10, weight: .light)
         instructionLabel.translatesAutoresizingMaskIntoConstraints = false
         
