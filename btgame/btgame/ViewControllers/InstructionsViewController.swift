@@ -19,9 +19,9 @@ class InstructionsViewController: UIViewController {
     
     let instructionsTextView: UITextView = {
         let tf = UITextView()
-        tf.text = "Objective: To laugh and have fun! \n\n1- Start round: All players select 1 topic to draw. \n\n2- Topics are then randomly passed to another player. \n\n3- Each player will have 60 seconds to draw topic passed to them. \n\n4- All sketches will then be passed to another player. \n\n5- Everyone will have 15 seconds to guess what their received drawing is. \n\n6- Guesses are then passed to the next player. \n\n7- Repeat steps 3 - 6 until all sketch and guessing rounds are complete and the final results are shown."
+        tf.text = "Objective: To laugh and have fun! \n\n1- Start round: All players select 1 topic for next player to draw. \n\n2- Topics are then randomly passed to another player. \n\n3- Each player will have a set time to draw the topic passed to them. \n\n4- All sketches will then be passed to another player. \n\n5- Everyone will have a set time to guess what their received drawing is. \n\n6- Guesses are then passed to the next player. \n\n7- Repeat steps 3-6 until all sketch and guessing rounds are complete and the final results are shown."
         tf.textColor = UIColor.mainScheme1()
-        tf.font = UIFont(name: "HoeflerText-Black", size: 17.5)
+        tf.font = .systemFont(ofSize: 16)
         tf.backgroundColor = UIColor.mainOffWhite()
         tf.isUserInteractionEnabled = false
         tf.translatesAutoresizingMaskIntoConstraints = false
@@ -59,7 +59,7 @@ class InstructionsViewController: UIViewController {
         instructionsTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
         
         dismissButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        dismissButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true
+        dismissButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40).isActive = true
         dismissButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
         
     }
