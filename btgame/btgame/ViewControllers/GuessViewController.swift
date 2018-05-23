@@ -14,81 +14,123 @@
     var timer = Timer()
     var time = GameController.shared.currentGame.timeLimit
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        GameController.shared.delegate = self
-        MCController.shared.delegate = self
-        self.navigationController?.navigationBar.isHidden = true
-        self.view.backgroundColor = UIColor.mainScheme3()
-        
-        self.view.addSubview(guessTextField)
-        self.view.addSubview(previousSketch)
-        self.view.addSubview(timeLabel)
-        self.view.addSubview(barLabel)
-        
-        //        setupView()
-        
-        let passedTimeline = timeline
-        guard let data = passedTimeline?.rounds.last?.imageData else { return }
-        let image = UIImage(data: data)
-        previousSketch.image = image
-        startTimer()
-    }
-    
-    //    lazy var viewContainer: UIView = {
-    //        let vc = UIView()
-    //        vc.frame = CGRect(x: 0, y: 0, width: self.view.frame.width/1, height: self.view.frame.height/1)
-    //        vc.backgroundColor = .red
-    //        return vc
-    //    }()
-    
     lazy var previousSketch: UIImageView = {
         let ps = UIImageView()
-        ps.frame = CGRect(x: 0, y: self.view.frame.height/6, width: self.view.frame.width/1, height: self.view.frame.height/1.5)
         ps.backgroundColor = .white
         ps.contentMode = .scaleAspectFit
+        ps.translatesAutoresizingMaskIntoConstraints = false
         return ps
     }()
     
     lazy var guessTextField: UITextField = {
         let gtf = UITextField()
-//        gtf.frame = CGRect(x: 0, y: self.view.frame.height - 140 , width: self.view.frame.width, height: 60)
-        gtf.anchor(top: previousSketch.bottomAnchor,
-                   left: self.view.leftAnchor,
-                   bottom: nil,
-                   right: self.view.rightAnchor,
-                   paddingTop: 0,
-                   paddingLeft: 0,
-                   paddingBottom: 0,
-                   paddingRight: 0,
-                   width: self.view.frame.width,
-                   height: 60)
-        gtf.backgroundColor = .white
-        gtf.font = UIFont(name: "Times New Roman", size: 30)
+        gtf.backgroundColor = UIColor.mainOffWhite()
         gtf.textColor = .black
         gtf.placeholder = "Enter Guess"
-        gtf.layer.borderColor = UIColor.black.cgColor
-        gtf.layer.borderWidth = 2.0
+        gtf.layer.borderColor = UIColor.mainScheme1().cgColor
+        gtf.layer.borderWidth = 1.0
+        gtf.translatesAutoresizingMaskIntoConstraints = false
+        gtf.setPadding()
         return gtf
     }()
     
-    lazy var timeLabel: UILabel = {
+    lazy var timerLabel: UILabel = {
         let label = UILabel()
-        label.frame = CGRect(x: self.view.frame.width - 80, y: 0, width: 80, height: 80)
-        label.backgroundColor = UIColor.mainScheme1()
+        label.backgroundColor = UIColor.mainOffWhite()
         label.font = UIFont(name: "Times New Roman", size: 40)
         label.textAlignment = .center
-        label.textColor = UIColor(red: 251.0/255.0, green: 254.0/255.0, blue: 60.0/255.0, alpha: 1.0)
+        label.textColor = .black
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.layer.borderColor = UIColor.mainScheme3().cgColor
+        label.layer.cornerRadius = 30
+        label.clipsToBounds = true
         return label
     }()
     
     lazy var barLabel: UILabel = {
         let lbl = UILabel()
         lbl.backgroundColor = UIColor.mainScheme1()
-        lbl.frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 80, height: 80)
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        lbl.textColor = .white
+        lbl.font = UIFont.boldSystemFont(ofSize: 30)
         return lbl
     }()
+    
+    // MARK: - Life Cycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        GameController.shared.delegate = self
+        MCController.shared.delegate = self
+        self.navigationController?.navigationBar.isHidden = true
+        self.view.backgroundColor = UIColor.mainScheme1()
+        
+        setupView()
+        
+        let passedTimeline = timeline
+        guard let data = passedTimeline?.rounds.last?.imageData else { return }
+        let image = UIImage(data: data)
+        previousSketch.image = image
+        barLabel.text = "   Dub this Doodle"
+        timerLabel.text = String(time)
+        startTimer()
+    }
+    
+    
+    //MARK: - View Setup
+    
+    func setupView() {
+        view.addSubview(barLabel)
+        view.addSubview(timerLabel)
+        view.addSubview(previousSketch)
+        view.addSubview(guessTextField)
+        
+        barLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+                        left: view.safeAreaLayoutGuide.leftAnchor,
+                        bottom: nil,
+                        right: view.safeAreaLayoutGuide.rightAnchor,
+                        paddingTop: 0,
+                        paddingLeft: 0,
+                        paddingBottom: 0,
+                        paddingRight: 0,
+                        width: 0,
+                        height: 70)
+        
+        timerLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+                         left: nil,
+                         bottom: nil,
+                         right: view.safeAreaLayoutGuide.rightAnchor,
+                         paddingTop: 5,
+                         paddingLeft: 8,
+                         paddingBottom: 0,
+                         paddingRight: 8,
+                         width: 60,
+                         height: 60)
+        
+        guessTextField.anchor(top: barLabel.bottomAnchor,
+                         left: self.view.leftAnchor,
+                         bottom: nil,
+                         right: self.view.rightAnchor,
+                         paddingTop: 8,
+                         paddingLeft: 0,
+                         paddingBottom: 0,
+                         paddingRight: 0,
+                         width: self.view.frame.width,
+                         height: 44)
+        
+        previousSketch.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.66).isActive = true
+        previousSketch.anchor(top: guessTextField.bottomAnchor,
+                              left: view.leftAnchor,
+                              bottom: nil,
+                              right: view.rightAnchor,
+                              paddingTop: 0,
+                              paddingLeft: 0,
+                              paddingBottom: 0,
+                              paddingRight: 0,
+                              width: 0,
+                              height: 0)
+    }
     
     // MARK: Timer
     
@@ -104,8 +146,11 @@
     
     @objc private func timerTicked() {
         time -= 1
-        timeLabel.text = String(time)
+        timerLabel.text = String(time)
         print(time)
+        if time <= 5 {
+            timerLabel.textColor = .red
+        }
         if time == 0 {
             let timeline = roundEnded()
             GameController.shared.endRound(withTimeline: timeline)
@@ -114,6 +159,8 @@
     }
     
  }
+ 
+ // MARK: - MCController Delegate
  
  extension GuessViewController: MCControllerDelegate {
     func toGuessView(timeline: Timeline) {}
@@ -138,6 +185,8 @@
         }
     }
  }
+ 
+ // MARK: - GameController Delegate
  
  extension GuessViewController: GameControllerDelegate {
     func advertiserToCanvasView(withTimeLine: Timeline) {
