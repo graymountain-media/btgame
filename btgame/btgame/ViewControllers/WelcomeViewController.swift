@@ -81,12 +81,10 @@ class WelcomeViewController: UIViewController {
     
     let howToPlayButton: UIButton = {
         let button = UIButton(type: .system)
-//        button.backgroundColor = UIColor.mainScheme2()
         button.setTitleColor(UIColor.mainScheme1(), for: .normal)
         button.setTitle("How to Play", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = UIFont(name: "HoeflerText-Black", size: 20)
-//        button.layer.cornerRadius = 5
         button.layer.masksToBounds = true
         button.addTarget(self, action: #selector(howToPlayButtonTapped), for: .touchUpInside)
         return button
