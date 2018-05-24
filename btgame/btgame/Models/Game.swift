@@ -7,3 +7,31 @@
 //
 
 import Foundation
+
+class Game {
+    let id: UUID
+    var numberOfRounds: Int
+    var returnedTimelines: [Timeline] {
+        didSet{
+            print("RETURNED TIMELINES: \(returnedTimelines)")
+        }
+    }
+    var timeLimit: Int
+    var players: [Player]
+    var topics: [String]
+    
+    init(players: [Player], timelines: [Timeline], timeLimit: Int = 5) {
+        self.id = UUID()
+        self.numberOfRounds = players.count
+        self.returnedTimelines = []
+        self.timeLimit = timeLimit
+        self.players = players
+        self.topics = []
+    }
+}
+
+extension Game: Equatable {
+    static func == (lhs: Game, rhs: Game) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
