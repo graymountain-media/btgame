@@ -52,8 +52,22 @@
         lbl.backgroundColor = UIColor.mainScheme1()
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.textColor = .white
-        lbl.font = UIFont.boldSystemFont(ofSize: 30)
+        lbl.font = UIFont(name: "Times New Roman", size: 35)
         return lbl
+    }()
+    
+    lazy var canvasTopBorderView: UIView = {
+        let cbv = UIView()
+        cbv.backgroundColor = UIColor.mainScheme3()
+        cbv.translatesAutoresizingMaskIntoConstraints = false
+        return cbv
+    }()
+    
+    lazy var canvasBottomBorderView: UIView = {
+        let cbv = UIView()
+        cbv.backgroundColor = UIColor.mainScheme3()
+        cbv.translatesAutoresizingMaskIntoConstraints = false
+        return cbv
     }()
     
     // MARK: - Life Cycle
@@ -85,6 +99,8 @@
         view.addSubview(timerLabel)
         view.addSubview(previousSketch)
         view.addSubview(guessTextField)
+        view.addSubview(canvasTopBorderView)
+        view.addSubview(canvasBottomBorderView)
         
         barLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor,
                         left: view.safeAreaLayoutGuide.leftAnchor,
@@ -108,11 +124,22 @@
                          width: 60,
                          height: 60)
         
-        guessTextField.anchor(top: barLabel.bottomAnchor,
+        canvasTopBorderView.anchor(top: barLabel.bottomAnchor,
+                                   left: view.safeAreaLayoutGuide.leftAnchor,
+                                   bottom: nil,
+                                   right: view.safeAreaLayoutGuide.rightAnchor,
+                                   paddingTop: 0,
+                                   paddingLeft: 0,
+                                   paddingBottom: 0,
+                                   paddingRight: 0,
+                                   width: 0,
+                                   height: 30)
+        
+        guessTextField.anchor(top: canvasTopBorderView.bottomAnchor,
                          left: self.view.leftAnchor,
                          bottom: nil,
                          right: self.view.rightAnchor,
-                         paddingTop: 8,
+                         paddingTop: 0,
                          paddingLeft: 0,
                          paddingBottom: 0,
                          paddingRight: 0,
@@ -130,6 +157,17 @@
                               paddingRight: 0,
                               width: 0,
                               height: 0)
+        
+        canvasBottomBorderView.anchor(top: previousSketch.bottomAnchor,
+                                      left: view.safeAreaLayoutGuide.leftAnchor,
+                                      bottom: nil,
+                                      right: view.safeAreaLayoutGuide.rightAnchor,
+                                      paddingTop: 0,
+                                      paddingLeft: 0,
+                                      paddingBottom: 0,
+                                      paddingRight: 0,
+                                      width: 0,
+                                      height: 30)
     }
     
     // MARK: Timer

@@ -14,7 +14,7 @@ struct Constants {
     
     static let welcome = "Welcome"
     static let to = "to"
-    static let gameName = "Dub n’ Doodle"
+    static let gameName = "Dub \nn’ \nDoodle"
     static let host = "Host"
     static let join = "Join"
     static let game = "Game"

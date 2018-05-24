@@ -24,7 +24,7 @@ class CanvasViewController: UIViewController {
         let passedTimeline = timeline
         lbl.backgroundColor = UIColor.mainScheme1()
         lbl.textColor = .white
-        lbl.font = UIFont(name: "Times New Roman", size: 30)
+        lbl.font = UIFont(name: "Times New Roman", size: 37)
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
@@ -50,6 +50,21 @@ class CanvasViewController: UIViewController {
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
+    
+    lazy var canvasTopBorderView: UIView = {
+        let cbv = UIView()
+        cbv.backgroundColor = UIColor.mainScheme3()
+        cbv.translatesAutoresizingMaskIntoConstraints = false
+        return cbv
+    }()
+    
+    lazy var canvasBottomBorderView: UIView = {
+        let cbv = UIView()
+        cbv.backgroundColor = UIColor.mainScheme3()
+        cbv.translatesAutoresizingMaskIntoConstraints = false
+        return cbv
+    }()
+    
     //    lazy var redButton: UIButton = {
     //        let btn = UIButton()
     //        return btn
@@ -94,7 +109,7 @@ class CanvasViewController: UIViewController {
         canvasView.tag = 1
         
         guard let timeline = timeline, let topic = timeline.rounds.last?.guess else {return}
-        topicLabel.text = "   Topic: \(topic)"
+        topicLabel.text = "   Doodle: \(topic)"
         timerLabel.text = String(time)
         startTimer()
         setupView()
@@ -133,6 +148,8 @@ class CanvasViewController: UIViewController {
         self.view.addSubview(canvasView)
         self.view.addSubview(topicLabel)
         self.view.addSubview(timerLabel)
+        self.view.addSubview(canvasTopBorderView)
+        self.view.addSubview(canvasBottomBorderView)
         
         topicLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor,
                         left: view.safeAreaLayoutGuide.leftAnchor,
@@ -145,6 +162,28 @@ class CanvasViewController: UIViewController {
                         width: 0,
                         height: 70)
         
+        canvasTopBorderView.anchor(top: topicLabel.bottomAnchor,
+                                left: view.safeAreaLayoutGuide.leftAnchor,
+                                bottom: nil,
+                                right: view.safeAreaLayoutGuide.rightAnchor,
+                                paddingTop: 0,
+                                paddingLeft: 0,
+                                paddingBottom: 0,
+                                paddingRight: 0,
+                                width: 0,
+                                height: 30)
+        
+        canvasBottomBorderView.anchor(top: canvasView.bottomAnchor,
+                                   left: view.safeAreaLayoutGuide.leftAnchor,
+                                   bottom: nil,
+                                   right: view.safeAreaLayoutGuide.rightAnchor,
+                                   paddingTop: 0,
+                                   paddingLeft: 0,
+                                   paddingBottom: 0,
+                                   paddingRight: 0,
+                                   width: 0,
+                                   height: 30)
+        
         timerLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor,
                          left: nil,
                          bottom: nil,
@@ -155,9 +194,9 @@ class CanvasViewController: UIViewController {
                          paddingRight: 8,
                          width: 60,
                          height: 60)
-        
+
         canvasView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.66).isActive = true
-        canvasView.topAnchor.constraint(equalTo: topicLabel.bottomAnchor, constant: 8).isActive = true
+        canvasView.topAnchor.constraint(equalTo: canvasTopBorderView.bottomAnchor, constant: 0).isActive = true
         canvasView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
         canvasView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
     }

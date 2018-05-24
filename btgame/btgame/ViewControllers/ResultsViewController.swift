@@ -66,7 +66,7 @@ class ResultsViewController: UIViewController {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.text = "Starter Topic"
-        view.font = UIFont.boldSystemFont(ofSize: 20)
+        view.font = UIFont(name: "Times New Roman", size: 30)
         view.textColor = UIColor.mainOffWhite()
         view.backgroundColor = UIColor.mainScheme1()
         view.textAlignment = .center

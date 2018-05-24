@@ -42,11 +42,11 @@ class TopicViewController: UIViewController {
     
     lazy var chooseTopicBelowLabel: UILabel = {
         let label = UILabel()
-        label.text = "Dub n' Doodle"
+        label.text = "Select a topic:"
         label.textColor = UIColor.black
         label.textAlignment = .center
-        label.frame = CGRect(x: self.view.frame.width/2 - 150, y: self.view.frame.height/4 - 100, width: 300, height: 60)
-        label.font = UIFont(name: "MarkerFelt-Wide", size: 32)
+        label.frame = CGRect(x: self.view.frame.width/2 - 150, y: self.view.frame.height/4 - 60, width: 300, height: 60)
+        label.font = UIFont(name: "MarkerFelt-Wide", size: 40)
         return label
     }()
     
@@ -108,6 +108,13 @@ class TopicViewController: UIViewController {
         return button
     }()
     
+    lazy var canvasTopBorderView: UIView = {
+        let cbv = UIView()
+        cbv.backgroundColor = UIColor.mainScheme3()
+        cbv.translatesAutoresizingMaskIntoConstraints = false
+        return cbv
+    }()
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -143,10 +150,21 @@ class TopicViewController: UIViewController {
         self.view.addSubview(fourthChoiceButton)
         self.view.addSubview(timerLabel)
         self.view.addSubview(barLabel)
-        
+        self.view.addSubview(canvasTopBorderView)
 
         view.addSubview(barLabel)
         view.addSubview(timerLabel)
+        
+        canvasTopBorderView.anchor(top: barLabel.bottomAnchor,
+                                   left: view.safeAreaLayoutGuide.leftAnchor,
+                                   bottom: nil,
+                                   right: view.safeAreaLayoutGuide.rightAnchor,
+                                   paddingTop: 0,
+                                   paddingLeft: 0,
+                                   paddingBottom: 0,
+                                   paddingRight: 0,
+                                   width: 0,
+                                   height: 25)
         
         barLabel.anchor(top: view.topAnchor,
                         left: view.safeAreaLayoutGuide.leftAnchor,
@@ -157,7 +175,7 @@ class TopicViewController: UIViewController {
                         paddingBottom: 0,
                         paddingRight: 0,
                         width: 0,
-                        height: 70)
+                        height: 90)
         
         timerLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor,
                           left: nil,
@@ -165,7 +183,7 @@ class TopicViewController: UIViewController {
                           right: view.safeAreaLayoutGuide.rightAnchor,
                           paddingTop: 5,
                           paddingLeft: 8,
-                          paddingBottom: 0,
+                          paddingBottom: 5,
                           paddingRight: 8,
                           width: 60,
                           height: 60)
