@@ -114,6 +114,7 @@ class TopicViewController: UIViewController {
         super.viewDidLoad()
         MCController.shared.delegate = self
         GameController.shared.delegate = self
+        view.backgroundColor = UIColor.mainScheme1()
         
         buttons = [firstChoiceButton,secondChoiceButton,thirdChoiceButton,fourthChoiceButton]
         
