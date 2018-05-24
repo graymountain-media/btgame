@@ -21,9 +21,10 @@ class WelcomeViewController: UIViewController {
     let welcomeLabel: UILabel = {
         let label = UILabel()
         label.text = "\(Constants.gameName)"
-        label.textColor = UIColor.mainScheme2()
+        label.numberOfLines = 0
+        label.textColor = UIColor.black
         label.textAlignment = .center
-        label.font = UIFont(name: "zapfino", size: 30)
+        label.font = UIFont(name: "MarkerFelt-Wide", size: 50)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -39,8 +40,8 @@ class WelcomeViewController: UIViewController {
         button.layer.cornerRadius = 65
         button.layer.shadowRadius = 2.0
         button.layer.masksToBounds = true
-        button.layer.borderColor = UIColor.black.cgColor
-        button.layer.borderWidth = 2.0
+//        button.layer.borderColor = UIColor.black.cgColor
+//        button.layer.borderWidth = 2.0
         button.addTarget(self, action: #selector(beginGameButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -55,8 +56,8 @@ class WelcomeViewController: UIViewController {
         button.layer.cornerRadius = 65
         button.layer.shadowRadius = 2.0
         button.layer.masksToBounds = true
-        button.layer.borderColor = UIColor.black.cgColor
-        button.layer.borderWidth = 2.0
+//        button.layer.borderColor = UIColor.black.cgColor
+//        button.layer.borderWidth = 2.0
         button.isHidden = true
         button.addTarget(self, action: #selector(hostButtonTapped), for: .touchUpInside)
         return button
@@ -72,8 +73,8 @@ class WelcomeViewController: UIViewController {
         button.layer.cornerRadius = 65
         button.layer.shadowRadius = 2.0
         button.layer.masksToBounds = true
-        button.layer.borderColor = UIColor.black.cgColor
-        button.layer.borderWidth = 2.0
+//        button.layer.borderColor = UIColor.black.cgColor
+//        button.layer.borderWidth = 2.0
         button.isHidden = true
         button.addTarget(self, action: #selector(joinButtonTapped), for: .touchUpInside)
         return button
@@ -130,7 +131,7 @@ class WelcomeViewController: UIViewController {
                             height: 0)
         
         beginGameButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-        beginGameButton.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
+        beginGameButton.centerYAnchor.constraint(equalTo: containerView.centerYAnchor, constant: 35).isActive = true
         beginGameButton.widthAnchor.constraint(equalToConstant: 130).isActive = true
         beginGameButton.heightAnchor.constraint(equalToConstant: 130).isActive = true
         
@@ -159,7 +160,7 @@ class WelcomeViewController: UIViewController {
             self.beginGameButton.isHidden = true
             self.hostButton.isHidden = false
             self.joinButton.isHidden = false
-            UIView.animate(withDuration: 0.75) {
+            UIView.animate(withDuration: 0.4) {
                 
                 self.joinButton.setTitle("Join", for: .normal)
                 self.hostButton.setTitle("Host", for: .normal)
