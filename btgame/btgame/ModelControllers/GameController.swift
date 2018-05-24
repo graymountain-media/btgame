@@ -201,4 +201,12 @@ class GameController {
             }
         }
     }
+    func clearData() {
+        isDrawingRound = false
+        playerOrder = []
+        orderedTimelines = []
+        returnedTimelines = []
+        roundNumber = 0
+        nextRoundInstruction = Event.Instruction.toCanvas
+    }
 }

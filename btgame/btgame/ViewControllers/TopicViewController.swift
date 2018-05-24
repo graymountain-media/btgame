@@ -114,7 +114,7 @@ class TopicViewController: UIViewController {
         super.viewDidLoad()
         MCController.shared.delegate = self
         GameController.shared.delegate = self
-        view.backgroundColor = UIColor.mainScheme1()
+        view.backgroundColor = UIColor.mainOffWhite()
         
         buttons = [firstChoiceButton,secondChoiceButton,thirdChoiceButton,fourthChoiceButton]
         
@@ -148,7 +148,7 @@ class TopicViewController: UIViewController {
         view.addSubview(barLabel)
         view.addSubview(timerLabel)
         
-        barLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+        barLabel.anchor(top: view.topAnchor,
                         left: view.safeAreaLayoutGuide.leftAnchor,
                         bottom: nil,
                         right: view.safeAreaLayoutGuide.rightAnchor,
