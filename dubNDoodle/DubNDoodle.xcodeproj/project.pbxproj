@@ -18,6 +18,7 @@
 		A140781E20AE351E0077C85C /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A140781D20AE351E0077C85C /* Counter.swift */; };
 		A151121320B37511001A8F46 /* SetupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A151121220B37511001A8F46 /* SetupTableViewCell.swift */; };
 		A151121520B380A7001A8F46 /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A151121420B380A7001A8F46 /* BrowserViewController.swift */; };
+		A1A5B4CB20B768D4006DCFF9 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A5B4CA20B768D4006DCFF9 /* SettingsViewController.swift */; };
 		A1BCCBFB20AA4BA600A4AC7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCBFA20AA4BA600A4AC7D /* AppDelegate.swift */; };
 		A1BCCC0220AA4BA700A4AC7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1BCCC0120AA4BA700A4AC7D /* Assets.xcassets */; };
 		A1BCCC0520AA4BA700A4AC7D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1BCCC0320AA4BA700A4AC7D /* LaunchScreen.storyboard */; };
@@ -55,7 +56,8 @@
 		A140781D20AE351E0077C85C /* Counter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Counter.swift; sourceTree = "<group>"; };
 		A151121220B37511001A8F46 /* SetupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupTableViewCell.swift; sourceTree = "<group>"; };
 		A151121420B380A7001A8F46 /* BrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
-		A1BCCBF720AA4BA600A4AC7D /* btgame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = btgame.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1A5B4CA20B768D4006DCFF9 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		A1BCCBF720AA4BA600A4AC7D /* DubNDoodle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DubNDoodle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1BCCBFA20AA4BA600A4AC7D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A1BCCC0120AA4BA700A4AC7D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A1BCCC0420AA4BA700A4AC7D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -96,7 +98,7 @@
 		A1BCCBEE20AA4BA600A4AC7D = {
 			isa = PBXGroup;
 			children = (
-				A1BCCBF920AA4BA600A4AC7D /* btgame */,
+				A1BCCBF920AA4BA600A4AC7D /* dubNDoodle */,
 				A1BCCBF820AA4BA600A4AC7D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -104,12 +106,12 @@
 		A1BCCBF820AA4BA600A4AC7D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A1BCCBF720AA4BA600A4AC7D /* btgame.app */,
+				A1BCCBF720AA4BA600A4AC7D /* DubNDoodle.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A1BCCBF920AA4BA600A4AC7D /* btgame */ = {
+		A1BCCBF920AA4BA600A4AC7D /* dubNDoodle */ = {
 			isa = PBXGroup;
 			children = (
 				A1BCCC1420AB2B5C00A4AC7D /* Models */,
@@ -118,7 +120,7 @@
 				A1BCCC1920AB2B7F00A4AC7D /* SpecialControllers */,
 				A1BCCC3220AB2CA300A4AC7D /* Resources */,
 			);
-			path = btgame;
+			path = dubNDoodle;
 			sourceTree = "<group>";
 		};
 		A1BCCC1420AB2B5C00A4AC7D /* Models */ = {
@@ -160,6 +162,7 @@
 			children = (
 				A1BCCC3320AB2D1200A4AC7D /* WelcomeViewController.swift */,
 				A1BCCC2520AB2BF900A4AC7D /* RegisterViewController.swift */,
+				A1A5B4CA20B768D4006DCFF9 /* SettingsViewController.swift */,
 				A1BCCC2720AB2C0000A4AC7D /* SetupViewController.swift */,
 				A151121220B37511001A8F46 /* SetupTableViewCell.swift */,
 				A151121420B380A7001A8F46 /* BrowserViewController.swift */,
@@ -194,9 +197,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A1BCCBF620AA4BA600A4AC7D /* btgame */ = {
+		A1BCCBF620AA4BA600A4AC7D /* DubNDoodle */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A1BCCC0920AA4BA700A4AC7D /* Build configuration list for PBXNativeTarget "btgame" */;
+			buildConfigurationList = A1BCCC0920AA4BA700A4AC7D /* Build configuration list for PBXNativeTarget "DubNDoodle" */;
 			buildPhases = (
 				A1BCCBF320AA4BA600A4AC7D /* Sources */,
 				A1BCCBF420AA4BA600A4AC7D /* Frameworks */,
@@ -206,9 +209,9 @@
 			);
 			dependencies = (
 			);
-			name = btgame;
+			name = DubNDoodle;
 			productName = btgame;
-			productReference = A1BCCBF720AA4BA600A4AC7D /* btgame.app */;
+			productReference = A1BCCBF720AA4BA600A4AC7D /* DubNDoodle.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -226,7 +229,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A1BCCBF220AA4BA600A4AC7D /* Build configuration list for PBXProject "btgame" */;
+			buildConfigurationList = A1BCCBF220AA4BA600A4AC7D /* Build configuration list for PBXProject "DubNDoodle" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -239,7 +242,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A1BCCBF620AA4BA600A4AC7D /* btgame */,
+				A1BCCBF620AA4BA600A4AC7D /* DubNDoodle */,
 			);
 		};
 /* End PBXProject section */
@@ -263,6 +266,7 @@
 			files = (
 				A1BCCC3620AB789C00A4AC7D /* Topics.swift in Sources */,
 				A1BCCC1120AB2B3900A4AC7D /* Timeline.swift in Sources */,
+				A1A5B4CB20B768D4006DCFF9 /* SettingsViewController.swift in Sources */,
 				3BD076B620AB384900BA7C43 /* Constants.swift in Sources */,
 				A1BCCC2320AB2BCF00A4AC7D /* TimelineController.swift in Sources */,
 				A1BCCC1620AB2B6F00A4AC7D /* MCController.swift in Sources */,
@@ -430,12 +434,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HSBGDDNL2A;
-				INFOPLIST_FILE = "$(SRCROOT)/btgame/Resources/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/dubNDoodle/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.Skybridge.btgame;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Skybridge.dubNDoodle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -448,12 +452,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HSBGDDNL2A;
-				INFOPLIST_FILE = "$(SRCROOT)/btgame/Resources/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/dubNDoodle/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.Skybridge.btgame;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Skybridge.dubNDoodle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -463,7 +467,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A1BCCBF220AA4BA600A4AC7D /* Build configuration list for PBXProject "btgame" */ = {
+		A1BCCBF220AA4BA600A4AC7D /* Build configuration list for PBXProject "DubNDoodle" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A1BCCC0720AA4BA700A4AC7D /* Debug */,
@@ -472,7 +476,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A1BCCC0920AA4BA700A4AC7D /* Build configuration list for PBXNativeTarget "btgame" */ = {
+		A1BCCC0920AA4BA700A4AC7D /* Build configuration list for PBXNativeTarget "DubNDoodle" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A1BCCC0A20AA4BA700A4AC7D /* Debug */,
