@@ -80,6 +80,7 @@ class ResultsViewController: UIViewController {
         guard let timelines = timelines else { return }
         guard let starterText = timelines[0].rounds[0].guess else { return }
         starterTopicLabel.text = starterText
+        MCController.shared.delegate = self
         
         scrollView.delegate = self
         view.backgroundColor = UIColor.mainScheme1()
@@ -176,9 +177,13 @@ class ResultsViewController: UIViewController {
         MCController.shared.currentGamePeers = []
         MCController.shared.playerArray = []
         MCController.shared.peerIDDict = [:]
+        MCController.shared.session.disconnect()
+        GameController.shared.clearData()
+        MCController.shared.advertiser?.stopAdvertisingPeer()
         navigationController?.popToRootViewController(animated: true)
     }
     @objc private func handleReplay(){
+        GameController.shared.clearData()
         GameController.shared.startNewGame(players: MCController.shared.playerArray)
         DispatchQueue.main.async {
             let destinationVC = TopicViewController()
@@ -247,6 +252,26 @@ extension ResultsViewController: UIScrollViewDelegate {
         starterTopicLabel.text = starterText
 
     }
+}
+
+extension ResultsViewController: MCControllerDelegate {
+    func playerJoinedSession() {}
+    func incrementDoneButtonCounter() {}
+    
+    func toTopicView(timeline: Timeline) {
+        DispatchQueue.main.async {
+            print("Results to topic")
+            let destinationVC = TopicViewController()
+            destinationVC.timeline = timeline
+            self.navigationController?.pushViewController(destinationVC, animated: true)
+        }
+    }
+    
+    func toCanvasView(timeline: Timeline) {}
+    func toGuessView(timeline: Timeline) {}
+    func toResultsView(timelines: [Timeline]) {}
+    
+    
 }
 
 
