@@ -168,6 +168,7 @@ class ResultsViewController: UIViewController {
             tableView.register(GuessTableViewCell.self, forCellReuseIdentifier: Constants.GuessCell)
             tableView.register(ImageTableViewCell.self, forCellReuseIdentifier: Constants.ImageCell)
             tableView.allowsSelection = false
+            tableView.separatorStyle = .none
             tableViews.append(tableView)
         }
         return tableViews
@@ -224,25 +225,20 @@ extension ResultsViewController: UITableViewDelegate, UITableViewDataSource {
         return timelines[currentTimelineIndex].rounds.count
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let timelines = timelines else { return 60.0 }
+        guard let timelines = timelines else { return 105.0 }
         if timelines[tableView.tag].rounds[indexPath.row].isImage {
             return CGFloat(view.frame.width)
         } else {
-            return 60.0
+            return 120.0
         }
     }
 }
 
 extension ResultsViewController: UIScrollViewDelegate {
     //TODO: - disable vertical scrolling
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let pageWidth = scrollView.bounds.width
-//        let pageFraction = scrollView.contentOffset.x / pageWidth
-//        pageControl.currentPage = Int(round(pageFraction))
-//        currentTimelineIndex = pageControl.currentPage
-    }
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        print("scrollViewDidEndDecelerating")
         let pageWidth = scrollView.bounds.width
         let pageFraction = scrollView.contentOffset.x / pageWidth
         pageControl.currentPage = Int(round(pageFraction))
