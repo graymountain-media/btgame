@@ -76,6 +76,7 @@ class SetupViewController: UIViewController {
     
     @objc fileprivate func startGame() {
         GameController.shared.startNewGame(players: MCController.shared.playerArray)
+        MCController.shared.advertiserAssistant?.stop()
         DispatchQueue.main.async {
             let destinationVC = TopicViewController()
             for timeline in GameController.shared.orderedTimelines {
