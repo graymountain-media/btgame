@@ -120,7 +120,8 @@ class TopicViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        MCController.shared.delegate = self
+        GameController.shared.roundNumberLabelValue = 1
+
         GameController.shared.delegate = self
         view.backgroundColor = UIColor.mainOffWhite()
         
@@ -207,6 +208,7 @@ class TopicViewController: UIViewController {
         timerLabel.text = String(time)
         print(time)
         if time == 0 {
+            self.navigationController?.pushViewController(BetweenRoundViewController(), animated: true)
             let round = roundEnded()
             GameController.shared.endRound(withRound: round)
             resetTimer()
@@ -233,12 +235,7 @@ class TopicViewController: UIViewController {
 
 extension TopicViewController: GameControllerDelegate {
     func advertiserToCanvasView(withRound: Round) {
-        print("Advertiser to canvas view")
-        DispatchQueue.main.async {
-            let canvasView = CanvasViewController()
-            canvasView.round = withRound
-            self.navigationController?.pushViewController(canvasView, animated: true)
-        }
+        
     }
     
     func advertiserToGuessView(withRound: Round) {
@@ -257,24 +254,20 @@ extension TopicViewController: GameControllerDelegate {
 
 // MARK: - MCController Delegate
 
-extension TopicViewController: MCControllerDelegate{
-    func toTopicView(withTopics topics: [String]) {
-    }
-    
-    func toCanvasView(round: Round) {
-        DispatchQueue.main.async {
-            let canvasView = CanvasViewController()
-            canvasView.round = round
-            self.navigationController?.pushViewController(canvasView, animated: true)
-        }
-    }
-    
-    func toGuessView(round: Round) {
-        
-    }
-    
-    func toResultsView(timelines: [Timeline]) {
-    }
-    func playerJoinedSession() {}
-    func incrementDoneButtonCounter() {}
-}
+//extension TopicViewController: MCControllerDelegate{
+//    func toTopicView(withTopics topics: [String]) {
+//    }
+//
+//    func toCanvasView(round: Round) {
+//
+//    }
+//
+//    func toGuessView(round: Round) {
+//
+//    }
+//
+//    func toResultsView(timelines: [Timeline]) {
+//    }
+//    func playerJoinedSession() {}
+//    func incrementDoneButtonCounter() {}
+//}

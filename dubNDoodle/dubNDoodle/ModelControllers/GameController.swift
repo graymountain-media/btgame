@@ -27,6 +27,7 @@ class GameController {
     var returnedRounds: [Round] = []
     var roundNumber = 0
     var nextRoundInstruction = Event.Instruction.toCanvas
+    var roundNumberLabelValue = 0
     
     weak var delegate: GameControllerDelegate?
     
@@ -103,17 +104,6 @@ class GameController {
         }
     }
     
-//    func refreshTimelines(){
-//        for (index, oldTimeline) in orderedTimelines.enumerated() {
-//            for newTimeline in returnedTimelines {
-//                if newTimeline.id == oldTimeline.id {
-//                    orderedTimelines.remove(at: index)
-//                    orderedTimelines.insert(newTimeline, at: index)
-//                }
-//            }
-//        }
-//        returnedTimelines = []
-//    }
     
     func sendAdvertiserToNextView(withRound round: Round){
         if isDrawingRound {
