@@ -12,7 +12,8 @@ import MultipeerConnectivity
 class TopicViewController: UIViewController {
     
     var displayName: String?
-    var timeline: Timeline?
+//    var timeline: Timeline?
+    var topics: [String]?
     var buttons: [UIButton] = []
     var selectedTopic: String = ""
     var timer = Timer()
@@ -132,8 +133,8 @@ class TopicViewController: UIViewController {
         setupView()
         setTopics()
         
-        guard let timeline = timeline else {return}
-        selectedTopic = timeline.possibleTopics[0]
+        guard let topics = topics else {return}
+        selectedTopic = topics[0]
         
         startTimer()
     }
@@ -206,8 +207,8 @@ class TopicViewController: UIViewController {
         timerLabel.text = String(time)
         print(time)
         if time == 0 {
-            let timeline = roundEnded()
-            GameController.shared.endRound(withTimeline: timeline)
+            let round = roundEnded()
+            GameController.shared.endRound(withRound: round)
             resetTimer()
         }
     }
@@ -220,9 +221,9 @@ class TopicViewController: UIViewController {
     }
     
     func setTopics(){
-        guard let timeline = timeline else {return}
+        guard let topics = topics else {return}
         for (index,button) in buttons.enumerated() {
-            button.setTitle(timeline.possibleTopics[index], for: .normal)
+            button.setTitle(topics[index], for: .normal)
         }
     }
     
@@ -231,30 +232,25 @@ class TopicViewController: UIViewController {
 // MARK: - GameController Delegate
 
 extension TopicViewController: GameControllerDelegate {
-    func advertiserToResultsView(withTimelines timelines: [Timeline]) {
-        
-    }
-    
-    
-    func roundEnded() -> Timeline {
-        let newRound = Round(owner: Player(displayName: "Starter Topic", id: MCPeerID(displayName: "Starter") , isAdvertiser: false), image: nil, guess: selectedTopic, isImage: false)
-        
-        guard let timeline = self.timeline else {return Timeline(owner: MCController.shared.playerArray[0])}
-        
-        timeline.rounds.append(newRound)
-        return timeline
-    }
-    
-    func advertiserToCanvasView(withTimeLine: Timeline) {
+    func advertiserToCanvasView(withRound: Round) {
         print("Advertiser to canvas view")
         DispatchQueue.main.async {
             let canvasView = CanvasViewController()
-            canvasView.timeline = withTimeLine
+            canvasView.round = round
             self.navigationController?.pushViewController(canvasView, animated: true)
         }
     }
     
-    func advertiserToGuessView(withTimeLine: Timeline) {
+    func advertiserToGuessView(withRound: Round) {
+    }
+    
+    func advertiserToResultsView(withTimelines timelines: [Timeline]) {
+    }
+    
+    
+    func roundEnded() -> Round {
+        let newRound = Round(owner: Player(displayName: "Starter Topic", id: MCPeerID(displayName: "Starter") , isAdvertiser: false), image: nil, guess: selectedTopic, isImage: false)
+        return newRound
     }
     
 }
@@ -262,20 +258,23 @@ extension TopicViewController: GameControllerDelegate {
 // MARK: - MCController Delegate
 
 extension TopicViewController: MCControllerDelegate{
-    func toResultsView(timelines: [Timeline]) {
-        
+    func toTopicView(withTopics topics: [String]) {
     }
     
-    func toCanvasView(timeline: Timeline) {
+    func toCanvasView(round: Round) {
         DispatchQueue.main.async {
             let canvasView = CanvasViewController()
-            canvasView.timeline = timeline
+            canvasView.round = round
             self.navigationController?.pushViewController(canvasView, animated: true)
         }
     }
     
+    func toGuessView(round: Round) {
+        
+    }
+    
+    func toResultsView(timelines: [Timeline]) {
+    }
     func playerJoinedSession() {}
     func incrementDoneButtonCounter() {}
-    func toTopicView(timeline: Timeline) {}
-    func toGuessView(timeline: Timeline) {}
 }

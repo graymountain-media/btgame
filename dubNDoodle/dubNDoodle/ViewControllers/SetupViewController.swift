@@ -82,7 +82,7 @@ class SetupViewController: UIViewController {
             for timeline in GameController.shared.orderedTimelines {
                 
                 if timeline.owner == MCController.shared.playerArray[0] {
-                    destinationVC.timeline = timeline
+                    destinationVC.topics = timeline.possibleTopics
                 }
             }
             self.navigationController?.pushViewController(destinationVC, animated: true)
