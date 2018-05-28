@@ -10,10 +10,57 @@ import UIKit
 
 class CanvasView: UIView {
     
-    var path = UIBezierPath()
-    var startPoint = CGPoint()
-    var touchPoint = CGPoint()
-    var seconds = 3
+    let path=UIBezierPath()
+    var previousPoint:CGPoint
+    var lineWidth:CGFloat=5.0
+    var strokeColor = UIColor.black
+    // Only override drawRect: if you perform custom drawing.
+    // An empty implementation adversely affects performance during animation.
+    override init(frame: CGRect) {
+        previousPoint=CGPoint.zero
+        super.init(frame: .zero)
+        let panGestureRecognizer=UIPanGestureRecognizer(target: self, action: #selector(pan))
+        panGestureRecognizer.maximumNumberOfTouches=1
+        self.addGestureRecognizer(panGestureRecognizer)
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        previousPoint=CGPoint.zero
+        super.init(coder: aDecoder)!
+        
+    }
+    
+    override func draw(_ rect: CGRect) {
+        // Drawing code
+        strokeColor.setStroke()
+        path.stroke()
+        path.lineWidth=lineWidth
+    }
+    
+    @objc func pan(panGestureRecognizer:UIPanGestureRecognizer)->Void
+    {
+        let currentPoint=panGestureRecognizer.location(in: self)
+        let midPoint=self.midPoint(p0: previousPoint, p1: currentPoint)
+        
+        if panGestureRecognizer.state == .began
+        {
+            path.move(to: currentPoint)
+        }
+        else if panGestureRecognizer.state == .changed
+        {
+            path.addQuadCurve(to: midPoint,controlPoint: previousPoint)
+        }
+        
+        previousPoint=currentPoint
+        self.setNeedsDisplay()
+    }
+    
+    func midPoint(p0:CGPoint,p1:CGPoint)->CGPoint
+    {
+        let x=(p0.x+p1.x)/2
+        let y=(p0.y+p1.y)/2
+        return CGPoint(x: x, y: y)
+    }
     
     func makeImage(withView view: UIView) -> UIImage? {
         let renderer = UIGraphicsImageRenderer(size: (viewWithTag(1)?.bounds.size)!)
@@ -24,41 +71,37 @@ class CanvasView: UIView {
         return image
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let touch = touches.first
-        if let point = touch?.location(in: viewWithTag(1)) {
-            startPoint = point
+    @objc func changeStrokeColor(_ sender: UIButton) {
+        switch sender.tag {
+        case 2:
+            strokeColor = UIColor.orange
+        case 3:
+            strokeColor = UIColor.yellow
+        case 4:
+            strokeColor = UIColor.red
+        case 5:
+            strokeColor = UIColor.blue
+        case 6:
+            strokeColor = UIColor.green
+        default:
+            strokeColor = UIColor.black
         }
     }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let touch = touches.first
-        if let point = touch?.location(in: viewWithTag(1)) {
-            touchPoint = point
-        }
-        path.move(to: startPoint)
-        path.addLine(to: touchPoint)
-        startPoint = touchPoint
-        
-        draw()
-    }
-    
-    func draw() {
-        let strokeLayer = CAShapeLayer()
-        strokeLayer.fillColor = nil
-        strokeLayer.strokeColor = UIColor.black.cgColor
-        strokeLayer.path = path.cgPath
-        strokeLayer.lineWidth = 6
-        viewWithTag(1)?.layer.addSublayer(strokeLayer)
-        viewWithTag(1)?.setNeedsDisplay()
-    }
-    
-    /*
-     // Only override draw() if you perform custom drawing.
-     // An empty implementation adversely affects performance during animation.
-     override func draw(_ rect: CGRect) {
-     // Drawing code
-     }
-     */
-    
 }
+
+
+//extension UIView {
+//
+//     static func scaleImageToSize(img: UIView) -> UIView {
+//        viewWithTag(1).updateConstraints(
+//        let size = CGSize(width: 200, height: 200)
+//
+//        img.draw(in: CGRect(origin: CGPoint.zero, size: size))
+//
+//        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+//
+//        UIGraphicsEndImageContext()
+//
+//        return scaledImage!
+//    }
+//}
