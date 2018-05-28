@@ -74,8 +74,9 @@
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        GameController.shared.roundNumberLabelValue += 1
+        
         GameController.shared.delegate = self
+        MCController.shared.delegate = self
         self.navigationController?.navigationBar.isHidden = true
         self.view.backgroundColor = UIColor.mainScheme1()
         
@@ -112,15 +113,15 @@
                         height: 70)
         
         timerLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor,
-                         left: nil,
-                         bottom: nil,
-                         right: view.safeAreaLayoutGuide.rightAnchor,
-                         paddingTop: 5,
-                         paddingLeft: 8,
-                         paddingBottom: 0,
-                         paddingRight: 8,
-                         width: 60,
-                         height: 60)
+                          left: nil,
+                          bottom: nil,
+                          right: view.safeAreaLayoutGuide.rightAnchor,
+                          paddingTop: 5,
+                          paddingLeft: 8,
+                          paddingBottom: 0,
+                          paddingRight: 8,
+                          width: 60,
+                          height: 60)
         
         canvasTopBorderView.anchor(top: barLabel.bottomAnchor,
                                    left: view.safeAreaLayoutGuide.leftAnchor,
@@ -134,15 +135,15 @@
                                    height: 30)
         
         guessTextField.anchor(top: canvasTopBorderView.bottomAnchor,
-                         left: self.view.leftAnchor,
-                         bottom: nil,
-                         right: self.view.rightAnchor,
-                         paddingTop: 0,
-                         paddingLeft: 0,
-                         paddingBottom: 0,
-                         paddingRight: 0,
-                         width: self.view.frame.width,
-                         height: 44)
+                              left: self.view.leftAnchor,
+                              bottom: nil,
+                              right: self.view.rightAnchor,
+                              paddingTop: 0,
+                              paddingLeft: 0,
+                              paddingBottom: 0,
+                              paddingRight: 0,
+                              width: self.view.frame.width,
+                              height: 44)
         
         previousSketch.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.66).isActive = true
         previousSketch.anchor(top: guessTextField.bottomAnchor,
@@ -188,14 +189,39 @@
             timerLabel.textColor = .red
         }
         if time == 0 {
-            self.navigationController?.pushViewController(BetweenRoundViewController(), animated: true)
             let round = roundEnded()
             GameController.shared.endRound(withRound: round)
             resetTimer()
-            
         }
     }
     
+ }
+ 
+ // MARK: - MCController Delegate
+ 
+ extension GuessViewController: MCControllerDelegate {
+    func toTopicView(withTopics topics: [String]) {}
+    func toGuessView(round: Round) {}
+    func playerJoinedSession() {}
+    func incrementDoneButtonCounter() {}
+    
+    func toCanvasView(round: Round) {
+        DispatchQueue.main.async {
+            let nextView = CanvasViewController()
+            nextView.round = round
+            self.navigationController?.pushViewController(nextView, animated: true)
+        }
+    }
+    func toResultsView(timelines: [Timeline]) {
+        print("Guess view did end game")
+        DispatchQueue.main.async {
+            let resultsView = ResultsViewController()
+            resultsView.timelines = timelines
+            print("DELEGATE TIMELINES: \(timelines)")
+            self.navigationController?.pushViewController(resultsView, animated: true)
+            
+        }
+    }
  }
  
  // MARK: - GameController Delegate
@@ -205,8 +231,26 @@
         let newRound = Round(owner: MCController.shared.playerArray[0], image: nil, guess: guessTextField.text, isImage: false)
         return newRound
     }
-    func advertiserToCanvasView(withRound: Round) {}
-    func advertiserToGuessView(withRound: Round) {}
-    func advertiserToResultsView(withTimelines timelines: [Timeline]) {}
+    
+    func advertiserToCanvasView(withRound: Round) {
+        DispatchQueue.main.async {
+            let canvasView = CanvasViewController()
+            canvasView.round = withRound
+            self.navigationController?.pushViewController(canvasView, animated: true)
+        }
+    }
+    
+    func advertiserToGuessView(withRound: Round) {
+    }
+    
+    
+    
+    func advertiserToResultsView(withTimelines timelines: [Timeline]) {
+        DispatchQueue.main.async {
+            let resultsView = ResultsViewController()
+            resultsView.timelines = timelines
+            self.navigationController?.pushViewController(resultsView, animated: true)
+        }
+    }
     
  }
