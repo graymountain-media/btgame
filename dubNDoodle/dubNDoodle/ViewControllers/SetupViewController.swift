@@ -153,16 +153,21 @@ extension SetupViewController: MCBrowserViewControllerDelegate {
 }
 
 extension SetupViewController: MCControllerDelegate {
-    func toResultsView(timelines: [Timeline]) {
-        
-    }
-    
-    func toTopicView(timeline: Timeline) {
+    func toTopicView(withTopics topics: [String]) {
         DispatchQueue.main.async {
             let destinationVC = TopicViewController()
-            destinationVC.timeline = timeline
+            destinationVC.topics = topics
             self.navigationController?.pushViewController(destinationVC, animated: true)
         }
+    }
+    
+    func toCanvasView(round: Round) {
+    }
+    
+    func toGuessView(round: Round) {
+    }
+    
+    func toResultsView(timelines: [Timeline]) {
     }
 
     func playerJoinedSession() {
@@ -175,8 +180,6 @@ extension SetupViewController: MCControllerDelegate {
         startButtonStatus()
     }
     
-    func toCanvasView(timeline: Timeline) {}
-    func toGuessView(timeline: Timeline) {}
 }
 
 extension SetupViewController: UITableViewDataSource, UITableViewDelegate {

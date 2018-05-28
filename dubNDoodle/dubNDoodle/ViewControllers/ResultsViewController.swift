@@ -186,11 +186,12 @@ class ResultsViewController: UIViewController {
     @objc private func handleReplay(){
         GameController.shared.clearData()
         GameController.shared.startNewGame(players: MCController.shared.playerArray)
+        
         DispatchQueue.main.async {
             let destinationVC = TopicViewController()
             for timeline in GameController.shared.orderedTimelines {
                 if timeline.owner == MCController.shared.playerArray[0] {
-                    destinationVC.timeline = timeline
+                    destinationVC.topics = timeline.possibleTopics
                 }
             }
             self.navigationController?.pushViewController(destinationVC, animated: true)
@@ -251,21 +252,27 @@ extension ResultsViewController: UIScrollViewDelegate {
 }
 
 extension ResultsViewController: MCControllerDelegate {
-    func playerJoinedSession() {}
-    func incrementDoneButtonCounter() {}
-    
-    func toTopicView(timeline: Timeline) {
+    func toTopicView(withTopics topics: [String]) {
         DispatchQueue.main.async {
             print("Results to topic")
             let destinationVC = TopicViewController()
-            destinationVC.timeline = timeline
+            destinationVC.topics = topics
             self.navigationController?.pushViewController(destinationVC, animated: true)
         }
     }
     
-    func toCanvasView(timeline: Timeline) {}
-    func toGuessView(timeline: Timeline) {}
-    func toResultsView(timelines: [Timeline]) {}
+    func toResultsView(timelines: [Timeline]) {
+    }
+    
+    func toCanvasView(round: Round) {
+    }
+    
+    func toGuessView(round: Round) {
+    }
+    
+    func playerJoinedSession() {}
+    func incrementDoneButtonCounter() {}
+    
     
     
 }
