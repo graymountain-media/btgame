@@ -188,7 +188,7 @@ extension SetupViewController: UITableViewDataSource, UITableViewDelegate {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.playerCellIdentifier, for: indexPath) as? SetupTableViewCell else {return UITableViewCell()}
         
         cell.updateCell(withPlayerName: MCController.shared.currentGamePeers[indexPath.row].displayName)
-        if indexPath.row == 0 {
+        if indexPath.row == 0 && MCController.shared.isAdvertiser == true {
             cell.donePressed()
         }
         

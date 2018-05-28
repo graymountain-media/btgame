@@ -12,7 +12,7 @@
     
     var round: Round?
     var timer = Timer()
-    var time = GameController.shared.currentGame.timeLimit
+    var time = 7
     
     lazy var previousSketch: UIImageView = {
         let ps = UIImageView()
@@ -76,7 +76,7 @@
         super.viewDidLoad()
         
         GameController.shared.delegate = self
-        MCController.shared.delegate = self
+        GameController.shared.roundNumberLabelValue += 1
         self.navigationController?.navigationBar.isHidden = true
         self.view.backgroundColor = UIColor.mainScheme1()
         
@@ -172,7 +172,7 @@
     // MARK: Timer
     
     func resetTimer() {
-        time = GameController.shared.currentGame.timeLimit
+        time = 7
         timer.invalidate()
     }
     
@@ -189,6 +189,11 @@
             timerLabel.textColor = .red
         }
         if time == 0 {
+            let betweenRoundViewController = BetweenRoundViewController()
+            if MCController.shared.currentGamePeers.count < 5 &&  GameController.shared.roundNumberLabelValue > (MCController.shared.currentGamePeers.count * 2) || (MCController.shared.currentGamePeers.count > 5 &&  GameController.shared.roundNumberLabelValue > MCController.shared.currentGamePeers.count)  {
+                betweenRoundViewController.setToEndGame()
+            }
+            self.navigationController?.pushViewController(betweenRoundViewController, animated: true)
             let round = roundEnded()
             GameController.shared.endRound(withRound: round)
             resetTimer()
@@ -197,32 +202,7 @@
     
  }
  
- // MARK: - MCController Delegate
  
- extension GuessViewController: MCControllerDelegate {
-    func toTopicView(withTopics topics: [String]) {}
-    func toGuessView(round: Round) {}
-    func playerJoinedSession() {}
-    func incrementDoneButtonCounter() {}
-    
-    func toCanvasView(round: Round) {
-        DispatchQueue.main.async {
-            let nextView = CanvasViewController()
-            nextView.round = round
-            self.navigationController?.pushViewController(nextView, animated: true)
-        }
-    }
-    func toResultsView(timelines: [Timeline]) {
-        print("Guess view did end game")
-        DispatchQueue.main.async {
-            let resultsView = ResultsViewController()
-            resultsView.timelines = timelines
-            print("DELEGATE TIMELINES: \(timelines)")
-            self.navigationController?.pushViewController(resultsView, animated: true)
-            
-        }
-    }
- }
  
  // MARK: - GameController Delegate
  
@@ -233,24 +213,10 @@
     }
     
     func advertiserToCanvasView(withRound: Round) {
-        DispatchQueue.main.async {
-            let canvasView = CanvasViewController()
-            canvasView.round = withRound
-            self.navigationController?.pushViewController(canvasView, animated: true)
-        }
     }
-    
     func advertiserToGuessView(withRound: Round) {
     }
-    
-    
-    
     func advertiserToResultsView(withTimelines timelines: [Timeline]) {
-        DispatchQueue.main.async {
-            let resultsView = ResultsViewController()
-            resultsView.timelines = timelines
-            self.navigationController?.pushViewController(resultsView, animated: true)
-        }
     }
     
  }

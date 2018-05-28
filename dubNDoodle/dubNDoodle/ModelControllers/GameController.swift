@@ -44,7 +44,11 @@ class GameController {
         currentGame = Game(players: players, timelines: orderedTimelines)
         getTopics()
         time = currentGame.timeLimit
-        currentGame.numberOfRounds = playerOrder.count * 2
+        if playerOrder.count < 5 {
+            currentGame.numberOfRounds = playerOrder.count * 2
+        } else {
+            currentGame.numberOfRounds = playerOrder.count
+        }
         distributeTopics()
     }
     

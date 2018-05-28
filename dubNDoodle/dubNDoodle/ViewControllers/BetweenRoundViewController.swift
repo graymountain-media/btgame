@@ -22,6 +22,7 @@ class BetweenRoundViewController: UIViewController {
     var canvasViewController = CanvasViewController()
     var guessViewController = GuessViewController()
     var resultsViewController = ResultsViewController()
+    var isEndGame = false
     
     let roundLabel: UILabel = {
         let label = UILabel()
@@ -37,6 +38,7 @@ class BetweenRoundViewController: UIViewController {
         label.textColor = UIColor.mainOffWhite()
         label.font = UIFont.boldSystemFont(ofSize: 60)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
         return label
     }()
     
@@ -49,6 +51,14 @@ class BetweenRoundViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    let indicator: UIActivityIndicatorView = {
+        let activity = UIActivityIndicatorView()
+        activity.translatesAutoresizingMaskIntoConstraints = false
+        activity.stopAnimating()
+        activity.color = UIColor.mainHighlight()
+        return activity
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +67,12 @@ class BetweenRoundViewController: UIViewController {
         GameController.shared.delegate = self
         MCController.shared.delegate = self
         
-        roundNumberLabel.text = String(GameController.shared.roundNumberLabelValue)
+        if isEndGame {
+            roundNumberLabel.text = "Gathering Results"
+        } else {
+            roundNumberLabel.text = String(GameController.shared.roundNumberLabelValue)
+        }
+        
         setupView()
     }
     
@@ -65,6 +80,8 @@ class BetweenRoundViewController: UIViewController {
         view.addSubview(roundLabel)
         view.addSubview(roundNumberLabel)
         view.addSubview(timeLabel)
+        view.addSubview(indicator)
+        
         roundLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         roundLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 60).isActive = true
         
@@ -73,6 +90,11 @@ class BetweenRoundViewController: UIViewController {
         
         timeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         timeLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30).isActive = true
+        
+        indicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        indicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        indicator.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        indicator.heightAnchor.constraint(equalToConstant: 150).isActive = true
     }
     
     // MARK: Timer
@@ -118,6 +140,19 @@ class BetweenRoundViewController: UIViewController {
             self.startTimer()
         }
     }
+    
+    func setToEndGame() {
+        roundLabel.text = "Please Wait"
+        roundNumberLabel.font = UIFont.boldSystemFont(ofSize: 50)
+        isEndGame = true
+        indicator.startAnimating()
+    }
+    
+    func toResults() {
+        DispatchQueue.main.async {
+            self.navigationController?.pushViewController(self.resultsViewController, animated: true)
+        }
+    }
 }
 
 extension BetweenRoundViewController: GameControllerDelegate {
@@ -140,7 +175,8 @@ extension BetweenRoundViewController: GameControllerDelegate {
     func advertiserToResultsView(withTimelines timelines: [Timeline]) {
         nextRound = .results
         resultsViewController.timelines = timelines
-        toNextRound()
+        toResults()
+        
     }
     
     
