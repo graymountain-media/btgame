@@ -10,8 +10,10 @@ import Foundation
 
 class Event: Codable {
     var instruction: Instruction
-    var timeline: Timeline
+    var round: Round
+    var topics: [String]
     var finalTimelines : [Timeline]
+    var fromPlayer: Int
     
     enum Instruction: String, Codable {
         case toTopics
@@ -21,9 +23,11 @@ class Event: Codable {
         case endGame
     }
     
-    init(withInstruction instruction: Instruction, timeline: Timeline = Timeline(owner: MCController.shared.playerArray[0]), timelines: [Timeline] = []) {
+    init(withInstruction instruction: Instruction, round: Round = Round(owner: MCController.shared.playerArray[0], image: nil, guess: nil, isImage: false), topics: [String] = [], timelines: [Timeline] = [], fromPlayer: Int = 0) {
         self.instruction = instruction
-        self.timeline = timeline
+        self.round = round
+        self.topics = topics
         self.finalTimelines = timelines
+        self.fromPlayer = fromPlayer
     }
 }
