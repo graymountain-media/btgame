@@ -32,7 +32,8 @@ class CanvasViewController: UIViewController {
     lazy var canvasView: CanvasView = {
         let cv = CanvasView()
         cv.backgroundColor = .white
-        cv.draw()
+//        cv.frame = CGRect(x: 50, y: 50, width: 50, height: 50)
+//        cv.draw(self.view.frame)
         cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
     }()
@@ -65,36 +66,42 @@ class CanvasViewController: UIViewController {
         return cbv
     }()
     
-    //    lazy var redButton: UIButton = {
-    //        let btn = UIButton()
-    //        return btn
-    //    }()
-    //
-    //    lazy var blueButton: UIButton = {
-    //        let btn = UIButton()
-    //        return btn
-    //    }()
-    //
-    //    lazy var greenButton: UIButton = {
-    //        let btn = UIButton()
-    //        return btn
-    //    }()
-    //
-    //    lazy var yellowButton: UIButton = {
-    //        let btn = UIButton()
-    //        return btn
-    //    }()
-    //
-    //    lazy var orangeButton: UIButton = {
-    //        let btn = UIButton()
-    //        return btn
-    //    }()
+        lazy var red: UIButton = {
+            let btn = UIButton()
+            btn.backgroundColor = .red 
+//            btn.addTarget(self.canvasView, action: #selector(CanvasView.changeStrokeColor(_:)), for: .touchUpInside)
+            return btn
+        }()
     
-    //    @objc func goToNextView(_ sender: Any) {
-    //        let nextView = GuessViewController()
-    //        nextView.previousSketch.image = canvasView.makeImage(withView: canvasView)
-    //        self.navigationController?.show(nextView, sender: sender)
-    //    }
+        lazy var blue: UIButton = {
+            let btn = UIButton()
+            btn.backgroundColor = .blue
+//            btn.addTarget(self.canvasView, action: #selector(CanvasView.changeStrokeColor(_:)), for: .touchUpInside)
+            return btn
+        }()
+    
+        lazy var green: UIButton = {
+            let btn = UIButton()
+            btn.backgroundColor = .green
+//            btn.addTarget(self.canvasView, action: #selector(CanvasView.changeStrokeColor(_:)), for: .touchUpInside)
+            return btn
+        }()
+    
+        lazy var yellow: UIButton = {
+            var color = UIColor.yellow.cgColor
+            let btn = UIButton()
+            btn.backgroundColor = .yellow
+//            btn.addTarget(self.canvasView, action: #selector(CanvasView.changeStrokeColor(_:)), for: .touchUpInside)
+            return btn
+        }()
+    
+        lazy var orange: UIButton = {
+            var color = UIColor.orange.cgColor
+            let btn = UIButton()
+            btn.backgroundColor = .orange
+//            btn.addTarget(self.canvasView, action: #selector(CanvasView.changeStrokeColor(_:)), for: .touchUpInside)
+            return btn
+        }()
     
     // MARK: - Life Cycle
     
@@ -107,6 +114,11 @@ class CanvasViewController: UIViewController {
         canvasView.clipsToBounds = true
         canvasView.isMultipleTouchEnabled = false
         canvasView.tag = 1
+        orange.tag = 2
+        yellow.tag = 3
+        red.tag = 4
+        blue.tag = 5
+        green.tag = 6
         
         guard let timeline = timeline, let topic = timeline.rounds.last?.guess else {return}
         topicLabel.text = "   Doodle: \(topic)"
@@ -150,6 +162,11 @@ class CanvasViewController: UIViewController {
         self.view.addSubview(timerLabel)
         self.view.addSubview(canvasTopBorderView)
         self.view.addSubview(canvasBottomBorderView)
+        self.view.addSubview(orange)
+        self.view.addSubview(red)
+        self.view.addSubview(blue)
+        self.view.addSubview(green)
+        self.view.addSubview(yellow)
         
         topicLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor,
                         left: view.safeAreaLayoutGuide.leftAnchor,
@@ -195,10 +212,66 @@ class CanvasViewController: UIViewController {
                          width: 60,
                          height: 60)
 
+        orange.anchor(top: nil,
+                            left: nil,
+                            bottom: canvasView.bottomAnchor,
+                            right: nil,
+                            paddingTop: 0,
+                            paddingLeft: 10,
+                            paddingBottom: 0,
+                            paddingRight: 0,
+                            width: 30,
+                            height: 30)
+        
+        red.anchor(top: nil,
+                            left: orange.rightAnchor,
+                            bottom: canvasView.bottomAnchor,
+                            right: nil,
+                            paddingTop: 0,
+                            paddingLeft: 10,
+                            paddingBottom: 0,
+                            paddingRight: 0,
+                            width: 30,
+                            height: 30)
+        
+        blue.anchor(top: nil,
+                   left: red.rightAnchor,
+                   bottom: canvasView.bottomAnchor,
+                   right: nil,
+                   paddingTop: 0,
+                   paddingLeft: 10,
+                   paddingBottom: 0,
+                   paddingRight: 0,
+                   width: 30,
+                   height: 30)
+        
+        green.anchor(top: nil,
+                   left: blue.rightAnchor,
+                   bottom: canvasView.bottomAnchor,
+                   right: nil,
+                   paddingTop: 0,
+                   paddingLeft: 10,
+                   paddingBottom: 0,
+                   paddingRight: 0,
+                   width: 30,
+                   height: 30)
+        
+        yellow.anchor(top: nil,
+                   left: green.rightAnchor,
+                   bottom: canvasView.bottomAnchor,
+                   right: nil,
+                   paddingTop: 0,
+                   paddingLeft: 10,
+                   paddingBottom: 0,
+                   paddingRight: 0,
+                   width: 30,
+                   height: 30)
+        
         canvasView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.66).isActive = true
         canvasView.topAnchor.constraint(equalTo: canvasTopBorderView.bottomAnchor, constant: 0).isActive = true
         canvasView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
         canvasView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        
     }
 }
 
@@ -249,9 +322,10 @@ extension CanvasViewController: GameControllerDelegate {
     }
     
     func roundEnded() -> Timeline {
-        let newRound = Round(owner: MCController.shared.playerArray[0], image: canvasView.makeImage(withView: canvasView), guess: nil, isImage: true)
+//        let newRound = Round(owner: MCController.shared.playerArray[0], image: canvasView.makeImage(withView: canvasView), guess: nil, isImage: true)
+//        UIView.scaleImageToSize(img: canvasView)
         guard let timeline = timeline else { return Timeline(owner: MCController.shared.playerArray[0]) }
-        timeline.rounds.append(newRound)
+//        timeline.rounds.append(newRound)
         return timeline
     }
 }

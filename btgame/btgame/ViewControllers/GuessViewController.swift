@@ -190,8 +190,9 @@
             timerLabel.textColor = .red
         }
         if time == 0 {
-            let timeline = roundEnded()
-            GameController.shared.endRound(withTimeline: timeline)
+            let passedTimeline = timeline
+            let roundTimeline = roundEnded()
+            GameController.shared.endRound(withTimeline: roundTimeline)
             resetTimer()
         }
     }
