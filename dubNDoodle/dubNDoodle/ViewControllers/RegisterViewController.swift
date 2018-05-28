@@ -30,6 +30,7 @@ class RegisterViewController: UIViewController {
         tf.text = UserDefaults.standard.string(forKey: "username") ?? ""
         tf.backgroundColor = UIColor.white
         tf.translatesAutoresizingMaskIntoConstraints = false
+        tf.clearButtonMode = .whileEditing
         tf.setPadding()
         return tf
     }()
