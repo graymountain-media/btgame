@@ -10,7 +10,8 @@ import UIKit
 
 class CanvasView: UIView {
     
-    let path=UIBezierPath()
+    
+    var path=UIBezierPath()
     var previousPoint:CGPoint
     var lineWidth:CGFloat=5.0
     var strokeColor = UIColor.black
@@ -86,6 +87,8 @@ class CanvasView: UIView {
         default:
             strokeColor = UIColor.black
         }
+        
+//        path = UIBezierPath()
     }
 }
 

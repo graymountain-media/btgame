@@ -10,9 +10,9 @@ import UIKit
 
 class CanvasViewController: UIViewController {
     
-    var path = UIBezierPath()
-    var startPoint = CGPoint()
-    var touchPoint = CGPoint()
+//    var path = UIBezierPath()
+//    var startPoint = CGPoint()
+//    var touchPoint = CGPoint()
     var round: Round?
     var timer = Timer()
     var time = GameController.shared.currentGame.timeLimit
