@@ -71,6 +71,8 @@ class GameController {
     
     func startNewRound () {
         
+        returnedRounds = []
+        
         roundNumber += 1
         if roundNumber > currentGame.numberOfRounds {
             endGame()
@@ -132,7 +134,7 @@ class GameController {
     func endRound(withRound round: Round) {
         
         if (!MCController.shared.isAdvertiser) {
-            MCController.shared.sendEvent(withInstruction: .endRoundReturn, round: round, fromPlayer: MCController.shared.playerArray[0].uid,  toPeers: MCController.shared.peerIDDict[MCController.shared.playerArray[1]]!)
+            MCController.shared.sendEvent(withInstruction: .endRoundReturn, round: round, fromPlayer: MCController.shared.playerArray[0].uid,  toPeer: MCController.shared.peerIDDict[MCController.shared.playerArray[1]]!)
         } else {
             print("Advertiser append timeline")
             
@@ -211,7 +213,7 @@ class GameController {
         isDrawingRound = false
         playerOrder = []
         orderedTimelines = []
-        returnedTimelines = []
+        returnedRounds = []
         roundNumber = 0
         nextRoundInstruction = Event.Instruction.toCanvas
     }

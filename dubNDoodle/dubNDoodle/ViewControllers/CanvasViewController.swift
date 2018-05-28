@@ -13,7 +13,7 @@ class CanvasViewController: UIViewController {
     var path = UIBezierPath()
     var startPoint = CGPoint()
     var touchPoint = CGPoint()
-    var timeline: Timeline?
+    var round: Round?
     var timer = Timer()
     var time = GameController.shared.currentGame.timeLimit
     
@@ -21,7 +21,6 @@ class CanvasViewController: UIViewController {
     
     lazy var topicLabel: UILabel = {
         let lbl = UILabel()
-        let passedTimeline = timeline
         lbl.backgroundColor = UIColor.mainScheme1()
         lbl.textColor = .white
         lbl.font = UIFont(name: "Times New Roman", size: 37)
@@ -108,7 +107,7 @@ class CanvasViewController: UIViewController {
         canvasView.isMultipleTouchEnabled = false
         canvasView.tag = 1
         
-        guard let timeline = timeline, let topic = timeline.rounds.last?.guess else {return}
+        guard let round = round, let topic = round.guess else {return}
         topicLabel.text = "   Doodle: \(topic)"
         timerLabel.text = String(time)
         startTimer()
@@ -135,8 +134,8 @@ class CanvasViewController: UIViewController {
             timerLabel.textColor = .red
         }
         if time == 0 {
-            let timeline = roundEnded()
-            GameController.shared.endRound(withTimeline: timeline)
+            let round = roundEnded()
+            GameController.shared.endRound(withRound: round)
             resetTimer()
         }
     }
@@ -205,17 +204,22 @@ class CanvasViewController: UIViewController {
 // MARK: - MCController Delegate
 
 extension CanvasViewController: MCControllerDelegate {
-    func toCanvasView(timeline: Timeline) {}
-    func playerJoinedSession() {}
-    func incrementDoneButtonCounter() {}
-    func toTopicView(timeline: Timeline) {}
-    func toGuessView(timeline: Timeline) {
+    func toTopicView(withTopics topics: [String]) {
+    }
+    
+    func toCanvasView(round: Round) {
+    }
+    
+    func toGuessView(round: Round) {
         DispatchQueue.main.async {
             let nextView = GuessViewController()
-            nextView.timeline = timeline
+            nextView.round = round
             self.navigationController?.pushViewController(nextView, animated: true)
         }
     }
+    
+    func playerJoinedSession() {}
+    func incrementDoneButtonCounter() {}
     func toResultsView(timelines: [Timeline]) {
         DispatchQueue.main.async {
             let resultsView = ResultsViewController()
@@ -228,18 +232,19 @@ extension CanvasViewController: MCControllerDelegate {
 // MARK: - GameController Delegate
 
 extension CanvasViewController: GameControllerDelegate {
-    func advertiserToCanvasView(withTimeLine: Timeline) {
-        
+    
+    func advertiserToCanvasView(withRound: Round) {
     }
     
-    func advertiserToGuessView(withTimeLine: Timeline) {
+    func advertiserToGuessView(withRound: Round) {
         DispatchQueue.main.async {
             let guessView = GuessViewController()
-            guessView.timeline = withTimeLine
+            guessView.round = withRound
             self.navigationController?.pushViewController(guessView, animated: true)
         }
-        
     }
+    
+
     func advertiserToResultsView(withTimelines timelines: [Timeline]) {
         DispatchQueue.main.async {
             let resultsView = ResultsViewController()
@@ -248,10 +253,9 @@ extension CanvasViewController: GameControllerDelegate {
         }
     }
     
-    func roundEnded() -> Timeline {
+    func roundEnded() -> Round {
         let newRound = Round(owner: MCController.shared.playerArray[0], image: canvasView.makeImage(withView: canvasView), guess: nil, isImage: true)
-        guard let timeline = timeline else { return Timeline(owner: MCController.shared.playerArray[0]) }
-        timeline.rounds.append(newRound)
-        return timeline
+        
+        return newRound
     }
 }

@@ -236,7 +236,7 @@ extension TopicViewController: GameControllerDelegate {
         print("Advertiser to canvas view")
         DispatchQueue.main.async {
             let canvasView = CanvasViewController()
-            canvasView.round = round
+            canvasView.round = withRound
             self.navigationController?.pushViewController(canvasView, animated: true)
         }
     }
