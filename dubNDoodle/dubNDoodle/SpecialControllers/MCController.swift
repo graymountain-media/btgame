@@ -67,7 +67,9 @@ class MCController: NSObject, MCSessionDelegate {
         peerID = MCPeerID(displayName: name)
         
         // May need to change
-        session = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .required)
+        print("Start Session")
+        session = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .optional)
+        
         session.delegate = self
         
         currentGamePeers.append(peerID)
@@ -108,7 +110,6 @@ class MCController: NSObject, MCSessionDelegate {
             
         case MCSessionState.connecting:
             print("Connecting to session")
-            
             
         default:
             print("Did not connect to session")
