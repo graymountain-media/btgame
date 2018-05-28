@@ -88,6 +88,7 @@ class ResultsViewController: UIViewController {
         pageControl.numberOfPages = timelines.count
         //print("Timelines: \(timelines)")
         setup()
+        scrollView.contentSize = CGSize(width: scrollView.frame.width, height: scrollView.frame.width)
     }
     private func setupButtons(){
         if(MCController.shared.isAdvertiser == false) {
@@ -236,19 +237,24 @@ extension ResultsViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension ResultsViewController: UIScrollViewDelegate {
-    //TODO: - disable vertical scrolling
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        print("scrollViewDidEndDecelerating")
-        let pageWidth = scrollView.bounds.width
-        let pageFraction = scrollView.contentOffset.x / pageWidth
-        pageControl.currentPage = Int(round(pageFraction))
-        currentTimelineIndex = pageControl.currentPage
-        guard let timelines = timelines else { return }
-        guard let starterText = timelines[currentTimelineIndex].rounds[0].guess else { return }
-        starterTopicLabel.text = starterText
-
+        if scrollView.contentOffset.y == 0 {
+            print("scrollViewDidEndDecelerating")
+            let pageWidth = scrollView.bounds.width
+            print("Page Width: \(pageWidth)")
+            let pageFraction = scrollView.contentOffset.x / pageWidth
+            print("Content Offset: \(scrollView.contentOffset.x)")
+            print("Page Fraction: \(pageFraction)")
+            pageControl.currentPage = Int(round(pageFraction))
+            print("Current Page: \(pageControl.currentPage)")
+            currentTimelineIndex = pageControl.currentPage
+            guard let timelines = timelines else { return }
+            guard let starterText = timelines[currentTimelineIndex].rounds[0].guess else { return }
+            starterTopicLabel.text = starterText
+        }
     }
+
 }
 
 extension ResultsViewController: MCControllerDelegate {
