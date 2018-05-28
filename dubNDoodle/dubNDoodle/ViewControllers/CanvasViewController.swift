@@ -105,8 +105,8 @@ class CanvasViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        GameController.shared.roundNumberLabelValue += 1
         GameController.shared.delegate = self
-        MCController.shared.delegate = self
         self.navigationController?.navigationBar.isHidden = true
         self.view.backgroundColor = UIColor.mainScheme1()
         canvasView.clipsToBounds = true
@@ -140,6 +140,11 @@ class CanvasViewController: UIViewController {
             timerLabel.textColor = .red
         }
         if time == 0 {
+            let betweenRoundViewController = BetweenRoundViewController()
+            if MCController.shared.currentGamePeers.count < 5 &&  GameController.shared.roundNumberLabelValue > (MCController.shared.currentGamePeers.count * 2) || (MCController.shared.currentGamePeers.count > 5 &&  GameController.shared.roundNumberLabelValue > MCController.shared.currentGamePeers.count)  {
+                betweenRoundViewController.setToEndGame()
+            }
+            self.navigationController?.pushViewController(betweenRoundViewController, animated: true)
             let round = roundEnded()
             GameController.shared.endRound(withRound: round)
             resetTimer()
@@ -274,56 +279,15 @@ class CanvasViewController: UIViewController {
     }
 }
 
-// MARK: - MCController Delegate
-
-extension CanvasViewController: MCControllerDelegate {
-    func toTopicView(withTopics topics: [String]) {
-    }
-    
-    func toCanvasView(round: Round) {
-    }
-    
-    func toGuessView(round: Round) {
-        DispatchQueue.main.async {
-            let nextView = GuessViewController()
-            nextView.round = round
-            self.navigationController?.pushViewController(nextView, animated: true)
-        }
-    }
-    
-    func playerJoinedSession() {}
-    func incrementDoneButtonCounter() {}
-    func toResultsView(timelines: [Timeline]) {
-        DispatchQueue.main.async {
-            let resultsView = ResultsViewController()
-            resultsView.timelines = timelines
-            self.navigationController?.pushViewController(resultsView, animated: true)
-        }
-    }
-}
-
 // MARK: - GameController Delegate
 
 extension CanvasViewController: GameControllerDelegate {
     
     func advertiserToCanvasView(withRound: Round) {
     }
-    
     func advertiserToGuessView(withRound: Round) {
-        DispatchQueue.main.async {
-            let guessView = GuessViewController()
-            guessView.round = withRound
-            self.navigationController?.pushViewController(guessView, animated: true)
-        }
     }
-    
-    
     func advertiserToResultsView(withTimelines timelines: [Timeline]) {
-        DispatchQueue.main.async {
-            let resultsView = ResultsViewController()
-            resultsView.timelines = timelines
-            self.navigationController?.pushViewController(resultsView, animated: true)
-        }
     }
     
     func roundEnded() -> Round {

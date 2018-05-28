@@ -17,7 +17,7 @@ class TopicViewController: UIViewController {
     var buttons: [UIButton] = []
     var selectedTopic: String = ""
     var timer = Timer()
-    var time = GameController.shared.currentGame.timeLimit
+    var time = 7
     
     
     lazy var timerLabel: UILabel = {
@@ -194,7 +194,7 @@ class TopicViewController: UIViewController {
     // MARK: Timer
     
     func resetTimer() {
-        time = GameController.shared.currentGame.timeLimit
+        time = 7
         timer.invalidate()
     }
     
@@ -220,6 +220,10 @@ class TopicViewController: UIViewController {
     @objc func buttonTapped(button: UIButton) {
         guard let topic = button.titleLabel?.text else {return}
         selectedTopic = topic
+        for button in buttons{
+            button.layer.borderColor = UIColor.black.cgColor
+        }
+        button.layer.borderColor = UIColor.mainHighlight().cgColor
     }
     
     func setTopics(){
@@ -252,22 +256,3 @@ extension TopicViewController: GameControllerDelegate {
     
 }
 
-// MARK: - MCController Delegate
-
-//extension TopicViewController: MCControllerDelegate{
-//    func toTopicView(withTopics topics: [String]) {
-//    }
-//
-//    func toCanvasView(round: Round) {
-//
-//    }
-//
-//    func toGuessView(round: Round) {
-//
-//    }
-//
-//    func toResultsView(timelines: [Timeline]) {
-//    }
-//    func playerJoinedSession() {}
-//    func incrementDoneButtonCounter() {}
-//}
