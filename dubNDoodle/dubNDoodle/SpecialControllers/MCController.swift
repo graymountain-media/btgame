@@ -15,9 +15,9 @@ import CoreBluetooth
 protocol MCControllerDelegate {
     func playerJoinedSession()
     func incrementDoneButtonCounter()
-    func toTopicView(timeline: Timeline)
-    func toCanvasView(timeline: Timeline)
-    func toGuessView(timeline: Timeline)
+    func toTopicView(withTopics topics: [String])
+    func toCanvasView(round: Round)
+    func toGuessView(round: Round)
     func toResultsView(timelines: [Timeline])
 }
 
@@ -149,14 +149,14 @@ class MCController: NSObject, MCSessionDelegate {
                 switch event.instruction{
                 case .toTopics:
                     print("To Topics")
-                    delegate?.toTopicView(timeline: event.timeline)
+                    delegate?.toTopicView(withTopics: event.topics)
                 case .endRoundReturn:
                     return
                 case .toGuess:
-                    delegate?.toGuessView(timeline: event.timeline)
+                    delegate?.toGuessView(round: event.round)
                     return
                 case .toCanvas:
-                    delegate?.toCanvasView(timeline: event.timeline)
+                    delegate?.toCanvasView(round: event.round)
                     return
                 case .endGame:
                     print("print end game")
@@ -170,10 +170,13 @@ class MCController: NSObject, MCSessionDelegate {
                 case .toTopics:
                     return
                 case .endRoundReturn:
-                    GameController.shared.returnedTimelines.append(event.timeline)
-                    let topics = GameController.shared.returnedTimelines.compactMap({$0.rounds[0].guess})
-                    print("SPECIAL RETURNED TIMELINES: \(topics)")
-                    if (GameController.shared.returnedTimelines.count) >= currentGamePeers.count {
+                    GameController.shared.returnedRounds.append(event.round)
+                    for (index, player) in GameController.shared.playerOrder.enumerated() {
+                        if player.uid == event.fromPlayer {
+                            GameController.shared.orderedTimelines[index].rounds.append(event.round)
+                        }
+                    }
+                    if (GameController.shared.returnedRounds.count) >= currentGamePeers.count {
                         GameController.shared.startNewRound()
                     }
                 case .toGuess:
@@ -200,10 +203,9 @@ class MCController: NSObject, MCSessionDelegate {
         // Nothing to do here
     }
     
-    func sendEvent(withInstruction instruction: Event.Instruction, timeline: Timeline, toPeers peer: MCPeerID) {
+    func sendEvent(withInstruction instruction: Event.Instruction, round: Round, fromPlayer: Int, toPeer peer: MCPeerID) {
         
-        let event = Event(withInstruction: instruction, timeline: timeline)
-        print("TIMELINE TOPICS:  \(timeline.possibleTopics)")
+        let event = Event(withInstruction: instruction, round: round, fromPlayer: fromPlayer)
         
         guard let eventData = DataManager.shared.encodeEvent(event: event) else {return}
 
@@ -211,6 +213,18 @@ class MCController: NSObject, MCSessionDelegate {
         try? session.send(eventData, toPeers: [peer], with: .reliable)
         print("Event Object Data Sent")
 
+    }
+    
+    func sendTopicsEvent(withTopics topics: [String], fromPlayer: Int, toPeer peer: MCPeerID) {
+        
+        let event = Event(withInstruction: Event.Instruction.toTopics, topics: topics, fromPlayer: fromPlayer)
+        
+        guard let eventData = DataManager.shared.encodeEvent(event: event) else {return}
+        
+        print("Event Object Data Prepared")
+        try? session.send(eventData, toPeers: [peer], with: .reliable)
+        print("Event Object Data Sent")
+        
     }
     
     func sendFinalEvent(withInstruction instruction: Event.Instruction, timelines: [Timeline], toPeers peer: MCPeerID) {

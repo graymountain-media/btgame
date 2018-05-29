@@ -88,6 +88,7 @@ class ResultsViewController: UIViewController {
         pageControl.numberOfPages = timelines.count
         //print("Timelines: \(timelines)")
         setup()
+        scrollView.contentSize = CGSize(width: scrollView.frame.width, height: scrollView.frame.width)
     }
     private func setupButtons(){
         if(MCController.shared.isAdvertiser == false) {
@@ -186,11 +187,12 @@ class ResultsViewController: UIViewController {
     @objc private func handleReplay(){
         GameController.shared.clearData()
         GameController.shared.startNewGame(players: MCController.shared.playerArray)
+        
         DispatchQueue.main.async {
             let destinationVC = TopicViewController()
             for timeline in GameController.shared.orderedTimelines {
                 if timeline.owner == MCController.shared.playerArray[0] {
-                    destinationVC.timeline = timeline
+                    destinationVC.topics = timeline.possibleTopics
                 }
             }
             self.navigationController?.pushViewController(destinationVC, animated: true)
@@ -235,37 +237,48 @@ extension ResultsViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension ResultsViewController: UIScrollViewDelegate {
-    //TODO: - disable vertical scrolling
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        print("scrollViewDidEndDecelerating")
-        let pageWidth = scrollView.bounds.width
-        let pageFraction = scrollView.contentOffset.x / pageWidth
-        pageControl.currentPage = Int(round(pageFraction))
-        currentTimelineIndex = pageControl.currentPage
-        guard let timelines = timelines else { return }
-        guard let starterText = timelines[currentTimelineIndex].rounds[0].guess else { return }
-        starterTopicLabel.text = starterText
-
+        if scrollView.contentOffset.y == 0 {
+            print("scrollViewDidEndDecelerating")
+            let pageWidth = scrollView.bounds.width
+            print("Page Width: \(pageWidth)")
+            let pageFraction = scrollView.contentOffset.x / pageWidth
+            print("Content Offset: \(scrollView.contentOffset.x)")
+            print("Page Fraction: \(pageFraction)")
+            pageControl.currentPage = Int(round(pageFraction))
+            print("Current Page: \(pageControl.currentPage)")
+            currentTimelineIndex = pageControl.currentPage
+            guard let timelines = timelines else { return }
+            guard let starterText = timelines[currentTimelineIndex].rounds[0].guess else { return }
+            starterTopicLabel.text = starterText
+        }
     }
+
 }
 
 extension ResultsViewController: MCControllerDelegate {
-    func playerJoinedSession() {}
-    func incrementDoneButtonCounter() {}
-    
-    func toTopicView(timeline: Timeline) {
+    func toTopicView(withTopics topics: [String]) {
         DispatchQueue.main.async {
             print("Results to topic")
             let destinationVC = TopicViewController()
-            destinationVC.timeline = timeline
+            destinationVC.topics = topics
             self.navigationController?.pushViewController(destinationVC, animated: true)
         }
     }
     
-    func toCanvasView(timeline: Timeline) {}
-    func toGuessView(timeline: Timeline) {}
-    func toResultsView(timelines: [Timeline]) {}
+    func toResultsView(timelines: [Timeline]) {
+    }
+    
+    func toCanvasView(round: Round) {
+    }
+    
+    func toGuessView(round: Round) {
+    }
+    
+    func playerJoinedSession() {}
+    func incrementDoneButtonCounter() {}
+    
     
     
 }

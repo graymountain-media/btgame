@@ -82,7 +82,7 @@ class SetupViewController: UIViewController {
             for timeline in GameController.shared.orderedTimelines {
                 
                 if timeline.owner == MCController.shared.playerArray[0] {
-                    destinationVC.timeline = timeline
+                    destinationVC.topics = timeline.possibleTopics
                 }
             }
             self.navigationController?.pushViewController(destinationVC, animated: true)
@@ -153,16 +153,21 @@ extension SetupViewController: MCBrowserViewControllerDelegate {
 }
 
 extension SetupViewController: MCControllerDelegate {
-    func toResultsView(timelines: [Timeline]) {
-        
-    }
-    
-    func toTopicView(timeline: Timeline) {
+    func toTopicView(withTopics topics: [String]) {
         DispatchQueue.main.async {
             let destinationVC = TopicViewController()
-            destinationVC.timeline = timeline
+            destinationVC.topics = topics
             self.navigationController?.pushViewController(destinationVC, animated: true)
         }
+    }
+    
+    func toCanvasView(round: Round) {
+    }
+    
+    func toGuessView(round: Round) {
+    }
+    
+    func toResultsView(timelines: [Timeline]) {
     }
 
     func playerJoinedSession() {
@@ -175,8 +180,6 @@ extension SetupViewController: MCControllerDelegate {
         startButtonStatus()
     }
     
-    func toCanvasView(timeline: Timeline) {}
-    func toGuessView(timeline: Timeline) {}
 }
 
 extension SetupViewController: UITableViewDataSource, UITableViewDelegate {
@@ -185,7 +188,7 @@ extension SetupViewController: UITableViewDataSource, UITableViewDelegate {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.playerCellIdentifier, for: indexPath) as? SetupTableViewCell else {return UITableViewCell()}
         
         cell.updateCell(withPlayerName: MCController.shared.currentGamePeers[indexPath.row].displayName)
-        if indexPath.row == 0 {
+        if indexPath.row == 0 && MCController.shared.isAdvertiser == true {
             cell.donePressed()
         }
         

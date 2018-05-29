@@ -9,9 +9,9 @@
 import UIKit
 
 protocol GameControllerDelegate: class {
-    func roundEnded() -> Timeline
-    func advertiserToCanvasView(withTimeLine: Timeline)
-    func advertiserToGuessView(withTimeLine: Timeline)
+    func roundEnded() -> Round
+    func advertiserToCanvasView(withRound: Round)
+    func advertiserToGuessView(withRound: Round)
     func advertiserToResultsView(withTimelines timelines: [Timeline])
 
 }
@@ -24,9 +24,10 @@ class GameController {
     var isDrawingRound: Bool
     var playerOrder: [Player] = []
     var orderedTimelines: [Timeline] = []
-    var returnedTimelines: [Timeline] = []
+    var returnedRounds: [Round] = []
     var roundNumber = 0
     var nextRoundInstruction = Event.Instruction.toCanvas
+    var roundNumberLabelValue = 0
     
     weak var delegate: GameControllerDelegate?
     
@@ -43,7 +44,11 @@ class GameController {
         currentGame = Game(players: players, timelines: orderedTimelines)
         getTopics()
         time = currentGame.timeLimit
-        currentGame.numberOfRounds = playerOrder.count * 2
+        if playerOrder.count < 5 {
+            currentGame.numberOfRounds = playerOrder.count * 2
+        } else {
+            currentGame.numberOfRounds = playerOrder.count
+        }
         distributeTopics()
     }
     
@@ -64,14 +69,15 @@ class GameController {
                 guard let peerID = MCController.shared.peerIDDict[timeline.owner] else {
                     print("Failed sending first round")
                     return}
-                MCController.shared.sendEvent(withInstruction: .toTopics, timeline: timeline, toPeers: peerID)
+                MCController.shared.sendTopicsEvent(withTopics: timeline.possibleTopics, fromPlayer: 0, toPeer: peerID)
             }
         }
     }
     
     func startNewRound () {
         
-        refreshTimelines()
+        returnedRounds = []
+        
         roundNumber += 1
         if roundNumber > currentGame.numberOfRounds {
             endGame()
@@ -90,34 +96,24 @@ class GameController {
         
         for (index,player) in playerOrder.enumerated() {
             if player.isAdvertiser != true {
-                guard let peerID = MCController.shared.peerIDDict[player] else {return}
+                guard let peerID = MCController.shared.peerIDDict[player], let round = orderedTimelines[index].rounds.last else {return}
                 
-                MCController.shared.sendEvent(withInstruction: nextRoundInstruction, timeline: orderedTimelines[index], toPeers: peerID)
+                MCController.shared.sendEvent(withInstruction: nextRoundInstruction, round: round, fromPlayer: 0, toPeer: peerID)
                 print("SENT BROWSER NEXT TIMELINE")
             } else {
                 print("SEND ADVERTISER TO NEXT VIEW")
-                sendAdvertiserToNextView(withTimeline: orderedTimelines[index])
+                guard let round = orderedTimelines[index].rounds.last else {return}
+                sendAdvertiserToNextView(withRound: round)
             }
         }
     }
     
-    func refreshTimelines(){
-        for (index, oldTimeline) in orderedTimelines.enumerated() {
-            for newTimeline in returnedTimelines {
-                if newTimeline.id == oldTimeline.id {
-                    orderedTimelines.remove(at: index)
-                    orderedTimelines.insert(newTimeline, at: index)
-                }
-            }
-        }
-        returnedTimelines = []
-    }
     
-    func sendAdvertiserToNextView(withTimeline timeline: Timeline){
+    func sendAdvertiserToNextView(withRound round: Round){
         if isDrawingRound {
-            delegate?.advertiserToCanvasView(withTimeLine: timeline)
+            delegate?.advertiserToCanvasView(withRound: round)
         } else {
-            delegate?.advertiserToGuessView(withTimeLine: timeline)
+            delegate?.advertiserToGuessView(withRound: round)
         }
     }
     
@@ -129,14 +125,20 @@ class GameController {
         
     }
     
-    func endRound(withTimeline timeline: Timeline) {
+    func endRound(withRound round: Round) {
         
         if (!MCController.shared.isAdvertiser) {
-            MCController.shared.sendEvent(withInstruction: .endRoundReturn, timeline: timeline, toPeers: MCController.shared.peerIDDict[MCController.shared.playerArray[1]]!)
+            MCController.shared.sendEvent(withInstruction: .endRoundReturn, round: round, fromPlayer: MCController.shared.playerArray[0].uid,  toPeer: MCController.shared.peerIDDict[MCController.shared.playerArray[1]]!)
         } else {
             print("Advertiser append timeline")
-            returnedTimelines.append(timeline)
-            if (returnedTimelines.count) >= MCController.shared.currentGamePeers.count {
+            
+            for (index,player) in playerOrder.enumerated() {
+                if player.isAdvertiser {
+                    orderedTimelines[index].rounds.append(round)
+                }
+            }
+            returnedRounds.append(round)
+            if (returnedRounds.count) >= MCController.shared.currentGamePeers.count {
                 startNewRound()
             }
         }
@@ -205,7 +207,7 @@ class GameController {
         isDrawingRound = false
         playerOrder = []
         orderedTimelines = []
-        returnedTimelines = []
+        returnedRounds = []
         roundNumber = 0
         nextRoundInstruction = Event.Instruction.toCanvas
     }

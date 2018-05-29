@@ -10,9 +10,9 @@
  
  class GuessViewController: UIViewController {
     
-    var timeline: Timeline?
+    var round: Round?
     var timer = Timer()
-    var time = GameController.shared.currentGame.timeLimit
+    var time = 7
     
     lazy var previousSketch: UIImageView = {
         let ps = UIImageView()
@@ -76,14 +76,13 @@
         super.viewDidLoad()
         
         GameController.shared.delegate = self
-        MCController.shared.delegate = self
+        GameController.shared.roundNumberLabelValue += 1
         self.navigationController?.navigationBar.isHidden = true
         self.view.backgroundColor = UIColor.mainScheme1()
         
         setupView()
         
-        let passedTimeline = timeline
-        guard let data = passedTimeline?.rounds.last?.imageData else { return }
+        guard let round = round, let data = round.imageData else { return }
         let image = UIImage(data: data)
         previousSketch.image = image
         barLabel.text = "   Dub this Doodle"
@@ -114,15 +113,15 @@
                         height: 70)
         
         timerLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor,
-                         left: nil,
-                         bottom: nil,
-                         right: view.safeAreaLayoutGuide.rightAnchor,
-                         paddingTop: 5,
-                         paddingLeft: 8,
-                         paddingBottom: 0,
-                         paddingRight: 8,
-                         width: 60,
-                         height: 60)
+                          left: nil,
+                          bottom: nil,
+                          right: view.safeAreaLayoutGuide.rightAnchor,
+                          paddingTop: 5,
+                          paddingLeft: 8,
+                          paddingBottom: 0,
+                          paddingRight: 8,
+                          width: 60,
+                          height: 60)
         
         canvasTopBorderView.anchor(top: barLabel.bottomAnchor,
                                    left: view.safeAreaLayoutGuide.leftAnchor,
@@ -136,15 +135,15 @@
                                    height: 30)
         
         guessTextField.anchor(top: canvasTopBorderView.bottomAnchor,
-                         left: self.view.leftAnchor,
-                         bottom: nil,
-                         right: self.view.rightAnchor,
-                         paddingTop: 0,
-                         paddingLeft: 0,
-                         paddingBottom: 0,
-                         paddingRight: 0,
-                         width: self.view.frame.width,
-                         height: 44)
+                              left: self.view.leftAnchor,
+                              bottom: nil,
+                              right: self.view.rightAnchor,
+                              paddingTop: 0,
+                              paddingLeft: 0,
+                              paddingBottom: 0,
+                              paddingRight: 0,
+                              width: self.view.frame.width,
+                              height: 44)
         
         previousSketch.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.66).isActive = true
         previousSketch.anchor(top: guessTextField.bottomAnchor,
@@ -173,7 +172,7 @@
     // MARK: Timer
     
     func resetTimer() {
-        time = GameController.shared.currentGame.timeLimit
+        time = 7
         timer.invalidate()
     }
     
@@ -190,67 +189,34 @@
             timerLabel.textColor = .red
         }
         if time == 0 {
-            let timeline = roundEnded()
-            GameController.shared.endRound(withTimeline: timeline)
+            let betweenRoundViewController = BetweenRoundViewController()
+            if MCController.shared.currentGamePeers.count < 5 &&  GameController.shared.roundNumberLabelValue > (MCController.shared.currentGamePeers.count * 2) || (MCController.shared.currentGamePeers.count > 5 &&  GameController.shared.roundNumberLabelValue > MCController.shared.currentGamePeers.count)  {
+                betweenRoundViewController.setToEndGame()
+            }
+            self.navigationController?.pushViewController(betweenRoundViewController, animated: true)
+            let round = roundEnded()
+            GameController.shared.endRound(withRound: round)
             resetTimer()
         }
     }
     
  }
  
- // MARK: - MCController Delegate
  
- extension GuessViewController: MCControllerDelegate {
-    func toGuessView(timeline: Timeline) {}
-    func playerJoinedSession() {}
-    func incrementDoneButtonCounter() {}
-    func toTopicView(timeline: Timeline) {}
-    func toCanvasView(timeline: Timeline) {
-        DispatchQueue.main.async {
-            let nextView = CanvasViewController()
-            nextView.timeline = timeline
-            self.navigationController?.pushViewController(nextView, animated: true)
-        }
-    }
-    func toResultsView(timelines: [Timeline]) {
-        print("Guess view did end game")
-        DispatchQueue.main.async {
-            let resultsView = ResultsViewController()
-            resultsView.timelines = timelines
-            print("DELEGATE TIMELINES: \(timelines)")
-            self.navigationController?.pushViewController(resultsView, animated: true)
-            
-        }
-    }
- }
  
  // MARK: - GameController Delegate
  
  extension GuessViewController: GameControllerDelegate {
-    func advertiserToCanvasView(withTimeLine: Timeline) {
-        DispatchQueue.main.async {
-            let canvasView = CanvasViewController()
-            canvasView.timeline = withTimeLine
-            self.navigationController?.pushViewController(canvasView, animated: true)
-        }
-        
-    }
-    
-    func advertiserToResultsView(withTimelines timelines: [Timeline]) {
-        DispatchQueue.main.async {
-            let resultsView = ResultsViewController()
-            resultsView.timelines = timelines
-            self.navigationController?.pushViewController(resultsView, animated: true)
-        }
-    }
-    
-    func advertiserToGuessView(withTimeLine: Timeline) {
-    }
-    
-    func roundEnded() -> Timeline {
+    func roundEnded() -> Round {
         let newRound = Round(owner: MCController.shared.playerArray[0], image: nil, guess: guessTextField.text, isImage: false)
-        guard let timeline = timeline else { return Timeline(owner: MCController.shared.playerArray[0]) }
-        timeline.rounds.append(newRound)
-        return timeline
+        return newRound
     }
+    
+    func advertiserToCanvasView(withRound: Round) {
+    }
+    func advertiserToGuessView(withRound: Round) {
+    }
+    func advertiserToResultsView(withTimelines timelines: [Timeline]) {
+    }
+    
  }

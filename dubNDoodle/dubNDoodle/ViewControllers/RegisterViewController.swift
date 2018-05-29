@@ -30,6 +30,7 @@ class RegisterViewController: UIViewController {
         tf.text = UserDefaults.standard.string(forKey: "username") ?? ""
         tf.backgroundColor = UIColor.white
         tf.translatesAutoresizingMaskIntoConstraints = false
+        tf.clearButtonMode = .whileEditing
         tf.setPadding()
         return tf
     }()
@@ -105,10 +106,14 @@ class RegisterViewController: UIViewController {
             print("No name entered")
             return
         }
-        print("REGISTER NAME: \(name)")
+        var formattedName = name
+        if name.count > 15 {
+            formattedName = String(name.prefix(15))
+        }
+        print("REGISTER NAME: \(formattedName)")
         //persist name
-        UserDefaults.standard.set(name, forKey: "username")
-        MCController.shared.displayName = name
+        UserDefaults.standard.set(formattedName, forKey: "username")
+        MCController.shared.displayName = formattedName
         MCController.shared.isAdvertiser = self.isAdvertiser
         MCController.shared.setupMC()
         let destinationVC = SetupViewController()
