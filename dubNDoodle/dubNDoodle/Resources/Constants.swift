@@ -31,6 +31,6 @@ struct Constants {
     static let ImageCell = "ImageCell"
     
     //Required num players
-    static let requiredNumberOfPlayers = 2
+    static let requiredNumberOfPlayers = 3
     static var timeLimit = 15
 }

@@ -7,6 +7,7 @@
  //
  
  import UIKit
+ import MultipeerConnectivity
  
  class GuessViewController: UIViewController {
     
@@ -77,6 +78,7 @@
         
         GameController.shared.delegate = self
         GameController.shared.roundNumberLabelValue += 1
+        MCController.shared.exitDelegate = self
         self.navigationController?.navigationBar.isHidden = true
         self.view.backgroundColor = UIColor.mainScheme1()
         
@@ -218,5 +220,27 @@
     }
     func advertiserToResultsView(withTimelines timelines: [Timeline]) {
     }
+    
+ }
+ extension GuessViewController: MCExitGameDelegate {
+    func exitGame(peerID: MCPeerID) {
+        let alertCon = UIAlertController(title: "Sorry", message: "\(peerID.displayName) blew it! You must restart game!", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Exit", style: .default){ (action) in
+            
+            MCController.shared.advertiserAssistant?.stop()
+            MCController.shared.currentGamePeers = []
+            MCController.shared.playerArray = []
+            MCController.shared.peerIDDict = [:]
+            MCController.shared.session.disconnect()
+            GameController.shared.clearData()
+            MCController.shared.advertiser?.stopAdvertisingPeer()
+            self.navigationController?.popToRootViewController(animated: true)
+            
+        }
+        alertCon.addAction(okAction)
+        self.present(alertCon, animated: true, completion: nil)
+        
+    }
+    
     
  }
