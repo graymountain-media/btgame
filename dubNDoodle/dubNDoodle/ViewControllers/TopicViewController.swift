@@ -121,7 +121,7 @@ class TopicViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         GameController.shared.roundNumberLabelValue = 1
-
+        MCController.shared.exitDelegate = self
         GameController.shared.delegate = self
         view.backgroundColor = UIColor.mainOffWhite()
         
@@ -254,5 +254,27 @@ extension TopicViewController: GameControllerDelegate {
         return newRound
     }
     
+}
+extension TopicViewController: MCExitGameDelegate {
+    func exitGame(peerID: MCPeerID) {
+        let alertCon = UIAlertController(title: "Sorry", message: "\(peerID.displayName) blew it! You must restart game!", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Exit", style: .default){ (action) in
+            
+            MCController.shared.advertiserAssistant?.stop()
+            MCController.shared.currentGamePeers = []
+            MCController.shared.playerArray = []
+            MCController.shared.peerIDDict = [:]
+            MCController.shared.session.disconnect()
+            GameController.shared.clearData()
+            MCController.shared.advertiser?.stopAdvertisingPeer()
+            self.navigationController?.popToRootViewController(animated: true)
+            
+        }
+        alertCon.addAction(okAction)
+        self.present(alertCon, animated: true, completion: nil)
+        
+    }
+
+
 }
 

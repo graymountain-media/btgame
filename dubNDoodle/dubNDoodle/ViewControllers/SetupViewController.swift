@@ -11,12 +11,16 @@ import UIKit
 import MultipeerConnectivity
 import CoreBluetooth
 
+protocol SetupViewControllerDelegate: class {
+    func userDidGoBackToRegister()
+}
+
 class SetupViewController: UIViewController {
     
     
     let cbManager = CBCentralManager()
     var doneButtonTappedCounter = 0
-    
+    weak var delegate: SetupViewControllerDelegate?
     let playerTableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = UIColor.mainOffWhite()
@@ -39,6 +43,7 @@ class SetupViewController: UIViewController {
         else {
             MCController.shared.delegate = self
             MCController.shared.doneDelegate = self
+            MCController.shared.exitDelegate = self
             cbManager.delegate = self
             setupTableView()
             setTableViewConstraints()
@@ -53,6 +58,16 @@ class SetupViewController: UIViewController {
                 present(browserVC, animated: true, completion: nil)
             }
         }
+    }
+//    override func viewDidDisappear(_ animated: Bool) {
+//        super.viewDidDisappear(true)
+//        delegate?.userDidGoBackToRegister()
+//    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        
+        delegate?.userDidGoBackToRegister()
+        print("userDidgoback called from SetupVC")
     }
     
     
@@ -146,9 +161,12 @@ extension SetupViewController: MCBrowserViewControllerDelegate {
     func browserViewControllerWasCancelled(_ browserViewController: MCBrowserViewController) {
         dismiss(animated: true, completion: nil)
         //checks the status of bluetooth enum cases are: poweredOff, poweredOn, resetting, unauthorized, unknown, unsupported
-        MCController.shared.currentGamePeers = []
-        MCController.shared.playerArray = []
         navigationController?.popViewController(animated: true)
+        //MCController.shared.currentGamePeers = []
+        //MCController.shared.playerArray = []
+        //MCController.shared.session.disconnect()
+        
+        
     }
 }
 
@@ -186,7 +204,13 @@ extension SetupViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.playerCellIdentifier, for: indexPath) as? SetupTableViewCell else {return UITableViewCell()}
-        
+        print("Did press done array: \(MCController.shared.didPressDone)")
+        if(MCController.shared.isAdvertiser){
+            if(indexPath.row >= 1 && MCController.shared.didPressDone[indexPath.row - 1]){
+                cell.donePressed()
+            }
+        }
+       
         cell.updateCell(withPlayerName: MCController.shared.currentGamePeers[indexPath.row].displayName)
         if indexPath.row == 0 && MCController.shared.isAdvertiser == true {
             cell.donePressed()
@@ -247,4 +271,30 @@ extension SetupViewController: DoneButtonDelegate {
             cell.donePressed()
         }
     }
+}
+extension SetupViewController: MCExitGameDelegate {
+    func exitGame(peerID: MCPeerID) {
+        if(MCController.shared.isAdvertiser){
+            guard let index = MCController.shared.currentGamePeers.index(of: peerID) else { print("no index was FOUND!!!!!!!!"); return}
+            
+            if(MCController.shared.didPressDone[index - 1]){
+                doneButtonTappedCounter -= 1
+                DispatchQueue.main.async {
+                    
+                    if self.doneButtonTappedCounter >= (MCController.shared.currentGamePeers.count - 1) && MCController.shared.currentGamePeers.count >= Constants.requiredNumberOfPlayers  {
+                        
+                        self.startButton.isEnabled = true
+                    }else {
+                        self.startButton.isEnabled = false
+                    }
+                }
+            }
+        }
+        DispatchQueue.main.async {
+            self.playerTableView.reloadData()
+        }
+        
+    }
+    
+    
 }

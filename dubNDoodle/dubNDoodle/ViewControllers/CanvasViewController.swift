@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MultipeerConnectivity
 
 class CanvasViewController: UIViewController {
     
@@ -107,6 +108,7 @@ class CanvasViewController: UIViewController {
         super.viewDidLoad()
         GameController.shared.roundNumberLabelValue += 1
         GameController.shared.delegate = self
+        MCController.shared.exitDelegate = self
         self.navigationController?.navigationBar.isHidden = true
         self.view.backgroundColor = UIColor.mainScheme1()
         canvasView.clipsToBounds = true
@@ -295,4 +297,26 @@ extension CanvasViewController: GameControllerDelegate {
         
         return newRound
     }
+}
+extension CanvasViewController: MCExitGameDelegate {
+    func exitGame(peerID: MCPeerID) {
+        let alertCon = UIAlertController(title: "Sorry", message: "\(peerID.displayName) blew it! You must restart game!", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Exit", style: .default){ (action) in
+            
+            MCController.shared.advertiserAssistant?.stop()
+            MCController.shared.currentGamePeers = []
+            MCController.shared.playerArray = []
+            MCController.shared.peerIDDict = [:]
+            MCController.shared.session.disconnect()
+            GameController.shared.clearData()
+            MCController.shared.advertiser?.stopAdvertisingPeer()
+            self.navigationController?.popToRootViewController(animated: true)
+            
+        }
+        alertCon.addAction(okAction)
+        self.present(alertCon, animated: true, completion: nil)
+        
+    }
+    
+    
 }

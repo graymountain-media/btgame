@@ -53,6 +53,7 @@ class RegisterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.backgroundColor = UIColor.mainOffWhite()
         self.title = "Player Name"
 
@@ -117,6 +118,7 @@ class RegisterViewController: UIViewController {
         MCController.shared.isAdvertiser = self.isAdvertiser
         MCController.shared.setupMC()
         let destinationVC = SetupViewController()
+        destinationVC.delegate = self
         navigationController?.pushViewController(destinationVC, animated: true)
         
     }
@@ -125,4 +127,11 @@ class RegisterViewController: UIViewController {
         
     }
 
+}
+extension RegisterViewController: SetupViewControllerDelegate {
+    func userDidGoBackToRegister() {
+        //loadViewIfNeeded()
+        print("UserDidGobackToRegster called from registerVC")
+        MCController.shared.session.disconnect()
+    }
 }

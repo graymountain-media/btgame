@@ -42,6 +42,10 @@ class SetupTableViewCell: UITableViewCell {
         playerNameLabel.anchor(top: self.topAnchor, left: self.leftAnchor, bottom: self.bottomAnchor, right: readyUpIcon.leftAnchor, paddingTop: 0, paddingLeft: 16, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         readyUpIcon.anchor(top: self.topAnchor, left: nil, bottom: self.bottomAnchor, right: self.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 16, width: self.frame.height, height: 0)
     }
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        readyUpIcon.isHidden = true 
+    }
     
     func updateCell(withPlayerName name: String) {
         setupCell()
