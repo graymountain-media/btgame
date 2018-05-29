@@ -11,22 +11,22 @@ import UIKit
 class CanvasView: UIView {
     
     
-    var path=UIBezierPath()
-    var previousPoint:CGPoint
-    var lineWidth:CGFloat=5.0
+    var path = UIBezierPath()
+    var previousPoint : CGPoint
+    var lineWidth : CGFloat=5.0
     var strokeColor = UIColor.black
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
     override init(frame: CGRect) {
-        previousPoint=CGPoint.zero
+        previousPoint = CGPoint.zero
         super.init(frame: .zero)
-        let panGestureRecognizer=UIPanGestureRecognizer(target: self, action: #selector(pan))
-        panGestureRecognizer.maximumNumberOfTouches=1
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(pan))
+        panGestureRecognizer.maximumNumberOfTouches = 1
         self.addGestureRecognizer(panGestureRecognizer)
     }
     
     required init(coder aDecoder: NSCoder) {
-        previousPoint=CGPoint.zero
+        previousPoint = CGPoint.zero
         super.init(coder: aDecoder)!
         
     }
@@ -56,8 +56,7 @@ class CanvasView: UIView {
         self.setNeedsDisplay()
     }
     
-    func midPoint(p0:CGPoint,p1:CGPoint)->CGPoint
-    {
+    func midPoint(p0:CGPoint,p1:CGPoint) -> CGPoint {
         let x=(p0.x+p1.x)/2
         let y=(p0.y+p1.y)/2
         return CGPoint(x: x, y: y)
@@ -72,24 +71,24 @@ class CanvasView: UIView {
         return image
     }
     
-    @objc func changeStrokeColor(_ sender: UIButton) {
-        switch sender.tag {
-        case 2:
-            strokeColor = UIColor.orange
-        case 3:
-            strokeColor = UIColor.yellow
-        case 4:
-            strokeColor = UIColor.red
-        case 5:
-            strokeColor = UIColor.blue
-        case 6:
-            strokeColor = UIColor.green
-        default:
-            strokeColor = UIColor.black
-        }
-        
-//        path = UIBezierPath()
-    }
+//    @objc func changeStrokeColor(_ sender: UIButton) {
+//        switch sender.tag {
+//        case 2:
+//            strokeColor = UIColor.orange
+//        case 3:
+//            strokeColor = UIColor.yellow
+//        case 4:
+//            strokeColor = UIColor.red
+//        case 5:
+//            strokeColor = UIColor.blue
+//        case 6:
+//            strokeColor = UIColor.green
+//        default:
+//            strokeColor = UIColor.black
+//        }
+//        self.draw(CGRect(x: 0, y: 0, width: (viewWithTag(1)?.frame.width)!, height: (viewWithTag(1)?.frame.height)!))
+//        
+//    }
 }
 
 
