@@ -10,73 +10,44 @@ import UIKit
 
 class WelcomeViewController: UIViewController {
     
-    let containerView: UIView = {
-        
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.masksToBounds = true
-        return view
-    }()
-    
     let welcomeLabel: UILabel = {
         let label = UILabel()
         label.text = "\(Constants.gameName)"
         label.numberOfLines = 0
         label.textColor = UIColor.black
         label.textAlignment = .center
-        label.font = UIFont(name: "MarkerFelt-Wide", size: 50)
+        label.font = UIFont(name: "MarkerFelt-Wide", size: 40.0)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let beginGameButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("\(Constants.begin)", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = UIColor.mainScheme2()
-        button.setTitleColor(UIColor.mainComplement1(), for: .normal)
-        button.titleLabel?.textAlignment = .center
-        button.titleLabel?.font = UIFont(name: "HoeflerText-Black", size: 35)
-        button.layer.cornerRadius = 65
-        button.layer.shadowRadius = 2.0
-        button.layer.masksToBounds = true
-//        button.layer.borderColor = UIColor.black.cgColor
-//        button.layer.borderWidth = 2.0
-        button.addTarget(self, action: #selector(beginGameButtonTapped), for: .touchUpInside)
-        return button
-    }()
-    
     lazy var hostButton: UIButton = {
-        let button = UIButton(frame: CGRect(x: beginGameButton.frame.origin.x, y: beginGameButton.frame.origin.y, width: 130, height: 130))
-        button.setTitle("", for: .normal)
+        let button = UIButton()
+        button.setTitle("Host", for: .normal)
         button.backgroundColor = UIColor.mainScheme2()
         button.setTitleColor(UIColor.mainComplement1(), for: .normal)
         button.titleLabel?.textAlignment = .center
-        button.titleLabel?.font = UIFont(name: "HoeflerText-Black", size: 35)
-        button.layer.cornerRadius = 65
+        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        button.layer.cornerRadius = 5
         button.layer.shadowRadius = 2.0
         button.layer.masksToBounds = true
-//        button.layer.borderColor = UIColor.black.cgColor
-//        button.layer.borderWidth = 2.0
-        button.isHidden = true
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(hostButtonTapped), for: .touchUpInside)
         return button
     }()
     
     lazy var joinButton: UIButton = {
-        let button = UIButton(frame: CGRect(x: beginGameButton.frame.origin.x, y: beginGameButton.frame.origin.y, width: 130, height: 130))
-        button.setTitle("", for: .normal)
+        let button = UIButton()
+        button.setTitle("Join", for: .normal)
         button.backgroundColor = UIColor.mainScheme2()
         button.setTitleColor(UIColor.mainComplement1(), for: .normal)
         button.titleLabel?.textAlignment = .center
-        button.titleLabel?.font = UIFont(name: "HoeflerText-Black", size: 35)
-        button.layer.cornerRadius = 65
+        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        button.layer.cornerRadius = 5
         button.layer.shadowRadius = 2.0
         button.layer.masksToBounds = true
-//        button.layer.borderColor = UIColor.black.cgColor
-//        button.layer.borderWidth = 2.0
-        button.isHidden = true
         button.addTarget(self, action: #selector(joinButtonTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
@@ -84,90 +55,47 @@ class WelcomeViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitleColor(UIColor.mainScheme1(), for: .normal)
         button.setTitle("How to Play", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.titleLabel?.font = UIFont(name: "HoeflerText-Black", size: 20)
+        
+        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
         button.layer.masksToBounds = true
         button.addTarget(self, action: #selector(howToPlayButtonTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     // MARK: - Life Cycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = UIColor.mainOffWhite()
-        view.addSubview(containerView)
-        setupContainerView()
+        setupViews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.isHidden = false
     }
     
-    func setupContainerView() {
+    func setupViews() {
+        view.addSubview(welcomeLabel)
+        view.addSubview(hostButton)
+        view.addSubview(joinButton)
+        view.addSubview(howToPlayButton)
         
-        containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        containerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        containerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        welcomeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        welcomeLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height / 8).isActive = true
         
-        containerView.addSubview(welcomeLabel)
-        containerView.addSubview(beginGameButton)
-        containerView.addSubview(hostButton)
-        containerView.addSubview(joinButton)
-        containerView.addSubview(howToPlayButton)
+        hostButton.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: view.frame.height / 8).isActive = true
+        hostButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        hostButton.widthAnchor.constraint(equalToConstant: view.frame.width / 1.5 ).isActive = true
+        hostButton.heightAnchor.constraint(equalToConstant: 44.0 ).isActive = true
         
-        welcomeLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-        welcomeLabel.anchor(top: containerView.topAnchor,
-                            left: containerView.leftAnchor,
-                            bottom: nil,
-                            right: containerView.rightAnchor,
-                            paddingTop: 50,
-                            paddingLeft: 12,
-                            paddingBottom: 0,
-                            paddingRight: 12,
-                            width: 0,
-                            height: 0)
+        joinButton.topAnchor.constraint(equalTo: hostButton.bottomAnchor, constant: 28.0).isActive = true
+        joinButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        joinButton.widthAnchor.constraint(equalToConstant: view.frame.width / 1.5 ).isActive = true
+        joinButton.heightAnchor.constraint(equalToConstant:  44.0 ).isActive = true
         
-        beginGameButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-        beginGameButton.centerYAnchor.constraint(equalTo: containerView.centerYAnchor, constant: 35).isActive = true
-        beginGameButton.widthAnchor.constraint(equalToConstant: 130).isActive = true
-        beginGameButton.heightAnchor.constraint(equalToConstant: 130).isActive = true
         
-        howToPlayButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-        howToPlayButton.anchor(top: nil,
-                               left: nil,
-                               bottom: containerView.bottomAnchor,
-                               right: nil,
-                               paddingTop: 0,
-                               paddingLeft: 0,
-                               paddingBottom: -40,
-                               paddingRight: 0,
-                               width: 0,
-                               height: 0)
-    }
-    
-    @objc func beginGameButtonTapped() {
-        
-        hostButton.center = beginGameButton.center
-        joinButton.center = beginGameButton.center
-        
-        UIView.animate(withDuration: 0.5, animations: {
-            
-            self.beginGameButton.setTitle("", for: .normal)
-        }) { (_) in
-            self.beginGameButton.isHidden = true
-            self.hostButton.isHidden = false
-            self.joinButton.isHidden = false
-            UIView.animate(withDuration: 0.4) {
-                
-                self.joinButton.setTitle("Join", for: .normal)
-                self.hostButton.setTitle("Host", for: .normal)
-                self.joinButton.frame.origin.x += 85
-                self.hostButton.frame.origin.x -= 85
-            }
-        }
+        howToPlayButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        howToPlayButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8).isActive = true
     }
     
     @objc func hostButtonTapped() {

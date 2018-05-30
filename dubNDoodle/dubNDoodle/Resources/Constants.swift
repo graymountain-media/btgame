@@ -33,4 +33,5 @@ struct Constants {
     //Required num players
     static let requiredNumberOfPlayers = 3
     static var timeLimit = 15
+    
 }
