@@ -224,22 +224,23 @@
  }
  extension GuessViewController: MCExitGameDelegate {
     func exitGame(peerID: MCPeerID) {
-        let alertCon = UIAlertController(title: "Sorry", message: "\(peerID.displayName) blew it! You must restart game!", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Exit", style: .default){ (action) in
-            
-            MCController.shared.advertiserAssistant?.stop()
-            MCController.shared.currentGamePeers = []
-            MCController.shared.playerArray = []
-            MCController.shared.peerIDDict = [:]
-            MCController.shared.session.disconnect()
-            GameController.shared.clearData()
-            MCController.shared.advertiser?.stopAdvertisingPeer()
-            self.navigationController?.popToRootViewController(animated: true)
-            
+        if self == navigationController?.topViewController {
+            let alertCon = UIAlertController(title: "Sorry", message: "\(peerID.displayName) blew it! You must restart game!", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Exit", style: .default){ (action) in
+                
+                MCController.shared.advertiserAssistant?.stop()
+                MCController.shared.currentGamePeers = []
+                MCController.shared.playerArray = []
+                MCController.shared.peerIDDict = [:]
+                MCController.shared.session.disconnect()
+                GameController.shared.clearData()
+                MCController.shared.advertiser?.stopAdvertisingPeer()
+                self.navigationController?.popToRootViewController(animated: true)
+                
+            }
+            alertCon.addAction(okAction)
+            self.present(alertCon, animated: true, completion: nil)
         }
-        alertCon.addAction(okAction)
-        self.present(alertCon, animated: true, completion: nil)
-        
     }
     
     

@@ -46,11 +46,11 @@ class MCController: NSObject, MCSessionDelegate {
     var advertiser: MCNearbyServiceAdvertiser?
     var advertiserAssistant: MCAdvertiserAssistant?
     var currentGamePeers = [MCPeerID]()
-    var didPressDone: [Bool] = []
     var playerArray: [Player] = [] {
         didSet {
             let array = playerArray.compactMap({$0.displayName})
             print(array)
+            delegate?.playerJoinedSession()
         }
     }
 
@@ -89,6 +89,9 @@ class MCController: NSObject, MCSessionDelegate {
     fileprivate func createPlayer() {
         guard let name = displayName else {return}
         let newPlayer = PlayerController.create(displayName: name, id: peerID, isAdvertiser: isAdvertiser)
+        if isAdvertiser {
+            newPlayer.isReady = true
+        }
         playerArray.append(newPlayer)
     }
     private func destroyPlayerData(id: MCPeerID) {
@@ -109,13 +112,26 @@ class MCController: NSObject, MCSessionDelegate {
             delegate?.playerJoinedSession()
             
             if isAdvertiser {
-                didPressDone.append(false)
                 do {
                     guard let data = DataManager.shared.encodePlayer(player: playerArray[0]) else {return}
                     print("The advertiser sent himself to a browser")
                     try session.send(data, toPeers: [peerID], with: .reliable)
                 } catch let e{
                     print("Error sending advertiser player object: \(e)")
+                }
+            }
+            print("SECOND PERSON IN ARRAY: \(currentGamePeers[1].displayName)")
+            
+            if !isAdvertiser {
+                guard let index = currentGamePeers.index(of: peerID) else {return}
+                if index >= 2 {
+                    do {
+                        guard let data = DataManager.shared.encodePlayer(player: playerArray[0]) else {return}
+                        print("The advertiser sent himself to a browser")
+                        try session.send(data, toPeers: [peerID], with: .reliable)
+                    } catch let e{
+                        print("Error sending advertiser player object: \(e)")
+                    }
                 }
             }
             
@@ -125,10 +141,13 @@ class MCController: NSObject, MCSessionDelegate {
         case MCSessionState.notConnected:
             print("\(peerID.displayName) is no longer connected to the session")
             exitDelegate?.exitGame(peerID: peerID)
-            guard let index = currentGamePeers.index(of: peerID) else {return}
-            currentGamePeers.remove(at: index)
-            didPressDone.remove(at: index - 1)
+            
+            print("ExitDelegate did run")
+            
+            
             if(isAdvertiser){
+                guard let index = currentGamePeers.index(of: peerID) else {return}
+                currentGamePeers.remove(at: index)
                 destroyPlayerData(id: peerID)
             }
             
@@ -142,13 +161,16 @@ class MCController: NSObject, MCSessionDelegate {
             peerIDDict[player] = peerID
             print("I am in the player handler")
             if !isAdvertiser {
-                do {
-                    //player receives the advertiser (player object) and then send itself (player) back to advertiser
-                    let browserPlayer = playerArray[0]
-                    guard let data = DataManager.shared.encodePlayer(player: browserPlayer) else { return }
-                    try session.send(data, toPeers: [peerID], with: .reliable)
-                } catch let e {
-                    print("Error sending self to advertiser: \(e)")
+                if playerArray.count < 3 {
+                    do {
+                        player.isReady = false
+                        //player receives the advertiser (player object) and then send itself (player) back to advertiser
+                        let browserPlayer = playerArray[0]
+                        guard let data = DataManager.shared.encodePlayer(player: browserPlayer) else { return }
+                        try session.send(data, toPeers: [peerID], with: .reliable)
+                    } catch let e {
+                        print("Error sending self to advertiser: \(e)")
+                    }
                 }
             }
             return
@@ -158,10 +180,9 @@ class MCController: NSObject, MCSessionDelegate {
             if(isAdvertiser){
                 delegate?.incrementDoneButtonCounter()
                 let player = (peerIDDict as NSDictionary).allKeys(for: peerID) as! [Player]
+                player[0].isReady = true
                 doneDelegate?.playerDidPressDone(player: player[0])
-                guard let index = playerArray.index(of: player[0]) else {return}
-                didPressDone[index - 1] = true
-            }
+                }
             return
         }
         

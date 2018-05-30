@@ -130,8 +130,9 @@ class RegisterViewController: UIViewController {
 }
 extension RegisterViewController: SetupViewControllerDelegate {
     func userDidGoBackToRegister() {
-        //loadViewIfNeeded()
         print("UserDidGobackToRegster called from registerVC")
-        MCController.shared.session.disconnect()
+        if self == navigationController?.topViewController {
+            MCController.shared.session.disconnect()
+        }
     }
 }

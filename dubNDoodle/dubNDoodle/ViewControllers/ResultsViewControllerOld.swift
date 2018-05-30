@@ -34,9 +34,9 @@ class ResultsViewControllerOld: UIViewController {
         return pc
     }()
     
-    let pageControl: UIPageViewController = {
-        let control = UIPageViewController()
-    }()
+//    let pageControl: UIPageViewController = {
+//        let control = UIPageViewController()
+//    }()
     let replayButton: UIButton = {
         let view = UIButton()
         view.backgroundColor = UIColor.mainScheme2()
@@ -107,7 +107,6 @@ class ResultsViewControllerOld: UIViewController {
         view.addSubview(scrollView)
         view.addSubview(starterTopicLabel)
         view.addSubview(bottomBarView)
-        view.addSubview(pageControl.view)
         
         bottomBarView.addSubview(pageControl)
         bottomBarView.addSubview(replayButton)

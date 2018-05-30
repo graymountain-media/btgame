@@ -13,6 +13,7 @@ class Player: Codable, Hashable {
     var uid: Int
     let displayName: String
     let isAdvertiser: Bool
+    var isReady: Bool
     var hashValue: Int {
         return self.uid
     }
@@ -21,6 +22,7 @@ class Player: Codable, Hashable {
         self.displayName = displayName
         self.isAdvertiser = isAdvertiser
         self.uid = Int(arc4random_uniform(UInt32(1000000)))
+        self.isReady = false
     }
     
     func asDict() -> [String: Player]{
