@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		3BD076B620AB384900BA7C43 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD076B520AB384900BA7C43 /* Constants.swift */; };
 		3BD076B820AB389F00BA7C43 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD076B720AB389F00BA7C43 /* Extensions.swift */; };
-		603D02A120ADE31C0021BE63 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D02A020ADE31C0021BE63 /* ImageCollectionViewCell.swift */; };
 		603D02A320ADE32C0021BE63 /* GuessCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D02A220ADE32C0021BE63 /* GuessCollectionViewCell.swift */; };
 		603D02A920AE49EF0021BE63 /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D02A820AE49EF0021BE63 /* ImageTableViewCell.swift */; };
 		6087AC9F20AF2B4400153E27 /* GuessTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6087AC9E20AF2B4400153E27 /* GuessTableViewCell.swift */; };
@@ -50,7 +49,6 @@
 /* Begin PBXFileReference section */
 		3BD076B520AB384900BA7C43 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3BD076B720AB389F00BA7C43 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		603D02A020ADE31C0021BE63 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		603D02A220ADE32C0021BE63 /* GuessCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuessCollectionViewCell.swift; sourceTree = "<group>"; };
 		603D02A820AE49EF0021BE63 /* ImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
 		6087AC9E20AF2B4400153E27 /* GuessTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuessTableViewCell.swift; sourceTree = "<group>"; };
@@ -182,7 +180,6 @@
 				A1A2A94C20BE08CA00F3C2CE /* TimelineViewController.swift */,
 				603D02A820AE49EF0021BE63 /* ImageTableViewCell.swift */,
 				6087AC9E20AF2B4400153E27 /* GuessTableViewCell.swift */,
-				603D02A020ADE31C0021BE63 /* ImageCollectionViewCell.swift */,
 				603D02A220ADE32C0021BE63 /* GuessCollectionViewCell.swift */,
 				A1544CD720BC7BFC00C4DF06 /* BetweenRoundViewController.swift */,
 			);
@@ -297,7 +294,6 @@
 				6087AC9F20AF2B4400153E27 /* GuessTableViewCell.swift in Sources */,
 				A1BCCC2E20AB2C2000A4AC7D /* GuessViewController.swift in Sources */,
 				A1BCCC1B20AB2B9C00A4AC7D /* GameController.swift in Sources */,
-				603D02A120ADE31C0021BE63 /* ImageCollectionViewCell.swift in Sources */,
 				3BD076B820AB389F00BA7C43 /* Extensions.swift in Sources */,
 				603D02A920AE49EF0021BE63 /* ImageTableViewCell.swift in Sources */,
 				A1BCCC1820AB2B7700A4AC7D /* NetworkController.swift in Sources */,

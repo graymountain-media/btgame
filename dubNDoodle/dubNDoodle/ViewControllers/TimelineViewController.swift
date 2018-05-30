@@ -15,7 +15,7 @@ class TimelineViewController: UIViewController {
     var tableView: UITableView = {
         let table = UITableView()
         table.allowsSelection = false
-        table.separatorStyle = .none
+//        table.separatorStyle = .none
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
@@ -23,6 +23,7 @@ class TimelineViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -30,6 +31,9 @@ class TimelineViewController: UIViewController {
         tableView.register(ImageTableViewCell.self, forCellReuseIdentifier: Constants.ImageCell)
         
         setTableView()
+        
+        guard let timeline = timeline else {return}
+        self.title = timeline.rounds[0].guess
     }
     
     private func setTableView() {
@@ -42,20 +46,18 @@ class TimelineViewController: UIViewController {
 extension TimelineViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+        print("Making a cell")
         guard let timeline = timeline else { return UITableViewCell() }
         
-        if timeline.rounds[indexPath.row].isImage {
+        if indexPath.row % 2 != 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.ImageCell, for: indexPath) as? ImageTableViewCell else { return UITableViewCell() }
-            cell.round = timeline.rounds[indexPath.row]
-            
-            cell.layoutSubviews()
+            let round = timeline.rounds[indexPath.row]
+            cell.updateCell(withRound: round)
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.GuessCell, for: indexPath) as? GuessTableViewCell else { return UITableViewCell() }
-            cell.round = timeline.rounds[indexPath.row]
-            
-            cell.layoutSubviews()
+            let round = timeline.rounds[indexPath.row]
+            cell.updateCell(withRound: round)
             return cell
         }
     }
@@ -66,11 +68,10 @@ extension TimelineViewController: UITableViewDelegate, UITableViewDataSource {
         return timeline.rounds.count
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let timeline = timeline else { return 105.0 }
-        if timeline.rounds[indexPath.row].isImage {
+        if indexPath.row % 2 != 0 {
             return CGFloat(view.frame.width)
         } else {
-            return 120.0
+            return 80.0
         }
     }
 }

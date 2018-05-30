@@ -213,13 +213,13 @@ extension ResultsViewControllerOld: UITableViewDelegate, UITableViewDataSource {
         
         if timelines[tableView.tag].rounds[indexPath.row].isImage {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.ImageCell, for: indexPath) as? ImageTableViewCell else { return UITableViewCell() }
-            cell.round = timelines[tableView.tag].rounds[indexPath.row]
+            //cell.round = timelines[tableView.tag].rounds[indexPath.row]
             
             cell.layoutSubviews()
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.GuessCell, for: indexPath) as? GuessTableViewCell else { return UITableViewCell() }
-            cell.round = timelines[tableView.tag].rounds[indexPath.row]
+            //cell.round = timelines[tableView.tag].rounds[indexPath.row]
             
             cell.layoutSubviews()
             return cell
