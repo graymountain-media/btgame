@@ -26,7 +26,7 @@ class TopicViewController: UIViewController {
         lbl.textColor = .black
         lbl.text = String(self.time)
         lbl.textAlignment = .center
-        lbl.font = UIFont(name: "Times New Roman", size: 40)
+        lbl.font = UIFont.preferredFont(forTextStyle: .title2)
         lbl.layer.borderColor = UIColor.mainScheme3().cgColor
         lbl.layer.cornerRadius = 30
         lbl.clipsToBounds = true

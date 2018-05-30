@@ -38,7 +38,7 @@
     lazy var timerLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = UIColor.mainOffWhite()
-        label.font = UIFont(name: "Times New Roman", size: 40)
+        label.font = UIFont.preferredFont(forTextStyle: .title2)
         label.textAlignment = .center
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -53,7 +53,7 @@
         lbl.backgroundColor = UIColor.mainScheme1()
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.textColor = .white
-        lbl.font = UIFont(name: "Times New Roman", size: 35)
+        lbl.font = UIFont.preferredFont(forTextStyle: .title2)
         return lbl
     }()
     

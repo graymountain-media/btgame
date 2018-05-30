@@ -28,7 +28,7 @@ class BetweenRoundViewController: UIViewController {
         let label = UILabel()
         label.text = "Round"
         label.textColor = UIColor.mainOffWhite()
-        label.font = UIFont.boldSystemFont(ofSize: 60)
+        label.font = UIFont.preferredFont(forTextStyle: .title1)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -36,7 +36,7 @@ class BetweenRoundViewController: UIViewController {
     let roundNumberLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.mainOffWhite()
-        label.font = UIFont.boldSystemFont(ofSize: 60)
+        label.font = UIFont.preferredFont(forTextStyle: .title1)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         return label
@@ -47,7 +47,7 @@ class BetweenRoundViewController: UIViewController {
         label.text = "3"
         label.isHidden = true
         label.textColor = UIColor.mainHighlight()
-        label.font = UIFont.boldSystemFont(ofSize: 70)
+        label.font = UIFont.preferredFont(forTextStyle: .title2)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
