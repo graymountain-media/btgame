@@ -26,7 +26,7 @@ class TopicViewController: UIViewController {
         lbl.textColor = .black
         lbl.text = String(self.time)
         lbl.textAlignment = .center
-        lbl.font = UIFont(name: "Times New Roman", size: 40)
+        lbl.font = UIFont.preferredFont(forTextStyle: .title1)
         lbl.layer.borderColor = UIColor.mainScheme3().cgColor
         lbl.layer.cornerRadius = 30
         lbl.clipsToBounds = true
@@ -121,7 +121,7 @@ class TopicViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         GameController.shared.roundNumberLabelValue = 1
-
+        MCController.shared.exitDelegate = self
         GameController.shared.delegate = self
         view.backgroundColor = UIColor.mainOffWhite()
         
@@ -254,5 +254,27 @@ extension TopicViewController: GameControllerDelegate {
         return newRound
     }
     
+}
+extension TopicViewController: MCExitGameDelegate {
+    func exitGame(peerID: MCPeerID) {
+        let alertCon = UIAlertController(title: "Sorry", message: "\(peerID.displayName) blew it! You must restart game!", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Exit", style: .default){ (action) in
+            
+            MCController.shared.advertiserAssistant?.stop()
+            MCController.shared.currentGamePeers = []
+            MCController.shared.playerArray = []
+            MCController.shared.peerIDDict = [:]
+            MCController.shared.session.disconnect()
+            GameController.shared.clearData()
+            MCController.shared.advertiser?.stopAdvertisingPeer()
+            self.navigationController?.popToRootViewController(animated: true)
+            
+        }
+        alertCon.addAction(okAction)
+        self.present(alertCon, animated: true, completion: nil)
+        
+    }
+
+
 }
 

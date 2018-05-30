@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MultipeerConnectivity
 
 class CanvasViewController: UIViewController {
     
@@ -23,7 +24,7 @@ class CanvasViewController: UIViewController {
         let lbl = UILabel()
         lbl.backgroundColor = UIColor.mainScheme1()
         lbl.textColor = .white
-        lbl.font = UIFont(name: "Times New Roman", size: 37)
+        lbl.font = UIFont.preferredFont(forTextStyle: .title1)
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
@@ -41,7 +42,7 @@ class CanvasViewController: UIViewController {
         lbl.textColor = .black
         lbl.text = String(self.time)
         lbl.textAlignment = .center
-        lbl.font = UIFont(name: "Times New Roman", size: 40)
+        lbl.font = UIFont.preferredFont(forTextStyle: .title1)
         lbl.layer.borderColor = UIColor.mainScheme3().cgColor
         lbl.layer.cornerRadius = 30
         lbl.clipsToBounds = true
@@ -63,42 +64,42 @@ class CanvasViewController: UIViewController {
         return cbv
     }()
     
-    lazy var red: UIButton = {
-        let btn = UIButton()
-        btn.backgroundColor = .red
-        btn.addTarget(self.canvasView, action: #selector(CanvasView.changeStrokeColor(_:)), for: .touchUpInside)
-        return btn
-    }()
-    
-    lazy var blue: UIButton = {
-        let btn = UIButton()
-        btn.backgroundColor = .blue
-        btn.addTarget(self.canvasView, action: #selector(CanvasView.changeStrokeColor(_:)), for: .touchUpInside)
-        return btn
-    }()
-    
-    lazy var green: UIButton = {
-        let btn = UIButton()
-        btn.backgroundColor = .green
-        btn.addTarget(self.canvasView, action: #selector(CanvasView.changeStrokeColor(_:)), for: .touchUpInside)
-        return btn
-    }()
-    
-    lazy var yellow: UIButton = {
-        var color = UIColor.yellow.cgColor
-        let btn = UIButton()
-        btn.backgroundColor = .yellow
-        btn.addTarget(self.canvasView, action: #selector(CanvasView.changeStrokeColor(_:)), for: .touchUpInside)
-        return btn
-    }()
-    
-    lazy var orange: UIButton = {
-        var color = UIColor.orange.cgColor
-        let btn = UIButton()
-        btn.backgroundColor = .orange
-        btn.addTarget(self.canvasView, action: #selector(CanvasView.changeStrokeColor(_:)), for: .touchUpInside)
-        return btn
-    }()
+//    lazy var red: UIButton = {
+//        let btn = UIButton()
+//        btn.backgroundColor = .red
+//        btn.addTarget(self.canvasView, action: #selector(CanvasView.changeStrokeColor(_:)), for: .touchUpInside)
+//        return btn
+//    }()
+//    
+//    lazy var blue: UIButton = {
+//        let btn = UIButton()
+//        btn.backgroundColor = .blue
+//        btn.addTarget(self.canvasView, action: #selector(CanvasView.changeStrokeColor(_:)), for: .touchUpInside)
+//        return btn
+//    }()
+//    
+//    lazy var green: UIButton = {
+//        let btn = UIButton()
+//        btn.backgroundColor = .green
+//        btn.addTarget(self.canvasView, action: #selector(CanvasView.changeStrokeColor(_:)), for: .touchUpInside)
+//        return btn
+//    }()
+//    
+//    lazy var yellow: UIButton = {
+//        var color = UIColor.yellow.cgColor
+//        let btn = UIButton()
+//        btn.backgroundColor = .yellow
+//        btn.addTarget(self.canvasView, action: #selector(CanvasView.changeStrokeColor(_:)), for: .touchUpInside)
+//        return btn
+//    }()
+//    
+//    lazy var orange: UIButton = {
+//        var color = UIColor.orange.cgColor
+//        let btn = UIButton()
+//        btn.backgroundColor = .orange
+//        btn.addTarget(self.canvasView, action: #selector(CanvasView.changeStrokeColor(_:)), for: .touchUpInside)
+//        return btn
+//    }()
     
     
     // MARK: - Life Cycle
@@ -107,6 +108,7 @@ class CanvasViewController: UIViewController {
         super.viewDidLoad()
         GameController.shared.roundNumberLabelValue += 1
         GameController.shared.delegate = self
+        MCController.shared.exitDelegate = self
         self.navigationController?.navigationBar.isHidden = true
         self.view.backgroundColor = UIColor.mainScheme1()
         canvasView.clipsToBounds = true
@@ -160,17 +162,17 @@ class CanvasViewController: UIViewController {
         self.view.addSubview(timerLabel)
         self.view.addSubview(canvasTopBorderView)
         self.view.addSubview(canvasBottomBorderView)
-        self.view.addSubview(orange)
-        self.view.addSubview(red)
-        self.view.addSubview(blue)
-        self.view.addSubview(green)
-        self.view.addSubview(yellow)
+//        self.view.addSubview(orange)
+//        self.view.addSubview(red)
+//        self.view.addSubview(blue)
+//        self.view.addSubview(green)
+//        self.view.addSubview(yellow)
         
-        orange.tag = 2
-        yellow.tag = 3
-        red.tag = 4
-        blue.tag = 5
-        green.tag = 6
+//        orange.tag = 2
+//        yellow.tag = 3
+//        red.tag = 4
+//        blue.tag = 5
+//        green.tag = 6
         
         topicLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor,
                           left: view.safeAreaLayoutGuide.leftAnchor,
@@ -216,60 +218,60 @@ class CanvasViewController: UIViewController {
                           width: 60,
                           height: 60)
         
-        orange.anchor(top: nil,
-                      left: nil,
-                      bottom: canvasView.bottomAnchor,
-                      right: nil,
-                      paddingTop: 0,
-                      paddingLeft: 10,
-                      paddingBottom: 0,
-                      paddingRight: 0,
-                      width: 30,
-                      height: 30)
-        
-        red.anchor(top: nil,
-                   left: orange.rightAnchor,
-                   bottom: canvasView.bottomAnchor,
-                   right: nil,
-                   paddingTop: 0,
-                   paddingLeft: 10,
-                   paddingBottom: 0,
-                   paddingRight: 0,
-                   width: 30,
-                   height: 30)
-        
-        blue.anchor(top: nil,
-                    left: red.rightAnchor,
-                    bottom: canvasView.bottomAnchor,
-                    right: nil,
-                    paddingTop: 0,
-                    paddingLeft: 10,
-                    paddingBottom: 0,
-                    paddingRight: 0,
-                    width: 30,
-                    height: 30)
-        
-        green.anchor(top: nil,
-                     left: blue.rightAnchor,
-                     bottom: canvasView.bottomAnchor,
-                     right: nil,
-                     paddingTop: 0,
-                     paddingLeft: 10,
-                     paddingBottom: 0,
-                     paddingRight: 0,
-                     width: 30,
-                     height: 30)
-        
-        yellow.anchor(top: nil,
-                      left: green.rightAnchor,
-                      bottom: canvasView.bottomAnchor,
-                      right: nil,
-                      paddingTop: 0,
-                      paddingLeft: 10,
-                      paddingBottom: 0,
-                      paddingRight: 0,
-                      width: 30,
-                      height: 30)
+//        orange.anchor(top: nil,
+//                      left: nil,
+//                      bottom: canvasView.bottomAnchor,
+//                      right: nil,
+//                      paddingTop: 0,
+//                      paddingLeft: 10,
+//                      paddingBottom: 0,
+//                      paddingRight: 0,
+//                      width: 30,
+//                      height: 30)
+//
+//        red.anchor(top: nil,
+//                   left: orange.rightAnchor,
+//                   bottom: canvasView.bottomAnchor,
+//                   right: nil,
+//                   paddingTop: 0,
+//                   paddingLeft: 10,
+//                   paddingBottom: 0,
+//                   paddingRight: 0,
+//                   width: 30,
+//                   height: 30)
+//
+//        blue.anchor(top: nil,
+//                    left: red.rightAnchor,
+//                    bottom: canvasView.bottomAnchor,
+//                    right: nil,
+//                    paddingTop: 0,
+//                    paddingLeft: 10,
+//                    paddingBottom: 0,
+//                    paddingRight: 0,
+//                    width: 30,
+//                    height: 30)
+//
+//        green.anchor(top: nil,
+//                     left: blue.rightAnchor,
+//                     bottom: canvasView.bottomAnchor,
+//                     right: nil,
+//                     paddingTop: 0,
+//                     paddingLeft: 10,
+//                     paddingBottom: 0,
+//                     paddingRight: 0,
+//                     width: 30,
+//                     height: 30)
+//
+//        yellow.anchor(top: nil,
+//                      left: green.rightAnchor,
+//                      bottom: canvasView.bottomAnchor,
+//                      right: nil,
+//                      paddingTop: 0,
+//                      paddingLeft: 10,
+//                      paddingBottom: 0,
+//                      paddingRight: 0,
+//                      width: 30,
+//                      height: 30)
         
         canvasView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.66).isActive = true
         canvasView.topAnchor.constraint(equalTo: canvasTopBorderView.bottomAnchor, constant: 0).isActive = true
@@ -295,4 +297,27 @@ extension CanvasViewController: GameControllerDelegate {
         
         return newRound
     }
+}
+extension CanvasViewController: MCExitGameDelegate {
+    func exitGame(peerID: MCPeerID) {
+        if self == navigationController?.topViewController {
+            let alertCon = UIAlertController(title: "Sorry", message: "\(peerID.displayName) blew it! You must restart game!", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Exit", style: .default){ (action) in
+                
+                MCController.shared.advertiserAssistant?.stop()
+                MCController.shared.currentGamePeers = []
+                MCController.shared.playerArray = []
+                MCController.shared.peerIDDict = [:]
+                MCController.shared.session.disconnect()
+                GameController.shared.clearData()
+                MCController.shared.advertiser?.stopAdvertisingPeer()
+                self.navigationController?.popToRootViewController(animated: true)
+                
+            }
+            alertCon.addAction(okAction)
+            self.present(alertCon, animated: true, completion: nil)
+        }
+    }
+    
+    
 }

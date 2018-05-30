@@ -10,7 +10,16 @@ import UIKit
 
 class ImageTableViewCell: UITableViewCell {
     
-    var round: Round?
+    let letterLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = UIColor.mainScheme2()
+        label.textColor = .white
+        label.layer.cornerRadius = 20
+        label.clipsToBounds = true
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
     var playerNameLabel: UILabel = {
         let label = UILabel()
@@ -29,40 +38,66 @@ class ImageTableViewCell: UITableViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = 10
-        imageView.layer.borderWidth = 2
+        imageView.layer.borderWidth = 0.5
         imageView.layer.borderColor = UIColor.mainScheme2().cgColor
-        imageView.layer.shadowRadius = 10
-        imageView.layer.shadowColor = UIColor.mainHighlight().cgColor
-        imageView.layer.shadowOpacity = 0.3
+//        imageView.layer.shadowRadius = 10
+//        imageView.layer.shadowColor = UIColor.mainHighlight().cgColor
+//        imageView.layer.shadowOpacity = 0.3
         return imageView
     }()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        setupView()
+    }
+
+    func setupView() {
+        
         contentView.addSubview(sketchImageView)
         contentView.addSubview(playerNameLabel)
-        sketchImageView.topAnchor.constraint(equalTo: playerNameLabel.bottomAnchor, constant: 8).isActive = true
-        sketchImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 32).isActive = true
-        sketchImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -32).isActive = true
-        sketchImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -19).isActive = true
+        contentView.addSubview(letterLabel)
         
-        playerNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5).isActive = true
-        playerNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        playerNameLabel.widthAnchor.constraint(equalToConstant: 100.0) .isActive = true
+        letterLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8).isActive = true
+        letterLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8).isActive = true
+        letterLabel.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        letterLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        sketchImageView.topAnchor.constraint(equalTo: playerNameLabel.bottomAnchor, constant: 8).isActive = true
+        sketchImageView.leadingAnchor.constraint(equalTo: letterLabel.trailingAnchor, constant: 4).isActive = true
+        sketchImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
+        sketchImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16).isActive = true
+        
+        playerNameLabel.leadingAnchor.constraint(equalTo: letterLabel.trailingAnchor, constant: 4).isActive = true
+        playerNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8).isActive = true
+        playerNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8).isActive = true
         playerNameLabel.heightAnchor.constraint(equalToConstant: 30.0) .isActive = true
-
+        
+//        if let round = round {
+//            if round.isImage {
+//                if let image = round.imageData {
+//                    self.backgroundColor = UIColor.mainOffWhite()
+//                    sketchImageView.image = UIImage(data: image)
+//                    playerNameLabel.text = round.owner.displayName
+//                    let uppercasedName = round.owner.displayName.uppercased()
+//                    let firstLetter = Array(uppercasedName)[0]
+//                    letterLabel.text = String(firstLetter)
+//                }
+//            }
+//        }
+        
+       
     }
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        if let round = round {
-            if round.isImage {
-                if let image = round.imageData {
-                    self.backgroundColor = UIColor.mainOffWhite()
-                    sketchImageView.image = UIImage(data: image)
-                    playerNameLabel.text = round.owner.displayName
-                }
-            }
+    
+    func updateCell(withRound round: Round) {
+        print("Update image cell")
+        if let image = round.imageData {
+            self.backgroundColor = UIColor.mainOffWhite()
+            sketchImageView.image = UIImage(data: image)
+            playerNameLabel.text = round.owner.displayName
+            let uppercasedName = round.owner.displayName.uppercased()
+            let firstLetter = Array(uppercasedName)[0]
+            letterLabel.text = String(firstLetter)
         }
     }
     
