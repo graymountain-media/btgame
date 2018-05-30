@@ -1,5 +1,5 @@
 //
-//  ResultsViewController.swift
+//  TimelineViewController.swift
 //  DubNDoodle
 //
 //  Created by Jake Gray on 5/29/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ResultsViewController: UIPageViewController {
+class TimelineViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
