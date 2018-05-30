@@ -19,6 +19,8 @@
 		A151121320B37511001A8F46 /* SetupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A151121220B37511001A8F46 /* SetupTableViewCell.swift */; };
 		A151121520B380A7001A8F46 /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A151121420B380A7001A8F46 /* BrowserViewController.swift */; };
 		A1544CD820BC7BFC00C4DF06 /* BetweenRoundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1544CD720BC7BFC00C4DF06 /* BetweenRoundViewController.swift */; };
+		A1A2A94B20BE063E00F3C2CE /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A2A94A20BE063E00F3C2CE /* ResultsViewController.swift */; };
+		A1A2A94D20BE08CA00F3C2CE /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A2A94C20BE08CA00F3C2CE /* TimelineViewController.swift */; };
 		A1A5B4CB20B768D4006DCFF9 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A5B4CA20B768D4006DCFF9 /* SettingsViewController.swift */; };
 		A1BCCBFB20AA4BA600A4AC7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCBFA20AA4BA600A4AC7D /* AppDelegate.swift */; };
 		A1BCCC0220AA4BA700A4AC7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1BCCC0120AA4BA700A4AC7D /* Assets.xcassets */; };
@@ -38,7 +40,7 @@
 		A1BCCC2A20AB2C0900A4AC7D /* TopicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC2920AB2C0900A4AC7D /* TopicViewController.swift */; };
 		A1BCCC2C20AB2C1000A4AC7D /* CanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC2B20AB2C1000A4AC7D /* CanvasViewController.swift */; };
 		A1BCCC2E20AB2C2000A4AC7D /* GuessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC2D20AB2C2000A4AC7D /* GuessViewController.swift */; };
-		A1BCCC3020AB2C2D00A4AC7D /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC2F20AB2C2D00A4AC7D /* ResultsViewController.swift */; };
+		A1BCCC3020AB2C2D00A4AC7D /* ResultsViewControllerOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC2F20AB2C2D00A4AC7D /* ResultsViewControllerOld.swift */; };
 		A1BCCC3420AB2D1200A4AC7D /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC3320AB2D1200A4AC7D /* WelcomeViewController.swift */; };
 		A1BCCC3620AB789C00A4AC7D /* Topics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC3520AB789C00A4AC7D /* Topics.swift */; };
 		BAA4C23920ADE0020083A5A0 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA4C23820ADE0020083A5A0 /* CanvasView.swift */; };
@@ -58,6 +60,8 @@
 		A151121220B37511001A8F46 /* SetupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupTableViewCell.swift; sourceTree = "<group>"; };
 		A151121420B380A7001A8F46 /* BrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
 		A1544CD720BC7BFC00C4DF06 /* BetweenRoundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetweenRoundViewController.swift; sourceTree = "<group>"; };
+		A1A2A94A20BE063E00F3C2CE /* ResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
+		A1A2A94C20BE08CA00F3C2CE /* TimelineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
 		A1A5B4CA20B768D4006DCFF9 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		A1BCCBF720AA4BA600A4AC7D /* DubNDoodle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DubNDoodle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1BCCBFA20AA4BA600A4AC7D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -79,7 +83,7 @@
 		A1BCCC2920AB2C0900A4AC7D /* TopicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicViewController.swift; sourceTree = "<group>"; };
 		A1BCCC2B20AB2C1000A4AC7D /* CanvasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewController.swift; sourceTree = "<group>"; };
 		A1BCCC2D20AB2C2000A4AC7D /* GuessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuessViewController.swift; sourceTree = "<group>"; };
-		A1BCCC2F20AB2C2D00A4AC7D /* ResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
+		A1BCCC2F20AB2C2D00A4AC7D /* ResultsViewControllerOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewControllerOld.swift; sourceTree = "<group>"; };
 		A1BCCC3320AB2D1200A4AC7D /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		A1BCCC3520AB789C00A4AC7D /* Topics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Topics.swift; sourceTree = "<group>"; };
 		BAA4C23820ADE0020083A5A0 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
@@ -173,7 +177,9 @@
 				BAA4C23820ADE0020083A5A0 /* CanvasView.swift */,
 				BAA4C23A20ADE0220083A5A0 /* InstructionsViewController.swift */,
 				A1BCCC2D20AB2C2000A4AC7D /* GuessViewController.swift */,
-				A1BCCC2F20AB2C2D00A4AC7D /* ResultsViewController.swift */,
+				A1BCCC2F20AB2C2D00A4AC7D /* ResultsViewControllerOld.swift */,
+				A1A2A94A20BE063E00F3C2CE /* ResultsViewController.swift */,
+				A1A2A94C20BE08CA00F3C2CE /* TimelineViewController.swift */,
 				603D02A820AE49EF0021BE63 /* ImageTableViewCell.swift */,
 				6087AC9E20AF2B4400153E27 /* GuessTableViewCell.swift */,
 				603D02A020ADE31C0021BE63 /* ImageCollectionViewCell.swift */,
@@ -270,7 +276,9 @@
 				A1BCCC3620AB789C00A4AC7D /* Topics.swift in Sources */,
 				A1BCCC1120AB2B3900A4AC7D /* Timeline.swift in Sources */,
 				A1544CD820BC7BFC00C4DF06 /* BetweenRoundViewController.swift in Sources */,
+				A1A2A94B20BE063E00F3C2CE /* ResultsViewController.swift in Sources */,
 				A1A5B4CB20B768D4006DCFF9 /* SettingsViewController.swift in Sources */,
+				A1A2A94D20BE08CA00F3C2CE /* TimelineViewController.swift in Sources */,
 				3BD076B620AB384900BA7C43 /* Constants.swift in Sources */,
 				A1BCCC2320AB2BCF00A4AC7D /* TimelineController.swift in Sources */,
 				A1BCCC1620AB2B6F00A4AC7D /* MCController.swift in Sources */,
@@ -281,7 +289,7 @@
 				A1BCCC1F20AB2BBA00A4AC7D /* PlayerController.swift in Sources */,
 				BAA4C23920ADE0020083A5A0 /* CanvasView.swift in Sources */,
 				A1BCCC2A20AB2C0900A4AC7D /* TopicViewController.swift in Sources */,
-				A1BCCC3020AB2C2D00A4AC7D /* ResultsViewController.swift in Sources */,
+				A1BCCC3020AB2C2D00A4AC7D /* ResultsViewControllerOld.swift in Sources */,
 				A1BCCC1320AB2B3F00A4AC7D /* Game.swift in Sources */,
 				A1BCCC3420AB2D1200A4AC7D /* WelcomeViewController.swift in Sources */,
 				A1BCCC0D20AB2ABF00A4AC7D /* Player.swift in Sources */,
@@ -437,7 +445,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4CG8J8CVZL;
+				DEVELOPMENT_TEAM = 6K47ASRSPN;
 				INFOPLIST_FILE = "$(SRCROOT)/dubNDoodle/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -455,7 +463,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4CG8J8CVZL;
+				DEVELOPMENT_TEAM = 6K47ASRSPN;
 				INFOPLIST_FILE = "$(SRCROOT)/dubNDoodle/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

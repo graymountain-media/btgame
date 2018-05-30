@@ -204,23 +204,21 @@ extension SetupViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.playerCellIdentifier, for: indexPath) as? SetupTableViewCell else {return UITableViewCell()}
-        print("Did press done array: \(MCController.shared.didPressDone)")
-        if(MCController.shared.isAdvertiser){
-            if(indexPath.row >= 1 && MCController.shared.didPressDone[indexPath.row - 1]){
-                cell.donePressed()
-            }
-        }
-       
-        cell.updateCell(withPlayerName: MCController.shared.currentGamePeers[indexPath.row].displayName)
-        if indexPath.row == 0 && MCController.shared.isAdvertiser == true {
-            cell.donePressed()
-        }
+        print("Index path is \(indexPath.row)")
+        let playerNames = MCController.shared.playerArray.compactMap({$0.displayName})
+        print("PLAYERS IN GAME: \(playerNames)")
+        cell.updateCell(withPlayer: MCController.shared.playerArray[indexPath.row])
+        
+//        if indexPath.row == 0 && MCController.shared.isAdvertiser == true {
+//            cell.donePressed()
+//        }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return MCController.shared.currentGamePeers.count
+        print("Num rows called. Player count: \(MCController.shared.playerArray.count)")
+        return MCController.shared.playerArray.count
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 40
@@ -249,11 +247,17 @@ extension SetupViewController: UITableViewDataSource, UITableViewDelegate {
 
         view.addSubview(playerLabel)
         view.addSubview(instructionLabel)
+        
+        if MCController.shared.isAdvertiser {
         view.addSubview(readyLabel)
         
         playerLabel.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 16, paddingBottom: 0, paddingRight: 4, width: 60, height: 0)
         instructionLabel.anchor(top: view.topAnchor, left: playerLabel.rightAnchor, bottom: view.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 200, height: 0)
         readyLabel.anchor(top: view.topAnchor, left: instructionLabel.rightAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 16, width: 0, height: 0)
+        } else {
+            playerLabel.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 16, paddingBottom: 0, paddingRight: 4, width: 60, height: 0)
+            instructionLabel.anchor(top: view.topAnchor, left: playerLabel.rightAnchor, bottom: view.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 200, height: 0)
+        }
         
         return view
     }
@@ -268,32 +272,33 @@ extension SetupViewController: DoneButtonDelegate {
             guard let cell = self.playerTableView.cellForRow(at: IndexPath(row: index, section: 0)) as? SetupTableViewCell else {
                 print("Error getting cell")
                 return}
-            cell.donePressed()
+            cell.updateCell(withPlayer: player)
         }
     }
 }
 extension SetupViewController: MCExitGameDelegate {
     func exitGame(peerID: MCPeerID) {
-        if(MCController.shared.isAdvertiser){
-            guard let index = MCController.shared.currentGamePeers.index(of: peerID) else { print("no index was FOUND!!!!!!!!"); return}
-            
-            if(MCController.shared.didPressDone[index - 1]){
-                doneButtonTappedCounter -= 1
-                DispatchQueue.main.async {
-                    
-                    if self.doneButtonTappedCounter >= (MCController.shared.currentGamePeers.count - 1) && MCController.shared.currentGamePeers.count >= Constants.requiredNumberOfPlayers  {
+        if self == navigationController?.topViewController {
+            if(MCController.shared.isAdvertiser){
+                let player = (MCController.shared.peerIDDict as NSDictionary).allKeys(for: peerID) as! [Player]
+                
+                if(player[0].isReady){
+                    doneButtonTappedCounter -= 1
+                    DispatchQueue.main.async {
                         
-                        self.startButton.isEnabled = true
-                    }else {
-                        self.startButton.isEnabled = false
+                        if self.doneButtonTappedCounter >= (MCController.shared.currentGamePeers.count - 1) && MCController.shared.currentGamePeers.count >= Constants.requiredNumberOfPlayers  {
+                            
+                            self.startButton.isEnabled = true
+                        }else {
+                            self.startButton.isEnabled = false
+                        }
                     }
                 }
             }
+            DispatchQueue.main.async {
+                self.playerTableView.reloadData()
+            }
         }
-        DispatchQueue.main.async {
-            self.playerTableView.reloadData()
-        }
-        
     }
     
     
