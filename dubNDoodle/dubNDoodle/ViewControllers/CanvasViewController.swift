@@ -24,7 +24,7 @@ class CanvasViewController: UIViewController {
         let lbl = UILabel()
         lbl.backgroundColor = UIColor.mainScheme1()
         lbl.textColor = .white
-        lbl.font = UIFont(name: "Times New Roman", size: 37)
+        lbl.font = UIFont.preferredFont(forTextStyle: .title1)
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
@@ -42,7 +42,7 @@ class CanvasViewController: UIViewController {
         lbl.textColor = .black
         lbl.text = String(self.time)
         lbl.textAlignment = .center
-        lbl.font = UIFont(name: "Times New Roman", size: 40)
+        lbl.font = UIFont.preferredFont(forTextStyle: .title1)
         lbl.layer.borderColor = UIColor.mainScheme3().cgColor
         lbl.layer.cornerRadius = 30
         lbl.clipsToBounds = true
