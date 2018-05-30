@@ -93,8 +93,8 @@ class BetweenRoundViewController: UIViewController {
         
         indicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         indicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        indicator.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        indicator.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        indicator.widthAnchor.constraint(equalToConstant: 250).isActive = true
+        indicator.heightAnchor.constraint(equalToConstant: 250).isActive = true
     }
     
     // MARK: Timer
