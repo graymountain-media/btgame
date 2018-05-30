@@ -10,11 +10,17 @@ import UIKit
 
 class GuessTableViewCell: UITableViewCell {
     
-    var round: Round?
-    
+    let letterLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = UIColor.mainScheme3()
+        label.layer.cornerRadius = 20
+        label.clipsToBounds = true
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
     var playerNameLabel: UILabel = {
-        
         let label = UILabel()
 //        label.backgroundColor = UIColor.mainOffWhite()
         label.layer.masksToBounds = true
@@ -27,45 +33,49 @@ class GuessTableViewCell: UITableViewCell {
     
     let guessLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = UIColor.mainScheme2()
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.font = UIFont.boldSystemFont(ofSize: 24)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = UIColor.white
-        label.textAlignment = .center
-        label.layer.cornerRadius = 10
-        label.clipsToBounds = true
-        label.layer.shadowRadius = 10
-        label.layer.shadowColor = UIColor.mainHighlight().cgColor
-        label.layer.shadowOpacity = 0.3
+        label.textAlignment = .left
         return label
     }()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+       
+        
+        setupCell()
+    }
+    func setupCell() {
+        
+        contentView.addSubview(letterLabel)
         contentView.addSubview(guessLabel)
         contentView.addSubview(playerNameLabel)
         
+        letterLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8).isActive = true
+        letterLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8).isActive = true
+        letterLabel.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        letterLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
         guessLabel.topAnchor.constraint(equalTo: playerNameLabel.bottomAnchor, constant: 8).isActive = true
-        guessLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 32).isActive = true
-        guessLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -32).isActive = true
-        guessLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -19).isActive = true
+        guessLabel.leadingAnchor.constraint(equalTo: letterLabel.trailingAnchor, constant: 4).isActive = true
+        guessLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8).isActive = true
+        guessLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8).isActive = true
         
-        playerNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5).isActive = true
-        playerNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        playerNameLabel.widthAnchor.constraint(equalToConstant: 100.0) .isActive = true
+        playerNameLabel.leadingAnchor.constraint(equalTo: letterLabel.trailingAnchor, constant: 4).isActive = true
+        playerNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8).isActive = true
+        playerNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8).isActive = true
         playerNameLabel.heightAnchor.constraint(equalToConstant: 30.0) .isActive = true
-    }
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        if let round = round {
-            if !round.isImage {
-                self.backgroundColor = UIColor.mainOffWhite()
-                playerNameLabel.text = round.owner.displayName
-                guessLabel.text = round.guess
-            }
-        }
         
+    }
+    
+    func updateCell(withRound round: Round) {
+        print("Update guess cell")
+            playerNameLabel.text = round.owner.displayName
+            guessLabel.text = round.guess
+            let uppercasedName = round.owner.displayName.uppercased()
+            let firstLetter = Array(uppercasedName)[0]
+            letterLabel.text = String(firstLetter)
     }
     
     required init?(coder aDecoder: NSCoder) {
