@@ -39,7 +39,6 @@
 		A1BCCC2A20AB2C0900A4AC7D /* TopicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC2920AB2C0900A4AC7D /* TopicViewController.swift */; };
 		A1BCCC2C20AB2C1000A4AC7D /* CanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC2B20AB2C1000A4AC7D /* CanvasViewController.swift */; };
 		A1BCCC2E20AB2C2000A4AC7D /* GuessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC2D20AB2C2000A4AC7D /* GuessViewController.swift */; };
-		A1BCCC3020AB2C2D00A4AC7D /* ResultsViewControllerOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC2F20AB2C2D00A4AC7D /* ResultsViewControllerOld.swift */; };
 		A1BCCC3420AB2D1200A4AC7D /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC3320AB2D1200A4AC7D /* WelcomeViewController.swift */; };
 		A1BCCC3620AB789C00A4AC7D /* Topics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCCC3520AB789C00A4AC7D /* Topics.swift */; };
 		BAA4C23920ADE0020083A5A0 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA4C23820ADE0020083A5A0 /* CanvasView.swift */; };
@@ -81,7 +80,6 @@
 		A1BCCC2920AB2C0900A4AC7D /* TopicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicViewController.swift; sourceTree = "<group>"; };
 		A1BCCC2B20AB2C1000A4AC7D /* CanvasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewController.swift; sourceTree = "<group>"; };
 		A1BCCC2D20AB2C2000A4AC7D /* GuessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuessViewController.swift; sourceTree = "<group>"; };
-		A1BCCC2F20AB2C2D00A4AC7D /* ResultsViewControllerOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewControllerOld.swift; sourceTree = "<group>"; };
 		A1BCCC3320AB2D1200A4AC7D /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		A1BCCC3520AB789C00A4AC7D /* Topics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Topics.swift; sourceTree = "<group>"; };
 		BAA4C23820ADE0020083A5A0 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
@@ -175,7 +173,6 @@
 				BAA4C23820ADE0020083A5A0 /* CanvasView.swift */,
 				BAA4C23A20ADE0220083A5A0 /* InstructionsViewController.swift */,
 				A1BCCC2D20AB2C2000A4AC7D /* GuessViewController.swift */,
-				A1BCCC2F20AB2C2D00A4AC7D /* ResultsViewControllerOld.swift */,
 				A1A2A94A20BE063E00F3C2CE /* ResultsViewController.swift */,
 				A1A2A94C20BE08CA00F3C2CE /* TimelineViewController.swift */,
 				603D02A820AE49EF0021BE63 /* ImageTableViewCell.swift */,
@@ -286,7 +283,6 @@
 				A1BCCC1F20AB2BBA00A4AC7D /* PlayerController.swift in Sources */,
 				BAA4C23920ADE0020083A5A0 /* CanvasView.swift in Sources */,
 				A1BCCC2A20AB2C0900A4AC7D /* TopicViewController.swift in Sources */,
-				A1BCCC3020AB2C2D00A4AC7D /* ResultsViewControllerOld.swift in Sources */,
 				A1BCCC1320AB2B3F00A4AC7D /* Game.swift in Sources */,
 				A1BCCC3420AB2D1200A4AC7D /* WelcomeViewController.swift in Sources */,
 				A1BCCC0D20AB2ABF00A4AC7D /* Player.swift in Sources */,
@@ -450,7 +446,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Skybridge.dubNDoodle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -468,7 +464,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Skybridge.dubNDoodle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

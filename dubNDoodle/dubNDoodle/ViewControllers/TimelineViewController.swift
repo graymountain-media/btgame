@@ -33,12 +33,13 @@ class TimelineViewController: UIViewController {
         setTableView()
         
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        guard let timeline = timeline else {return}
-        self.parent?.title = timeline.rounds[0].guess
-    }
+//    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        
+//        guard let timeline = timeline else {return}
+//        self.parent?.title = "Results For Topic \(timeline.rounds[0].guess)"
+//    }
     
     private func setTableView() {
         view.addSubview(tableView)
