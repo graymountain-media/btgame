@@ -148,20 +148,22 @@ class GameController {
         for player in playerOrder {
             if player.isAdvertiser == false {
                 
-                var sortedTimelines: [Timeline] = []
-                for timeline in orderedTimelines {
-                    if timeline.owner == player {
-                        sortedTimelines.insert(timeline, at: 0)
-                    } else {
-                        sortedTimelines.append(timeline)
+                DispatchQueue.global(qos: .userInitiated).async {
+                    var sortedTimelines: [Timeline] = []
+                    for timeline in self.orderedTimelines {
+                        if timeline.owner == player {
+                            sortedTimelines.insert(timeline, at: 0)
+                        } else {
+                            sortedTimelines.append(timeline)
+                        }
                     }
+                    print("Browser timelines: \(sortedTimelines)")
+                    
+                    guard let peerID = MCController.shared.peerIDDict[player] else {return}
+                    print("Peer ID \(peerID)")
+                    MCController.shared.sendFinalEvent(withInstruction: .endGame, timelines: sortedTimelines, toPeers: peerID)
                 }
-                print("Browser timelines: \(sortedTimelines)")
                 
-                guard let peerID = MCController.shared.peerIDDict[player] else {return}
-                print("Peer ID \(peerID)")
-                MCController.shared.sendFinalEvent(withInstruction: .endGame, timelines: sortedTimelines, toPeers: peerID)
-
             } else {
                 var sortedTimelines: [Timeline] = []
                 for timeline in orderedTimelines {
