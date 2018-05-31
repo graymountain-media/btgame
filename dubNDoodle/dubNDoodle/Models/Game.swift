@@ -24,7 +24,7 @@ class Game {
         self.id = UUID()
         self.numberOfRounds = players.count
         self.returnedTimelines = []
-        self.timeLimit = Constants.timeLimit
+        self.timeLimit = Constants.drawingTimeLimit
         self.players = players
         self.topics = []
     }

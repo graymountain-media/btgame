@@ -16,7 +16,7 @@ class WelcomeViewController: UIViewController {
         label.numberOfLines = 0
         label.textColor = UIColor.black
         label.textAlignment = .center
-        label.font = UIFont(name: "MarkerFelt-Wide", size: 40.0)
+        label.font = UIFont(name: "MarkerFelt-Wide", size: 55.0)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -26,11 +26,8 @@ class WelcomeViewController: UIViewController {
         button.setTitle("Host", for: .normal)
         button.backgroundColor = UIColor.mainScheme2()
         button.setTitleColor(UIColor.mainComplement1(), for: .normal)
-        button.titleLabel?.textAlignment = .center
-        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
         button.layer.cornerRadius = 5
-        button.layer.shadowRadius = 2.0
-        button.layer.masksToBounds = true
+        button.clipsToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(hostButtonTapped), for: .touchUpInside)
         return button
@@ -41,11 +38,8 @@ class WelcomeViewController: UIViewController {
         button.setTitle("Join", for: .normal)
         button.backgroundColor = UIColor.mainScheme2()
         button.setTitleColor(UIColor.mainComplement1(), for: .normal)
-        button.titleLabel?.textAlignment = .center
-        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
         button.layer.cornerRadius = 5
-        button.layer.shadowRadius = 2.0
-        button.layer.masksToBounds = true
+        button.clipsToBounds = true
         button.addTarget(self, action: #selector(joinButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -86,12 +80,12 @@ class WelcomeViewController: UIViewController {
         hostButton.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: view.frame.height / 8).isActive = true
         hostButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         hostButton.widthAnchor.constraint(equalToConstant: view.frame.width / 1.5 ).isActive = true
-        hostButton.heightAnchor.constraint(equalToConstant: 44.0 ).isActive = true
+        hostButton.heightAnchor.constraint(equalToConstant: 54.0 ).isActive = true
         
         joinButton.topAnchor.constraint(equalTo: hostButton.bottomAnchor, constant: 28.0).isActive = true
         joinButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         joinButton.widthAnchor.constraint(equalToConstant: view.frame.width / 1.5 ).isActive = true
-        joinButton.heightAnchor.constraint(equalToConstant:  44.0 ).isActive = true
+        joinButton.heightAnchor.constraint(equalToConstant:  54.0 ).isActive = true
         
         
         howToPlayButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
