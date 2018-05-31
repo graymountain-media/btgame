@@ -126,7 +126,7 @@ class SettingsViewController: UIViewController {
     
     @objc func doneButtonTapped() {
         let timeLimit = getTimeValue()
-        Constants.timeLimit = timeLimit
+//        Constants.canvstimeLimit = timeLimit
         let destinationVC = RegisterViewController()
         if let isAdvertiser = isAdvertiser {
             destinationVC.isAdvertiser = isAdvertiser

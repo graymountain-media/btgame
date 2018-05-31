@@ -15,12 +15,12 @@ class TimelineViewController: UIViewController {
     var tableView: UITableView = {
         let table = UITableView()
         table.allowsSelection = false
-//        table.separatorStyle = .none
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
     
-
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,8 +32,12 @@ class TimelineViewController: UIViewController {
         
         setTableView()
         
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         guard let timeline = timeline else {return}
-        self.title = timeline.rounds[0].guess
+        self.parent?.title = timeline.rounds[0].guess
     }
     
     private func setTableView() {

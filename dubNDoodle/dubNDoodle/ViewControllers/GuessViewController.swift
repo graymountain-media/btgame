@@ -13,9 +13,16 @@
     
     var round: Round?
     var timer = Timer()
-    var time = 7
+    var time = Constants.guessTimeLimit
     
-    lazy var previousSketch: UIImageView = {
+    let barView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.mainScheme1()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let previousSketch: UIImageView = {
         let ps = UIImageView()
         ps.backgroundColor = .white
         ps.contentMode = .scaleAspectFit
@@ -23,11 +30,11 @@
         return ps
     }()
     
-    lazy var guessTextField: UITextField = {
+    let guessTextField: UITextField = {
         let gtf = UITextField()
         gtf.backgroundColor = UIColor.mainOffWhite()
         gtf.textColor = .black
-        gtf.placeholder = "Enter Guess"
+        gtf.placeholder = "Enter your dub"
         gtf.layer.borderColor = UIColor.mainScheme1().cgColor
         gtf.layer.borderWidth = 1.0
         gtf.translatesAutoresizingMaskIntoConstraints = false
@@ -35,7 +42,7 @@
         return gtf
     }()
     
-    lazy var timerLabel: UILabel = {
+    let timerLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = UIColor.mainOffWhite()
         label.font = UIFont.preferredFont(forTextStyle: .title1)
@@ -48,13 +55,20 @@
         return label
     }()
     
-    lazy var barLabel: UILabel = {
+    let topLabel: UILabel = {
         let lbl = UILabel()
         lbl.backgroundColor = UIColor.mainScheme1()
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.textColor = .white
         lbl.font = UIFont.preferredFont(forTextStyle: .title2)
         return lbl
+    }()
+    
+    let guessFieldPaddingView: UIView = {
+        let cbv = UIView()
+        cbv.backgroundColor = UIColor.mainScheme3()
+        cbv.translatesAutoresizingMaskIntoConstraints = false
+        return cbv
     }()
     
     lazy var canvasTopBorderView: UIView = {
@@ -79,15 +93,17 @@
         GameController.shared.delegate = self
         GameController.shared.roundNumberLabelValue += 1
         MCController.shared.exitDelegate = self
+        
         self.navigationController?.navigationBar.isHidden = true
         self.view.backgroundColor = UIColor.mainScheme1()
         
         setupView()
+        setupBarView()
         
         guard let round = round, let data = round.imageData else { return }
         let image = UIImage(data: data)
         previousSketch.image = image
-        barLabel.text = "   Dub this Doodle"
+        topLabel.text = "Dub this Doodle"
         timerLabel.text = String(time)
         startTimer()
     }
@@ -96,36 +112,25 @@
     //MARK: - View Setup
     
     func setupView() {
-        view.addSubview(barLabel)
-        view.addSubview(timerLabel)
+        view.addSubview(barView)
         view.addSubview(previousSketch)
         view.addSubview(guessTextField)
+        view.addSubview(guessFieldPaddingView)
         view.addSubview(canvasTopBorderView)
         view.addSubview(canvasBottomBorderView)
         
-        barLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor,
-                        left: view.safeAreaLayoutGuide.leftAnchor,
-                        bottom: nil,
-                        right: view.safeAreaLayoutGuide.rightAnchor,
-                        paddingTop: 0,
-                        paddingLeft: 0,
-                        paddingBottom: 0,
-                        paddingRight: 0,
-                        width: 0,
-                        height: 70)
+        barView.anchor(top: view.topAnchor,
+                       left: view.safeAreaLayoutGuide.leftAnchor,
+                       bottom: nil,
+                       right: view.safeAreaLayoutGuide.rightAnchor,
+                       paddingTop: 0,
+                       paddingLeft: 0,
+                       paddingBottom: 0,
+                       paddingRight: 0,
+                       width: 0,
+                       height: 100)
         
-        timerLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor,
-                          left: nil,
-                          bottom: nil,
-                          right: view.safeAreaLayoutGuide.rightAnchor,
-                          paddingTop: 5,
-                          paddingLeft: 8,
-                          paddingBottom: 0,
-                          paddingRight: 8,
-                          width: 60,
-                          height: 60)
-        
-        canvasTopBorderView.anchor(top: barLabel.bottomAnchor,
+        guessFieldPaddingView.anchor(top: barView.bottomAnchor,
                                    left: view.safeAreaLayoutGuide.leftAnchor,
                                    bottom: nil,
                                    right: view.safeAreaLayoutGuide.rightAnchor,
@@ -136,19 +141,7 @@
                                    width: 0,
                                    height: 30)
         
-        guessTextField.anchor(top: canvasTopBorderView.bottomAnchor,
-                              left: self.view.leftAnchor,
-                              bottom: nil,
-                              right: self.view.rightAnchor,
-                              paddingTop: 0,
-                              paddingLeft: 0,
-                              paddingBottom: 0,
-                              paddingRight: 0,
-                              width: self.view.frame.width,
-                              height: 44)
-        
-        previousSketch.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.66).isActive = true
-        previousSketch.anchor(top: guessTextField.bottomAnchor,
+        guessTextField.anchor(top: guessFieldPaddingView.bottomAnchor,
                               left: view.leftAnchor,
                               bottom: nil,
                               right: view.rightAnchor,
@@ -157,11 +150,33 @@
                               paddingBottom: 0,
                               paddingRight: 0,
                               width: 0,
+                              height: 44)
+        
+        canvasTopBorderView.anchor(top: guessTextField.bottomAnchor,
+                                   left: view.safeAreaLayoutGuide.leftAnchor,
+                                   bottom: nil,
+                                   right: view.safeAreaLayoutGuide.rightAnchor,
+                                   paddingTop: 0,
+                                   paddingLeft: 0,
+                                   paddingBottom: 0,
+                                   paddingRight: 0,
+                                   width: 0,
+                                   height: 30)
+        
+        previousSketch.anchor(top: canvasTopBorderView.bottomAnchor,
+                              left: view.leftAnchor,
+                              bottom: canvasBottomBorderView.topAnchor,
+                              right: view.rightAnchor,
+                              paddingTop: 0,
+                              paddingLeft: 0,
+                              paddingBottom: 0,
+                              paddingRight: 0,
+                              width: 0,
                               height: 0)
         
-        canvasBottomBorderView.anchor(top: previousSketch.bottomAnchor,
+        canvasBottomBorderView.anchor(top: nil,
                                       left: view.safeAreaLayoutGuide.leftAnchor,
-                                      bottom: nil,
+                                      bottom: view.safeAreaLayoutGuide.bottomAnchor,
                                       right: view.safeAreaLayoutGuide.rightAnchor,
                                       paddingTop: 0,
                                       paddingLeft: 0,
@@ -171,10 +186,37 @@
                                       height: 30)
     }
     
+    func setupBarView() {
+        barView.addSubview(topLabel)
+        barView.addSubview(timerLabel)
+        
+        topLabel.anchor(top: nil,
+                          left: barView.leftAnchor,
+                          bottom: barView.bottomAnchor,
+                          right: timerLabel.leftAnchor,
+                          paddingTop: 0,
+                          paddingLeft: 8,
+                          paddingBottom: 0,
+                          paddingRight: 8,
+                          width: 0,
+                          height: 60)
+        
+        timerLabel.anchor(top: nil,
+                          left: nil,
+                          bottom: barView.bottomAnchor,
+                          right: barView.rightAnchor,
+                          paddingTop: 0,
+                          paddingLeft: 0,
+                          paddingBottom: -5,
+                          paddingRight: 8,
+                          width: 60,
+                          height: 60)
+    }
+    
     // MARK: Timer
     
     func resetTimer() {
-        time = 7
+        time = Constants.guessTimeLimit
         timer.invalidate()
     }
     
@@ -189,6 +231,16 @@
         print(time)
         if time <= 5 {
             timerLabel.textColor = .red
+            UIView.animate(withDuration: 0.3, animations: {
+                self.timerLabel.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
+            },
+                           completion: { _ in
+                            UIView.animate(withDuration: 0.3) {
+                                self.timerLabel.transform = CGAffineTransform.identity
+                                
+                            }
+                            
+            })
         }
         if time == 0 {
             let betweenRoundViewController = BetweenRoundViewController()

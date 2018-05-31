@@ -34,11 +34,11 @@ class TopicViewController: UIViewController {
         return lbl
     }()
     
-    lazy var barLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.backgroundColor = UIColor.mainScheme1()
-        lbl.translatesAutoresizingMaskIntoConstraints = false
-        return lbl
+    lazy var barView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.mainScheme1()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     lazy var chooseTopicBelowLabel: UILabel = {
@@ -145,19 +145,27 @@ class TopicViewController: UIViewController {
     
     func setupView() {
         
-        self.view.addSubview(chooseTopicBelowLabel)
-        self.view.addSubview(firstChoiceButton)
-        self.view.addSubview(secondChoiceButton)
-        self.view.addSubview(thirdChoiceButton)
-        self.view.addSubview(fourthChoiceButton)
-        self.view.addSubview(timerLabel)
-        self.view.addSubview(barLabel)
-        self.view.addSubview(canvasTopBorderView)
-
-        view.addSubview(barLabel)
-        view.addSubview(timerLabel)
+        view.addSubview(barView)
+        barView.addSubview(timerLabel)
+        view.addSubview(chooseTopicBelowLabel)
+        view.addSubview(firstChoiceButton)
+        view.addSubview(secondChoiceButton)
+        view.addSubview(thirdChoiceButton)
+        view.addSubview(fourthChoiceButton)
+        view.addSubview(canvasTopBorderView)
         
-        canvasTopBorderView.anchor(top: barLabel.bottomAnchor,
+        barView.anchor(top: view.topAnchor,
+                       left: view.safeAreaLayoutGuide.leftAnchor,
+                       bottom: nil,
+                       right: view.safeAreaLayoutGuide.rightAnchor,
+                       paddingTop: 0,
+                       paddingLeft: 0,
+                       paddingBottom: 0,
+                       paddingRight: 0,
+                       width: 0,
+                       height: 100)
+        
+        canvasTopBorderView.anchor(top: barView.bottomAnchor,
                                    left: view.safeAreaLayoutGuide.leftAnchor,
                                    bottom: nil,
                                    right: view.safeAreaLayoutGuide.rightAnchor,
@@ -168,24 +176,13 @@ class TopicViewController: UIViewController {
                                    width: 0,
                                    height: 25)
         
-        barLabel.anchor(top: view.topAnchor,
-                        left: view.safeAreaLayoutGuide.leftAnchor,
-                        bottom: nil,
-                        right: view.safeAreaLayoutGuide.rightAnchor,
-                        paddingTop: 0,
-                        paddingLeft: 0,
-                        paddingBottom: 0,
-                        paddingRight: 0,
-                        width: 0,
-                        height: 90)
-        
-        timerLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+        timerLabel.anchor(top: nil,
                           left: nil,
-                          bottom: nil,
-                          right: view.safeAreaLayoutGuide.rightAnchor,
-                          paddingTop: 5,
-                          paddingLeft: 8,
-                          paddingBottom: 5,
+                          bottom: barView.bottomAnchor,
+                          right: barView.rightAnchor,
+                          paddingTop: 0,
+                          paddingLeft: 0,
+                          paddingBottom: -5,
                           paddingRight: 8,
                           width: 60,
                           height: 60)
@@ -207,6 +204,19 @@ class TopicViewController: UIViewController {
         time -= 1
         timerLabel.text = String(time)
         print(time)
+        if time <= 5 {
+            timerLabel.textColor = .red
+            UIView.animate(withDuration: 0.3, animations: {
+                self.timerLabel.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
+            },
+                           completion: { _ in
+                            UIView.animate(withDuration: 0.3) {
+                                self.timerLabel.transform = CGAffineTransform.identity
+                                
+                            }
+                            
+            })
+        }
         if time == 0 {
             self.navigationController?.pushViewController(BetweenRoundViewController(), animated: true)
             let round = roundEnded()

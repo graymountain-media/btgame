@@ -28,7 +28,9 @@ class BetweenRoundViewController: UIViewController {
         let label = UILabel()
         label.text = "Round"
         label.textColor = UIColor.mainOffWhite()
-        label.font = UIFont.boldSystemFont(ofSize: 60)
+        label.font = UIFont.systemFont(ofSize: 80)
+        label.textAlignment = .center
+        label.adjustsFontSizeToFitWidth = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -36,9 +38,10 @@ class BetweenRoundViewController: UIViewController {
     let roundNumberLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.mainOffWhite()
-        label.font = UIFont.boldSystemFont(ofSize: 60)
+        label.font = UIFont.systemFont(ofSize: 80)
+        label.textAlignment = .center
+        label.adjustsFontSizeToFitWidth = true
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
         return label
     }()
     
@@ -47,7 +50,8 @@ class BetweenRoundViewController: UIViewController {
         label.text = "3"
         label.isHidden = true
         label.textColor = UIColor.mainHighlight()
-        label.font = UIFont.boldSystemFont(ofSize: 70)
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 120)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -84,11 +88,17 @@ class BetweenRoundViewController: UIViewController {
         
         roundLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         roundLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 60).isActive = true
+        roundLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9).isActive = true
+        roundLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2).isActive = true
         
         roundNumberLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         roundNumberLabel.topAnchor.constraint(equalTo: roundLabel.bottomAnchor, constant: 8).isActive = true
+        roundNumberLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9).isActive = true
+        roundNumberLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2).isActive = true
         
-        timeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        timeLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        timeLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        timeLabel.topAnchor.constraint(equalTo: roundNumberLabel.bottomAnchor, constant: 30).isActive = true
         timeLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30).isActive = true
         
         indicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -108,6 +118,16 @@ class BetweenRoundViewController: UIViewController {
     func startTimer() {
         timeLabel.isHidden = false
         timeLabel.text = String(time)
+        UIView.animate(withDuration: 0.3, animations: {
+            self.timeLabel.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+        },
+                       completion: { _ in
+                        UIView.animate(withDuration: 0.3) {
+                            self.timeLabel.transform = CGAffineTransform.identity
+                            
+                        }
+                        
+        })
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerTicked), userInfo: nil, repeats: true)
     }
     
@@ -115,6 +135,16 @@ class BetweenRoundViewController: UIViewController {
         time -= 1
         timeLabel.text = String(time)
         print(time)
+        UIView.animate(withDuration: 0.3, animations: {
+            self.timeLabel.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+        },
+                       completion: { _ in
+                        UIView.animate(withDuration: 0.3) {
+                            self.timeLabel.transform = CGAffineTransform.identity
+                            
+                        }
+                        
+        })
         if time == 0 {
             switch nextRound {
             case .canvas:
@@ -207,7 +237,7 @@ extension BetweenRoundViewController: MCControllerDelegate {
     func toResultsView(timelines: [Timeline]) {
         nextRound = .results
         resultsViewController.timelines = timelines
-        toNextRound()
+        toResults()
     }
     
     

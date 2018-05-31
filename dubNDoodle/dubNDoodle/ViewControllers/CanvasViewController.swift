@@ -18,21 +18,22 @@ class CanvasViewController: UIViewController {
     var timer = Timer()
     var time = GameController.shared.currentGame.timeLimit
     
-    
-    
-    lazy var topicLabel: UILabel = {
+    let topicLabel: UILabel = {
         let lbl = UILabel()
-        lbl.backgroundColor = UIColor.mainScheme1()
         lbl.textColor = .white
         lbl.font = UIFont.preferredFont(forTextStyle: .title1)
+        lbl.adjustsFontSizeToFitWidth = true
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
     
-    lazy var canvasView: CanvasView = {
+    let canvasView: CanvasView = {
         let cv = CanvasView()
         cv.backgroundColor = .white
         cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.clipsToBounds = true
+        cv.isMultipleTouchEnabled = false
+        cv.tag = 1
         return cv
     }()
     
@@ -50,57 +51,26 @@ class CanvasViewController: UIViewController {
         return lbl
     }()
     
-    lazy var canvasTopBorderView: UIView = {
+    let barView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.mainScheme1()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let canvasTopBorderView: UIView = {
         let cbv = UIView()
         cbv.backgroundColor = UIColor.mainScheme3()
         cbv.translatesAutoresizingMaskIntoConstraints = false
         return cbv
     }()
     
-    lazy var canvasBottomBorderView: UIView = {
+    let canvasBottomBorderView: UIView = {
         let cbv = UIView()
         cbv.backgroundColor = UIColor.mainScheme3()
         cbv.translatesAutoresizingMaskIntoConstraints = false
         return cbv
     }()
-    
-//    lazy var red: UIButton = {
-//        let btn = UIButton()
-//        btn.backgroundColor = .red
-//        btn.addTarget(self.canvasView, action: #selector(CanvasView.changeStrokeColor(_:)), for: .touchUpInside)
-//        return btn
-//    }()
-//    
-//    lazy var blue: UIButton = {
-//        let btn = UIButton()
-//        btn.backgroundColor = .blue
-//        btn.addTarget(self.canvasView, action: #selector(CanvasView.changeStrokeColor(_:)), for: .touchUpInside)
-//        return btn
-//    }()
-//    
-//    lazy var green: UIButton = {
-//        let btn = UIButton()
-//        btn.backgroundColor = .green
-//        btn.addTarget(self.canvasView, action: #selector(CanvasView.changeStrokeColor(_:)), for: .touchUpInside)
-//        return btn
-//    }()
-//    
-//    lazy var yellow: UIButton = {
-//        var color = UIColor.yellow.cgColor
-//        let btn = UIButton()
-//        btn.backgroundColor = .yellow
-//        btn.addTarget(self.canvasView, action: #selector(CanvasView.changeStrokeColor(_:)), for: .touchUpInside)
-//        return btn
-//    }()
-//    
-//    lazy var orange: UIButton = {
-//        var color = UIColor.orange.cgColor
-//        let btn = UIButton()
-//        btn.backgroundColor = .orange
-//        btn.addTarget(self.canvasView, action: #selector(CanvasView.changeStrokeColor(_:)), for: .touchUpInside)
-//        return btn
-//    }()
-    
     
     // MARK: - Life Cycle
     
@@ -109,17 +79,17 @@ class CanvasViewController: UIViewController {
         GameController.shared.roundNumberLabelValue += 1
         GameController.shared.delegate = self
         MCController.shared.exitDelegate = self
+        
         self.navigationController?.navigationBar.isHidden = true
         self.view.backgroundColor = UIColor.mainScheme1()
-        canvasView.clipsToBounds = true
-        canvasView.isMultipleTouchEnabled = false
-        canvasView.tag = 1
         
         guard let round = round, let topic = round.guess else {return}
-        topicLabel.text = "   Doodle: \(topic)"
+        topicLabel.text = "Doodle: \(topic)"
         timerLabel.text = String(time)
-        startTimer()
+        
         setupView()
+        setupBarView()
+        startTimer()
     }
     
     // MARK: - Timer
@@ -140,6 +110,16 @@ class CanvasViewController: UIViewController {
         print(time)
         if time <= 5 {
             timerLabel.textColor = .red
+            UIView.animate(withDuration: 0.3, animations: {
+                self.timerLabel.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
+            },
+                           completion: { _ in
+                            UIView.animate(withDuration: 0.3) {
+                                self.timerLabel.transform = CGAffineTransform.identity
+                                
+                            }
+                            
+            })
         }
         if time == 0 {
             let betweenRoundViewController = BetweenRoundViewController()
@@ -157,24 +137,13 @@ class CanvasViewController: UIViewController {
     
     func setupView(){
         
-        self.view.addSubview(canvasView)
-        self.view.addSubview(topicLabel)
-        self.view.addSubview(timerLabel)
-        self.view.addSubview(canvasTopBorderView)
-        self.view.addSubview(canvasBottomBorderView)
-//        self.view.addSubview(orange)
-//        self.view.addSubview(red)
-//        self.view.addSubview(blue)
-//        self.view.addSubview(green)
-//        self.view.addSubview(yellow)
+        view.addSubview(barView)
+        view.addSubview(canvasView)
         
-//        orange.tag = 2
-//        yellow.tag = 3
-//        red.tag = 4
-//        blue.tag = 5
-//        green.tag = 6
+        view.addSubview(canvasTopBorderView)
+        view.addSubview(canvasBottomBorderView)
         
-        topicLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+        barView.anchor(top: view.topAnchor,
                           left: view.safeAreaLayoutGuide.leftAnchor,
                           bottom: nil,
                           right: view.safeAreaLayoutGuide.rightAnchor,
@@ -183,9 +152,10 @@ class CanvasViewController: UIViewController {
                           paddingBottom: 0,
                           paddingRight: 0,
                           width: 0,
-                          height: 70)
+                          height: 100)
         
-        canvasTopBorderView.anchor(top: topicLabel.bottomAnchor,
+        
+        canvasTopBorderView.anchor(top: barView.bottomAnchor,
                                    left: view.safeAreaLayoutGuide.leftAnchor,
                                    bottom: nil,
                                    right: view.safeAreaLayoutGuide.rightAnchor,
@@ -207,77 +177,42 @@ class CanvasViewController: UIViewController {
                                       width: 0,
                                       height: 30)
         
-        timerLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor,
-                          left: nil,
-                          bottom: nil,
-                          right: view.safeAreaLayoutGuide.rightAnchor,
-                          paddingTop: 5,
-                          paddingLeft: 8,
-                          paddingBottom: 0,
-                          paddingRight: 8,
-                          width: 60,
-                          height: 60)
         
-//        orange.anchor(top: nil,
-//                      left: nil,
-//                      bottom: canvasView.bottomAnchor,
-//                      right: nil,
-//                      paddingTop: 0,
-//                      paddingLeft: 10,
-//                      paddingBottom: 0,
-//                      paddingRight: 0,
-//                      width: 30,
-//                      height: 30)
-//
-//        red.anchor(top: nil,
-//                   left: orange.rightAnchor,
-//                   bottom: canvasView.bottomAnchor,
-//                   right: nil,
-//                   paddingTop: 0,
-//                   paddingLeft: 10,
-//                   paddingBottom: 0,
-//                   paddingRight: 0,
-//                   width: 30,
-//                   height: 30)
-//
-//        blue.anchor(top: nil,
-//                    left: red.rightAnchor,
-//                    bottom: canvasView.bottomAnchor,
-//                    right: nil,
-//                    paddingTop: 0,
-//                    paddingLeft: 10,
-//                    paddingBottom: 0,
-//                    paddingRight: 0,
-//                    width: 30,
-//                    height: 30)
-//
-//        green.anchor(top: nil,
-//                     left: blue.rightAnchor,
-//                     bottom: canvasView.bottomAnchor,
-//                     right: nil,
-//                     paddingTop: 0,
-//                     paddingLeft: 10,
-//                     paddingBottom: 0,
-//                     paddingRight: 0,
-//                     width: 30,
-//                     height: 30)
-//
-//        yellow.anchor(top: nil,
-//                      left: green.rightAnchor,
-//                      bottom: canvasView.bottomAnchor,
-//                      right: nil,
-//                      paddingTop: 0,
-//                      paddingLeft: 10,
-//                      paddingBottom: 0,
-//                      paddingRight: 0,
-//                      width: 30,
-//                      height: 30)
-        
+     
         canvasView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.66).isActive = true
         canvasView.topAnchor.constraint(equalTo: canvasTopBorderView.bottomAnchor, constant: 0).isActive = true
         canvasView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
         canvasView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
         canvasView.draw(CGRect(x: 0, y: 0, width: canvasView.frame.width, height: canvasView.frame.height))
+        
+        
+    }
+    
+    func setupBarView() {
+        barView.addSubview(topicLabel)
+        barView.addSubview(timerLabel)
+        
+        topicLabel.anchor(top: nil,
+                          left: barView.leftAnchor,
+                          bottom: barView.bottomAnchor,
+                          right: timerLabel.leftAnchor,
+                          paddingTop: 0,
+                          paddingLeft: 8,
+                          paddingBottom: 0,
+                          paddingRight: 8,
+                          width: 0,
+                          height: 60)
+        
+        timerLabel.anchor(top: nil,
+                          left: nil,
+                          bottom: barView.bottomAnchor,
+                          right: barView.rightAnchor,
+                          paddingTop: 0,
+                          paddingLeft: 0,
+                          paddingBottom: -5,
+                          paddingRight: 8,
+                          width: 60,
+                          height: 60)
     }
 }
 
