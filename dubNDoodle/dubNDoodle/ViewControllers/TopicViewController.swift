@@ -43,7 +43,8 @@ class TopicViewController: UIViewController {
     
     lazy var chooseTopicBelowLabel: UILabel = {
         let label = UILabel()
-        label.text = "Select a topic:"
+        label.text = "Select a topic for next player:"
+        label.adjustsFontSizeToFitWidth = true
         label.textColor = UIColor.black
         label.textAlignment = .center
         label.frame = CGRect(x: self.view.frame.width/2 - 150, y: self.view.frame.height/4 - 60, width: 300, height: 60)
@@ -71,7 +72,6 @@ class TopicViewController: UIViewController {
         button.setTitle("Topic", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 27)
-        //        button.layer.cornerRadius = 15
         button.frame = CGRect(x: self.view.frame.width/4 - 50, y: self.view.frame.height/4 + 100, width: self.view.frame.width/2 + 100, height: 100)
         button.layer.masksToBounds = true
         button.layer.borderColor = UIColor.black.cgColor

@@ -33,6 +33,6 @@ struct Constants {
     //Required num players
     static let requiredNumberOfPlayers = 3
     static var drawingTimeLimit = 25
-    static var guessTimeLimit = 10
+    static var guessTimeLimit = 15
     
 }
